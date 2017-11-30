@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodboy.picshop.dao.UserDao">
+
+    <select id="queryUserIdByAccountAndPassword" resultType="int" >
+        SELECT id
+        FROM shop_user
+        WHERE account = #{account} AND password = #{password}
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE shop_user
+        SET nickname = #{nickname}, avatar = #{avatar}, sex = #{sex}, birthday = #{birthday}, email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_user (account, password, nickname, avatar, sex, birthday, email, phone)
+        VALUES (#{account}, #{password}, #{nickname}, #{avatar}, #{sex}, #{birthday}, #{email}, #{phone})
+    </insert>
+
+    <select id="queryUserById" resultType="User">
+        SELECT * FROM shop_user WHERE id = #{id}
+    </select>
+
+</mapper>

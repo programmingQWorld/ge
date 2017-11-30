@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodboy.picshop.dao.ReceivingDao">
+
+    <insert id="insertReceiving" parameterType="Receiving" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_receiving (receiver, phone, zip_code, address, is_default, uid)
+        VALUES (#{receiver}, #{phone}, #{zipCode}, #{address}, #{isDefault}, #{user.id})
+    </insert>
+
+    <select id="queryReceivingByUserId" resultType="Receiving">
+        SELECT R.*, U.id "user.id", U.account "user.account", U.password "user.password",
+                U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone"
+        FROM shop_receiving R
+        INNER JOIN shop_user U ON R.uid = U.id
+        WHERE R.uid = #{userId}
+    </select>
+
+    <update id="setIsDefault">
+        UPDATE shop_receiving
+        SET is_default = #{isDefault}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteReceiving">
+        DELETE FROM shop_receiving WHERE id = #{id}
+    </delete>
+
+    <select id="queryDefaultReceiving" resultType="Receiving">
+        SELECT R.*, U.* "user.*"
+        FROM shop_receiving R
+        INNER JOIN shop_user U ON R.uid = U.id
+        WHERE R.uid = #{userId} AND R.is_default = 1
+    </select>
+
+</mapper>
