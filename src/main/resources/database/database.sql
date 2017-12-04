@@ -50,13 +50,13 @@ DROP TABLE IF EXISTS `shop_cart`;
 CREATE TABLE `shop_cart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
+  `cid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
-  KEY `pid` (`pid`),
+  KEY `pid` (`cid`),
   CONSTRAINT `shop_cart_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `shop_cart_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `shop_cart_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,6 +65,7 @@ CREATE TABLE `shop_cart` (
 
 LOCK TABLES `shop_cart` WRITE;
 /*!40000 ALTER TABLE `shop_cart` DISABLE KEYS */;
+INSERT INTO `shop_cart` VALUES (2,1,3);
 /*!40000 ALTER TABLE `shop_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +86,7 @@ CREATE TABLE `shop_commodity` (
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
   CONSTRAINT `shop_commodity_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,6 +95,7 @@ CREATE TABLE `shop_commodity` (
 
 LOCK TABLES `shop_commodity` WRITE;
 /*!40000 ALTER TABLE `shop_commodity` DISABLE KEYS */;
+INSERT INTO `shop_commodity` VALUES (1,'hello',100,'http://goodboy.com/picture.png',10,1),(2,'hello223',1001,'http://goodboy.com/picture.png',0,1),(3,'hello5555',1001,'http://goodboy.com/picture.png',0,1);
 /*!40000 ALTER TABLE `shop_commodity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +151,7 @@ CREATE TABLE `shop_order` (
   CONSTRAINT `shop_order_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `shop_order_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `shop_receiving` (`id`),
   CONSTRAINT `shop_order_ibfk_3` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,6 +160,7 @@ CREATE TABLE `shop_order` (
 
 LOCK TABLES `shop_order` WRITE;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
+INSERT INTO `shop_order` VALUES (1,1,2,0,'No000001','2017-12-04 09:40:59',0,1),(3,1,2,0,'No000002','2017-12-04 09:41:36',0,1);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +182,7 @@ CREATE TABLE `shop_receiving` (
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
   CONSTRAINT `shop_receiving_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +191,7 @@ CREATE TABLE `shop_receiving` (
 
 LOCK TABLES `shop_receiving` WRITE;
 /*!40000 ALTER TABLE `shop_receiving` DISABLE KEYS */;
-INSERT INTO `shop_receiving` VALUES (1,'jack','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',0,1),(2,'jack2','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',0,1);
+INSERT INTO `shop_receiving` VALUES (2,'jack2','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',1,1),(3,'jack1','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',0,1);
 /*!40000 ALTER TABLE `shop_receiving` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +237,7 @@ CREATE TABLE `shop_user` (
   `phone` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `account` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,4 +259,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-30 15:50:56
+-- Dump completed on 2017-12-04 17:56:15

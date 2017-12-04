@@ -15,6 +15,17 @@ public class Order {
     private Receiving receiving;    //订单的收货信息实体
     private Commodity commodity;    //订单的商品实体
 
+    public Order() {
+    }
+
+    public Order(String orderNo, Date createTime, User user, Receiving receiving, Commodity commodity) {
+        this.orderNo = orderNo;
+        this.createTime = createTime;
+        this.user = user;
+        this.receiving = receiving;
+        this.commodity = commodity;
+    }
+
     public int getId() {
         return id;
     }

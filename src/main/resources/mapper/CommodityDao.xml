@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodboy.picshop.dao.CommodityDao">
+
+    <select id="queryCommodityByUserId" resultType="Commodity">
+        SELECT C.*, U.id "user.id", U.account "user.account", U.password "user.password",
+                U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone"
+        FROM shop_commodity C
+        INNER JOIN shop_user U ON C.uid = U.id
+        WHERE C.uid = #{userId}
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <insert id="insertCommodity" parameterType="Commodity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_commodity (name, price, picture, shipping_cost, uid)
+        VALUES (#{name}, #{price}, #{picture}, #{shippingCost}, #{user.id})
+    </insert>
+
+    <select id="queryAllCommodity" resultType="Commodity">
+        SELECT *
+        FROM shop_commodity
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="queryCommodityById" resultType="Commodity">
+        SELECT * FROM shop_commodity WHERE id = #{id}
+    </select>
+
+</mapper>

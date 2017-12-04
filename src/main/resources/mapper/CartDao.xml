@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodboy.picshop.dao.CartDao">
+
+    <insert id="insertCart" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_cart (uid, pid) VALUES (#{userId}, #{commodityId})
+    </insert>
+    
+    <select id="queryCartByUserId" resultType="Cart">
+        SELECT CART.id, U.id "user.id", U.account "user.account", U.password "user.password",
+                U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone",
+                C.id "commodity.id", C.name "commodity.name", C.price "commodity.price", C.picture "commodity.picture", C.shipping_cost "commodity.shippingCost"
+        FROM (shop_cart CART INNER JOIN shop_commodity C ON CART.pid = C.id)
+        INNER JOIN shop_user U ON CART.uid = u.id
+        WHERE CART.uid = #{userId}
+    </select>
+
+    <delete id="deleteCart">
+        DELETE FROM shop_cart WHERE id = #{id}
+    </delete>
+    
+</mapper>

@@ -11,6 +11,17 @@ public class Commodity {
     private float shippingCost; //运费
     private User user;          //所属卖家用户实体，多对一复合属性
 
+    public Commodity() {
+    }
+
+    public Commodity(String name, float price, String picture, float shippingCost, User user) {
+        this.name = name;
+        this.price = price;
+        this.picture = picture;
+        this.shippingCost = shippingCost;
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }

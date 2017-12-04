@@ -8,6 +8,9 @@ public class Cart {
     private User user;              //所属用户实体，多对一复合属性
     private Commodity commodity;    //购物车里的商品实体，多对一复合属性
 
+    public Cart() {
+    }
+
     public int getId() {
         return id;
     }

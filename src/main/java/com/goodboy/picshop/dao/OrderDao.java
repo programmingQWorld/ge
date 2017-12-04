@@ -8,6 +8,13 @@ import java.util.List;
 public interface OrderDao {
 
     /**
+     * 插入新的订单记录
+     * @param order 订单实体
+     * @return 插入行数
+     */
+    int insertOrder(Order order);
+
+    /**
      * 通过订单id查询单个订单详情
      * @param id 订单id
      * @return 订单实体
