@@ -18,19 +18,19 @@ public class OrderDaoTest extends BaseTest {
 
     //注入OrderDao
     @Autowired
-    OrderDao orderDao;
+    private OrderDao orderDao;
 
     //注入CommodityDao
     @Autowired
-    CommodityDao commodityDao;
+    private CommodityDao commodityDao;
 
     //注入ReceivingDao
     @Autowired
-    ReceivingDao receivingDao;
+    private ReceivingDao receivingDao;
 
     //注入UserDao
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Test
     public void testInsertOrder() throws Exception{

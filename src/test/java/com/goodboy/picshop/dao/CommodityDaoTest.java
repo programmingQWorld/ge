@@ -6,6 +6,7 @@ import com.goodboy.picshop.entity.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,16 +16,16 @@ public class CommodityDaoTest extends BaseTest{
 
     //注入CommodityDao
     @Autowired
-    CommodityDao commodityDao;
+    private CommodityDao commodityDao;
 
     //注入UserDao
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Test
     public void testInsertCommodity() throws Exception{
         User user =userDao.queryUserById(1);
-        Commodity commodity = new Commodity("hello5555", 1001, "http://goodboy.com/picture.png", 0, user);
+        Commodity commodity = new Commodity("z231094", 1001, "http://goodboy.com/picture.png", 0, new Date(), 12, 12, user);
         int insert = commodityDao.insertCommodity(commodity);
         System.out.println("insert = " + insert);
     }
@@ -45,5 +46,11 @@ public class CommodityDaoTest extends BaseTest{
     public void testQueryCommodityById() throws Exception{
         Commodity commodity = commodityDao.queryCommodityById(1);
         System.out.println(commodity);
+    }
+
+    @Test
+    public void testQueryCommodityByTagId() throws Exception{
+        List<Commodity> commodityList = commodityDao.queryCommodityByTagId(1, 0, 5);
+        System.out.println(commodityList);
     }
 }

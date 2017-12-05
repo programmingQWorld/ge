@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodboy.picshop.dao.OrderDao">
+
+    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_order (cid, rid, is_pay, order_no, create_time, status, uid)
+        VALUES (#{commodity.id}, #{receiving.id}, #{isPay}, #{orderNo}, #{createTime}, #{status}, #{user.id})
+    </insert>
+
+    <select id="queryOrderById" resultType="Order">
+        SELECT * FROM shop_order WHERE id = #{id}
+    </select>
+
+    <select id="queryOrderByUserId" resultType="Order">
+        SELECT * FROM shop_order WHERE uid = #{userId} LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="queryOrderByUserIdAndIsPay" resultType="Order">
+        SELECT * FROM shop_order WHERE uid = #{userId} AND is_pay = #{isPay} LIMIT #{offset}, #{limit}
+    </select>
+
+</mapper>

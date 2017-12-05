@@ -37,4 +37,13 @@ public interface CommodityDao {
      * @return 单个商品实体
      */
     Commodity queryCommodityById(int id);
+
+    /**
+     * 查询某标签下的最新作品
+     * @param tagId 标签id
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 商品集合
+     */
+    List<Commodity> queryCommodityByTagId(@Param("tagId") int tagId, @Param("offset") int offset, @Param("limit") int limit);
 }

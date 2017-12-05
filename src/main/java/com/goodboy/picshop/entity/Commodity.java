@@ -1,5 +1,7 @@
 package com.goodboy.picshop.entity;
 
+import java.util.Date;
+
 /**
  * 商品实体类
  */
@@ -9,16 +11,22 @@ public class Commodity {
     private float price;        //商品价格
     private String picture;     //商品图片链接
     private float shippingCost; //运费
+    private Date createTime;    //商品上架时间
+    private float sizeWidth;    //商品的宽
+    private float sizeHeight;   //商品的高
     private User user;          //所属卖家用户实体，多对一复合属性
 
     public Commodity() {
     }
 
-    public Commodity(String name, float price, String picture, float shippingCost, User user) {
+    public Commodity(String name, float price, String picture, float shippingCost, Date createTime, float sizeWidth, float sizeHeight, User user) {
         this.name = name;
         this.price = price;
         this.picture = picture;
         this.shippingCost = shippingCost;
+        this.createTime = createTime;
+        this.sizeWidth = sizeWidth;
+        this.sizeHeight = sizeHeight;
         this.user = user;
     }
 
@@ -62,6 +70,30 @@ public class Commodity {
         this.shippingCost = shippingCost;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public float getSizeWidth() {
+        return sizeWidth;
+    }
+
+    public void setSizeWidth(float sizeWidth) {
+        this.sizeWidth = sizeWidth;
+    }
+
+    public float getSizeHeight() {
+        return sizeHeight;
+    }
+
+    public void setSizeHeight(float sizeHeight) {
+        this.sizeHeight = sizeHeight;
+    }
+
     public User getUser() {
         return user;
     }
@@ -77,6 +109,9 @@ public class Commodity {
                 + ", price = " + this.price
                 + ", picture = " + this.picture
                 + ", shippingCost = " + this.shippingCost
+                + ", createTime = " + this.createTime
+                + ", sizeWidth = " + this.sizeWidth
+                + ", sizeHeight = " + this.sizeHeight
                 + ", user = " + this.user + " }";
     }
 }

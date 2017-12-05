@@ -14,7 +14,7 @@ public class CartDaoTest extends BaseTest{
 
     //注入CartDao
     @Autowired
-    CartDao cartDao;
+    private CartDao cartDao;
 
     @Test
     public void testInsertCart() throws Exception{
