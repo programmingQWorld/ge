@@ -29,4 +29,15 @@ public class CommodityServiceImplTest extends BaseTest {
         Commodity commodity = commodityService.getById(1);
         System.out.println(commodity);
     }
+
+    @Test
+    public void testGetByUser() throws Exception{
+        List<Commodity> commodityList = commodityService.getByUser(1, 0, 5);
+        System.out.println(commodityList);
+    }
+
+    @Test
+    public void testAdd() throws Exception{
+        System.out.println(commodityService.add("q123456", "http://shierd.info/shio.png", 1, 12, 12, 120));
+    }
 }

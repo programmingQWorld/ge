@@ -53,4 +53,10 @@ public class CommodityDaoTest extends BaseTest{
         List<Commodity> commodityList = commodityDao.queryCommodityByTagId(1, 0, 5);
         System.out.println(commodityList);
     }
+
+    @Test
+    public void testInsertCommodityRelTag() throws Exception{
+        int insert = commodityDao.insertCommodityRelTag(1, 4);
+        System.out.println("insert = " + insert);
+    }
 }

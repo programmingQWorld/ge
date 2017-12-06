@@ -46,4 +46,12 @@ public interface CommodityDao {
      * @return 商品集合
      */
     List<Commodity> queryCommodityByTagId(@Param("tagId") int tagId, @Param("offset") int offset, @Param("limit") int limit);
+
+    /**
+     * 插入标签与商品关联的记录
+     * @param tagId 标签id
+     * @param commodityId 商品id
+     * @return 插入行数
+     */
+    int insertCommodityRelTag(@Param("tagId") int tagId, @Param("commodityId") int commodityId);
 }

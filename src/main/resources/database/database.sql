@@ -78,15 +78,19 @@ DROP TABLE IF EXISTS `shop_commodity`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_commodity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(128) NOT NULL,
   `price` decimal(10,0) DEFAULT NULL,
   `picture` varchar(256) DEFAULT NULL,
   `shipping_cost` decimal(10,0) DEFAULT NULL,
   `uid` int(11) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `size_width` decimal(10,0) NOT NULL,
+  `size_height` decimal(10,0) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
   KEY `uid` (`uid`),
   CONSTRAINT `shop_commodity_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +99,7 @@ CREATE TABLE `shop_commodity` (
 
 LOCK TABLES `shop_commodity` WRITE;
 /*!40000 ALTER TABLE `shop_commodity` DISABLE KEYS */;
-INSERT INTO `shop_commodity` VALUES (1,'hello',100,'http://goodboy.com/picture.png',10,1),(2,'hello223',1001,'http://goodboy.com/picture.png',0,1),(3,'hello5555',1001,'http://goodboy.com/picture.png',0,1);
+INSERT INTO `shop_commodity` VALUES (1,'hello',100,'http://goodboy.com/picture.png',10,1,'2017-12-06 00:00:00',0,0),(2,'hello223',1001,'http://goodboy.com/picture.png',0,1,'2017-12-21 00:00:00',0,0),(3,'hello5555',1001,'http://goodboy.com/picture.png',0,1,'2017-12-25 00:00:00',0,0),(4,'h123213',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 07:34:13',0,0),(5,'z231094',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 09:16:50',12,12),(6,'q12345',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:00:53',12,12),(7,'q123456',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:02:50',12,12);
 /*!40000 ALTER TABLE `shop_commodity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +119,7 @@ CREATE TABLE `shop_commodity_rel_tag` (
   KEY `tid` (`tid`),
   CONSTRAINT `shop_commodity_rel_tag_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `shop_commodity_rel_tag_ibfk_2` FOREIGN KEY (`tid`) REFERENCES `shop_tag` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +128,7 @@ CREATE TABLE `shop_commodity_rel_tag` (
 
 LOCK TABLES `shop_commodity_rel_tag` WRITE;
 /*!40000 ALTER TABLE `shop_commodity_rel_tag` DISABLE KEYS */;
+INSERT INTO `shop_commodity_rel_tag` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,6,1),(6,7,1);
 /*!40000 ALTER TABLE `shop_commodity_rel_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +211,7 @@ CREATE TABLE `shop_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,6 +220,7 @@ CREATE TABLE `shop_tag` (
 
 LOCK TABLES `shop_tag` WRITE;
 /*!40000 ALTER TABLE `shop_tag` DISABLE KEYS */;
+INSERT INTO `shop_tag` VALUES (1,'test');
 /*!40000 ALTER TABLE `shop_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-04 17:56:15
+-- Dump completed on 2017-12-06 15:43:36
