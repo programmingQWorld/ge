@@ -1,6 +1,7 @@
 package com.goodboy.picshop.service.impl;
 
 import com.goodboy.picshop.BaseTest;
+import com.goodboy.picshop.dto.CommodityGetDto;
 import com.goodboy.picshop.entity.Commodity;
 import com.goodboy.picshop.service.CommodityService;
 import org.junit.Test;
@@ -14,30 +15,30 @@ public class CommodityServiceImplTest extends BaseTest {
 
     @Test
     public void testGetByTag() throws Exception{
-        List<Commodity> commodityList = commodityService.getByTag(1, 0, 5);
-        System.out.println(commodityList);
+        CommodityGetDto commodityGetDto = commodityService.getByTag(1, 0, 5);
+        System.out.println(commodityGetDto);
     }
 
     @Test
     public void testGetAll() throws Exception{
-        List<Commodity> commodityList = commodityService.getAll(12, 12);
-        System.out.println(commodityList);
+        CommodityGetDto commodityGetDto = commodityService.getAll(0, 2);
+        System.out.println(commodityGetDto);
     }
 
     @Test
     public void testGetById() throws Exception{
-        Commodity commodity = commodityService.getById(1);
-        System.out.println(commodity);
+        CommodityGetDto commodityGetDto = commodityService.getById(1);
+        System.out.println(commodityGetDto);
     }
 
     @Test
     public void testGetByUser() throws Exception{
-        List<Commodity> commodityList = commodityService.getByUser(1, 0, 5);
-        System.out.println(commodityList);
+        CommodityGetDto commodityGetDto = commodityService.getByUser(1, 0, 5);
+        System.out.println(commodityGetDto);
     }
 
     @Test
     public void testAdd() throws Exception{
-        System.out.println(commodityService.add("q123456", "http://shierd.info/shio.png", 1, 12, 12, 120));
+        System.out.println(commodityService.add("q123456234", "http://shierd.info/shio.png", 1, 12, 12, 120));
     }
 }

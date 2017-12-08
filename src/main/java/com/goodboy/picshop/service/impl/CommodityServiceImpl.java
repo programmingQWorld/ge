@@ -3,6 +3,7 @@ package com.goodboy.picshop.service.impl;
 import com.goodboy.picshop.dao.CommodityDao;
 import com.goodboy.picshop.dao.UserDao;
 import com.goodboy.picshop.dto.CommodityAddDto;
+import com.goodboy.picshop.dto.CommodityGetDto;
 import com.goodboy.picshop.dto.StatusEnum;
 import com.goodboy.picshop.entity.Commodity;
 import com.goodboy.picshop.entity.User;
@@ -24,32 +25,31 @@ public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private UserDao userDao;
 
-    public List<Commodity> getByTag(int tagId, int offset, int limit) {
-        return commodityDao.queryCommodityByTagId(tagId, offset, limit);
+    public CommodityGetDto getByTag(int tagId, int offset, int limit) {
+        List<Commodity> commodityList = commodityDao.queryCommodityByTagId(tagId, offset, limit);
+        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodityList);
+        return commodityGetDto;
     }
 
-    public List<Commodity> getAll(int offset, int limit) {
-        return commodityDao.queryAllCommodity(offset, limit);
+    public CommodityGetDto getAll(int offset, int limit) {
+        List<Commodity> commodityList = commodityDao.queryAllCommodity(offset, limit);
+        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodityList);
+        return commodityGetDto;
     }
 
-    public Commodity getById(int commodityId) {
-        return commodityDao.queryCommodityById(commodityId);
+    public CommodityGetDto getById(int commodityId) {
+        Commodity commodity = commodityDao.queryCommodityById(commodityId);
+        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodity);
+        return commodityGetDto;
     }
 
-    public List<Commodity> getByUser(int userId, int offset, int limit) {
-        return commodityDao.queryCommodityByUserId(userId, offset, limit);
+    public CommodityGetDto getByUser(int userId, int offset, int limit) {
+        List<Commodity> commodityList = commodityDao.queryCommodityByUserId(userId, offset, limit);
+        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodityList);
+        return commodityGetDto;
     }
 
-    /**
-     * 增加商品，使用事务管理
-     * @param name
-     * @param picture
-     * @param tagId
-     * @param sizeWidth
-     * @param sizeHeight
-     * @param price
-     * @return
-     */
+    // 使用事务管理
     @Transactional
     public CommodityAddDto add(String name, String picture, int tagId, float sizeWidth, float sizeHeight, float price) {
         try{
