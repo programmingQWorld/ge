@@ -260,10 +260,10 @@ alter table shop_commodity add size_height float;
 drop table IF EXISTS  shop_cart_items;
 create table shop_cart_items (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  pid int (11) not null,
-  cart_id int(11) not null,
+  cid int (11) not null COMMENT '商品表',
+  cart_id int(11) not null COMMENT '该项所属购物车的id',
   PRIMARY KEY (id),
-  FOREIGN KEY (pid) REFERENCES shop_commodity(id) on UPDATE CASCADE ,
+  FOREIGN KEY (cid) REFERENCES shop_commodity(id) on UPDATE CASCADE ,
   FOREIGN KEY (cart_id) REFERENCES  shop_cart(id) ON UPDATE CASCADE
 ) ENGINE = innodb DEFAULT charset =  utf8;
 
