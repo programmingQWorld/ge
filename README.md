@@ -3,16 +3,24 @@ A website for showing and selling painting, deploy by SSM framework.
 枨锜 -- working
 ##购物车
 ### 用户大锜创建了购物车
-> insert into shop_cart (uid) values (3);
+```sql
+insert into shop_cart (uid) values (3);
+```
 ### 大锜 添加 《铅笔画》《好人画》《惠普卡通画》 到他的购物车中
-> insert into shop_cart_items (cid, cart_id) <br> values (4, 6),<br>
+```sql
+insert into shop_cart_items (cid, cart_id) <br> values (4, 6),<br>
+```
 (3, 6),<br>
 (7, 6);<br>
 
 ### 用户 java 创建了购物车
-> insert into shop_cart (uid) values (1);
+```sql
+insert into shop_cart (uid) values (1);
+```
 ### java 添加 《宝石菇》《手绘藤花画》《惠普卡通画》 到他的购物车中
-> insert into shop_cart_items (cid, cart_id) <br> values (10, 7),<br>
+```sql
+insert into shop_cart_items (cid, cart_id) <br> values (10, 7),<br>
+```
 (5, 7),<br>
 (7, 7);<br>
 
