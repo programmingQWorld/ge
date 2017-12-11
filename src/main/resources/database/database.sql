@@ -63,7 +63,6 @@ CREATE TABLE `shop_cart` (
 -- Dumping data for table `shop_cart`
 --
 
-
 LOCK TABLES `shop_cart` WRITE;
 /*!40000 ALTER TABLE `shop_cart` DISABLE KEYS */;
 INSERT INTO `shop_cart` VALUES (2,1,3);
@@ -250,25 +249,6 @@ CREATE TABLE `shop_user` (
 --
 -- Dumping data for table `shop_user`
 --
-
--- 添加 创建时间、 宽度、高度 到商品表
-alter table shop_commodity add create_time timestamp;
-alter table shop_commodity add size_width FLOAT;
-alter table shop_commodity add size_height float;
-
--- 创建订单项表。
-drop table IF EXISTS  shop_cart_items;
-create table shop_cart_items (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  cid int (11) not null COMMENT '商品表',
-  cart_id int(11) not null COMMENT '该项所属购物车的id',
-  PRIMARY KEY (id),
-  FOREIGN KEY (cid) REFERENCES shop_commodity(id) on UPDATE CASCADE ,
-  FOREIGN KEY (cart_id) REFERENCES  shop_cart(id) ON UPDATE CASCADE
-) ENGINE = innodb DEFAULT charset =  utf8;
-
--- 测试分支是否会被主分支自动分并
-
 
 LOCK TABLES `shop_user` WRITE;
 /*!40000 ALTER TABLE `shop_user` DISABLE KEYS */;
