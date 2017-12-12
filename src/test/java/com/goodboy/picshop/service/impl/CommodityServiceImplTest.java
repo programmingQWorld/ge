@@ -1,13 +1,10 @@
 package com.goodboy.picshop.service.impl;
 
 import com.goodboy.picshop.BaseTest;
-import com.goodboy.picshop.dto.CommodityGetDto;
-import com.goodboy.picshop.entity.Commodity;
+import com.goodboy.picshop.dto.CommodityDto;
 import com.goodboy.picshop.service.CommodityService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 public class CommodityServiceImplTest extends BaseTest {
     @Autowired
@@ -15,30 +12,32 @@ public class CommodityServiceImplTest extends BaseTest {
 
     @Test
     public void testGetByTag() throws Exception{
-        CommodityGetDto commodityGetDto = commodityService.getByTag(1, 0, 5);
-        System.out.println(commodityGetDto);
+        CommodityDto commodityDto = commodityService.getByTag(1, 0, 5);
+        System.out.println(commodityDto);
     }
 
     @Test
     public void testGetAll() throws Exception{
-        CommodityGetDto commodityGetDto = commodityService.getAll(0, 2);
-        System.out.println(commodityGetDto);
+        CommodityDto commodityDto = commodityService.getAll(0, 2);
+        System.out.println(commodityDto);
     }
 
     @Test
     public void testGetById() throws Exception{
-        CommodityGetDto commodityGetDto = commodityService.getById(1);
-        System.out.println(commodityGetDto);
+        CommodityDto commodityDto = commodityService.getById(1);
+        System.out.println(commodityDto);
     }
 
     @Test
     public void testGetByUser() throws Exception{
-        CommodityGetDto commodityGetDto = commodityService.getByUser(1, 0, 5);
-        System.out.println(commodityGetDto);
+        CommodityDto commodityDto = commodityService.getByUser(1, 0, 5);
+        System.out.println(commodityDto);
     }
 
     @Test
     public void testAdd() throws Exception{
-        System.out.println(commodityService.add("q123456234", "http://shierd.info/shio.png", 1, 12, 12, 120));
+        CommodityDto commodityDto = commodityService.add("西风", "http://10.10.112.170/images/Original/image6.png",
+                6, 120, 120, 120, 2);
+        System.out.println(commodityDto);
     }
 }

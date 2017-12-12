@@ -1,10 +1,6 @@
 package com.goodboy.picshop.service;
 
-import com.goodboy.picshop.dto.CommodityAddDto;
-import com.goodboy.picshop.dto.CommodityGetDto;
-import com.goodboy.picshop.entity.Commodity;
-
-import java.util.List;
+import com.goodboy.picshop.dto.CommodityDto;
 
 /**
  * 商品业务接口：站在“使用者”的角度设计
@@ -17,7 +13,7 @@ public interface CommodityService {
      * @param limit
      * @return 查询商品的数据传输对象
      */
-    CommodityGetDto getByTag(int tagId, int offset, int limit);
+    CommodityDto getByTag(int tagId, int offset, int limit);
 
     /**
      * 查询所有作品，根据作品上架时间倒序排序
@@ -25,14 +21,14 @@ public interface CommodityService {
      * @param limit
      * @return 查询商品的数据传输对象
      */
-    CommodityGetDto getAll(int offset, int limit);
+    CommodityDto getAll(int offset, int limit);
 
     /**
      * 根据商品id查询单个作品
      * @param commodityId
      * @return 商品查询的数据传输对象
      */
-    CommodityGetDto getById(int commodityId);
+    CommodityDto getById(int commodityId);
 
     /**
      * 根据卖家id查询该卖家下的所有商品
@@ -41,7 +37,7 @@ public interface CommodityService {
      * @param limit
      * @return
      */
-    CommodityGetDto getByUser(int userId, int offset, int limit);
+    CommodityDto getByUser(int userId, int offset, int limit);
 
     /**
      * 增加商品
@@ -51,7 +47,8 @@ public interface CommodityService {
      * @param sizeWidth
      * @param sizeHeight
      * @param price
+     * @param userId
      * @return
      */
-    CommodityAddDto add(String name, String picture, int tagId, float sizeWidth, float sizeHeight, float price);
+    CommodityDto add(String name, String picture, int tagId, float sizeWidth, float sizeHeight, float price, int userId);
 }

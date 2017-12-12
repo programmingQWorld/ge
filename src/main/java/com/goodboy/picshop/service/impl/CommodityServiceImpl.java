@@ -2,14 +2,15 @@ package com.goodboy.picshop.service.impl;
 
 import com.goodboy.picshop.dao.CommodityDao;
 import com.goodboy.picshop.dao.UserDao;
-import com.goodboy.picshop.dto.CommodityAddDto;
-import com.goodboy.picshop.dto.CommodityGetDto;
+import com.goodboy.picshop.dto.CommodityDto;
 import com.goodboy.picshop.dto.StatusEnum;
 import com.goodboy.picshop.entity.Commodity;
 import com.goodboy.picshop.entity.User;
-import com.goodboy.picshop.exception.CommodityAddException;
+import com.goodboy.picshop.exception.CommodityRepeatException;
+import com.goodboy.picshop.exception.NoUserException;
 import com.goodboy.picshop.service.CommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,55 +26,54 @@ public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private UserDao userDao;
 
-    public CommodityGetDto getByTag(int tagId, int offset, int limit) {
+    public CommodityDto getByTag(int tagId, int offset, int limit) {
         List<Commodity> commodityList = commodityDao.queryCommodityByTagId(tagId, offset, limit);
-        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodityList);
-        return commodityGetDto;
+        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+        return commodityDto;
     }
 
-    public CommodityGetDto getAll(int offset, int limit) {
+    public CommodityDto getAll(int offset, int limit) {
         List<Commodity> commodityList = commodityDao.queryAllCommodity(offset, limit);
-        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodityList);
-        return commodityGetDto;
+        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+        return commodityDto;
     }
 
-    public CommodityGetDto getById(int commodityId) {
+    public CommodityDto getById(int commodityId) {
         Commodity commodity = commodityDao.queryCommodityById(commodityId);
-        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodity);
-        return commodityGetDto;
+        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodity);
+        return commodityDto;
     }
 
-    public CommodityGetDto getByUser(int userId, int offset, int limit) {
+    public CommodityDto getByUser(int userId, int offset, int limit) {
         List<Commodity> commodityList = commodityDao.queryCommodityByUserId(userId, offset, limit);
-        CommodityGetDto commodityGetDto = new CommodityGetDto(StatusEnum.SUCCESS, commodityList);
-        return commodityGetDto;
+        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+        return commodityDto;
     }
 
     // 使用事务管理
     @Transactional
-    public CommodityAddDto add(String name, String picture, int tagId, float sizeWidth, float sizeHeight, float price) {
+    public CommodityDto add(String name, String picture, int tagId, float sizeWidth, float sizeHeight, float price, int userId) {
         try{
-            int userId = 1;
-            if(userId == 0){    // 是否已登录
-                throw new CommodityAddException("no login");
-            }
+            // 根据用户id获取用户实体
             User user = userDao.queryUserById(userId);
+            if(user == null){   // 用户不存在
+                throw new NoUserException("no user");
+            }
             Commodity commodity = new Commodity(name, price, picture, 0, new Date(), sizeWidth, sizeHeight, user);
-            //执行增加商品操作
+            // 执行增加商品操作
             int insert = commodityDao.insertCommodity(commodity);
-            if(insert <= 0){    // 作品重复
-                throw new CommodityAddException("repeat commodity");
-            }else {     // 增加商品成功
-                //执行增加商品标签操作
+            if(insert >= 1) {     // 增加商品成功
+                // 执行增加商品标签操作
                 insert = commodityDao.insertCommodityRelTag(tagId, commodity.getId());
-                if(insert <= 0){
-                    throw new CommodityAddException("repeat tag relation");
-                }else {
-                    return new CommodityAddDto(StatusEnum.SUCCESS);
+                if(insert >= 1) {       // 增加商品标签成功
+                    return new CommodityDto(StatusEnum.SUCCESS);
                 }
             }
-        }catch (CommodityAddException cae) {
-            throw cae;
+        }catch (NoUserException nue){
+            throw nue;
+        }catch (DuplicateKeyException dke){
+            throw new CommodityRepeatException("repeat commodity");
         }
+        return null;
     }
 }

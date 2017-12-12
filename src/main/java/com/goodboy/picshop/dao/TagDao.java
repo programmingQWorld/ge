@@ -11,4 +11,11 @@ public interface TagDao {
      * @return 标签集合
      */
     List<Tag> queryAll();
+
+    /**
+     * 插入新标签记录
+     * @param tag 标签对象实体
+     * @return 插入行数
+     */
+    int insertTag(Tag tag);
 }
