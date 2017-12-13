@@ -12,7 +12,7 @@ public class CommodityServiceImplTest extends BaseTest {
 
     @Test
     public void testGetByTag() throws Exception{
-        CommodityDto commodityDto = commodityService.getByTag(1, 0, 5);
+        CommodityDto commodityDto = commodityService.getByTag(7, 0, 5);
         System.out.println(commodityDto);
     }
 
@@ -24,7 +24,7 @@ public class CommodityServiceImplTest extends BaseTest {
 
     @Test
     public void testGetById() throws Exception{
-        CommodityDto commodityDto = commodityService.getById(1);
+        CommodityDto commodityDto = commodityService.getById(12);
         System.out.println(commodityDto);
     }
 

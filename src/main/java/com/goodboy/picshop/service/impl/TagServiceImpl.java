@@ -4,6 +4,7 @@ import com.goodboy.picshop.dao.TagDao;
 import com.goodboy.picshop.dto.StatusEnum;
 import com.goodboy.picshop.dto.TagDto;
 import com.goodboy.picshop.entity.Tag;
+import com.goodboy.picshop.exception.NoTagFoundException;
 import com.goodboy.picshop.exception.TagRepeatException;
 import com.goodboy.picshop.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,19 @@ public class TagServiceImpl implements TagService {
     private TagDao tagDao;
 
     public TagDto getAll() {
+        // 查询所有标签
         List<Tag> tagList = tagDao.queryAll();
-        TagDto tagDto = new TagDto(StatusEnum.SUCCESS, tagList);
-        return tagDto;
+        try {
+            // 判断是否有标签
+            if(!tagList.isEmpty()) {
+                TagDto tagDto = new TagDto(StatusEnum.SUCCESS, tagList);
+                return tagDto;
+            }else{      // 没有标签
+                throw new NoTagFoundException("no tag found");
+            }
+        }catch (NoTagFoundException ntfe){
+            throw ntfe;
+        }
     }
 
     // 新增标签

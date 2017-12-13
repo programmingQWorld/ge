@@ -6,6 +6,7 @@ import com.goodboy.picshop.dto.CommodityDto;
 import com.goodboy.picshop.dto.StatusEnum;
 import com.goodboy.picshop.entity.Commodity;
 import com.goodboy.picshop.entity.User;
+import com.goodboy.picshop.exception.NoCommodityFoundException;
 import com.goodboy.picshop.exception.CommodityRepeatException;
 import com.goodboy.picshop.exception.NoUserException;
 import com.goodboy.picshop.service.CommodityService;
@@ -27,21 +28,51 @@ public class CommodityServiceImpl implements CommodityService {
     private UserDao userDao;
 
     public CommodityDto getByTag(int tagId, int offset, int limit) {
+        // 根据标签id查询商品
         List<Commodity> commodityList = commodityDao.queryCommodityByTagId(tagId, offset, limit);
-        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
-        return commodityDto;
+        try {
+            // 判断是否有商品
+            if (!commodityList.isEmpty()) {
+                CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+                return commodityDto;
+            } else {    // 没有商品
+                throw new NoCommodityFoundException("no commodity found");
+            }
+        }catch (NoCommodityFoundException ncfe){
+            throw ncfe;
+        }
     }
 
     public CommodityDto getAll(int offset, int limit) {
+        // 查询所有商品
         List<Commodity> commodityList = commodityDao.queryAllCommodity(offset, limit);
-        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
-        return commodityDto;
+        try {
+            // 判断是否有商品
+            if (!commodityList.isEmpty()) {
+                CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+                return commodityDto;
+            } else {    // 没有商品
+                throw new NoCommodityFoundException("no commodity found");
+            }
+        }catch (NoCommodityFoundException ncfe){
+            throw ncfe;
+        }
     }
 
     public CommodityDto getById(int commodityId) {
+        // 根据id查询商品
         Commodity commodity = commodityDao.queryCommodityById(commodityId);
-        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodity);
-        return commodityDto;
+        try {
+            // 判断商品是否存在
+            if (commodity != null) {
+                CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodity);
+                return commodityDto;
+            }else {     // 商品不存在
+                throw new NoCommodityFoundException("commodity not found");
+            }
+        }catch (NoCommodityFoundException ncfe){
+            throw ncfe;
+        }
     }
 
     public CommodityDto getByUser(int userId, int offset, int limit) {
