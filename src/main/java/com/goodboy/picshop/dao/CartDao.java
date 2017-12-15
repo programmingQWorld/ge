@@ -1,6 +1,7 @@
 package com.goodboy.picshop.dao;
 
 import com.goodboy.picshop.entity.Cart;
+import com.goodboy.picshop.entity.CartItem;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface CartDao {
      * @param userId 用户id
      * @return 购物车实体集合
      */
-    List<Cart> queryCartByUserId(int userId);
+    Cart queryCartByUserId(int userId);
 
     /**
      * 插入新的购物车记录（加入购物车）
@@ -28,4 +29,6 @@ public interface CartDao {
      * @return 删除行数
      */
     int deleteCart(int id);
+
+
 }

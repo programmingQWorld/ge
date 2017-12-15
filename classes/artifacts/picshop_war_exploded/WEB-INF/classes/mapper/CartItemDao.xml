@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodboy.picshop.dao.CartItemDao">
+        <resultMap id="itemmap" type="CartItem">
+            <id column="id" property="id" />
+            <association property="commodity" javaType="Commodity">
+                <id property="id" column="cid" />
+                <result property="name" column="name" />
+                <result property="price" column="price" />
+                <result property="picture" column="picture" />
+                <association property="user" javaType="User">
+                    <id property="id" column = "uid" />
+                    <result property="nickname" column="nickname" />
+                </association>
+            </association>
+        </resultMap>
+        <select id = "queryCartItemsByCartId" parameterType="int" resultMap="itemmap">
+            select  items.id, items.cid, comm.name, comm.price, comm.picture, user.id, user.nickname
+            FROM shop_cart_items items
+                left join shop_commodity comm on items.cid = comm.id
+                left join shop_user user on user.id = comm.uid
+            where items.cart_id = #{cartid};
+        </select>
+</mapper>

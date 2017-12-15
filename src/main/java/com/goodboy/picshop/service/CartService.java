@@ -1,5 +1,6 @@
 package com.goodboy.picshop.service;
 
+import com.goodboy.picshop.dto.CartDto;
 import com.goodboy.picshop.entity.Cart;
 
 /**
@@ -12,4 +13,18 @@ public interface CartService {
 	 * @return
 	 */
 	public double calcuTotal(Cart cart) throws Exception;
+
+	/**
+	 * 根据用户id获得购物车信息
+	 * @param userid
+	 * @return
+	 */
+	public CartDto getCartInfoByUserId(int userid);
+
+	/***
+	 * 保存用户的信息
+	 * @param cartDto  购物车dto对象
+	 */
+	public void saveUserCartInfo(CartDto cartDto);
 }
+

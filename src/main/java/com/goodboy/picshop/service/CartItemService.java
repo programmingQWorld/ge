@@ -1,6 +1,6 @@
 package com.goodboy.picshop.service;
 
-import com.goodboy.picshop.entity.Cart;
+import com.goodboy.picshop.dto.CartDto;
 import com.goodboy.picshop.entity.CartItem;
 import com.goodboy.picshop.entity.Commodity;
 
@@ -14,7 +14,7 @@ public interface CartItemService  {
 	 * @param commodity 商品
 	 * @return
 	 */
-	public Cart addCartItem(Cart cart, Commodity commodity);
+	public CartDto addCartItem(CartDto cart, Commodity commodity);
 
 	/**
 	 * 把商品数据转化为购物项

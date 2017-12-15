@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goodboy.picshop.dao.CommodityDao">
+
+    <select id="queryCommodityByUserId" resultType="Commodity">
+        SELECT C.*, U.id "user.id",
+                U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone"
+        FROM shop_commodity C
+        INNER JOIN shop_user U ON C.uid = U.id
+        WHERE C.uid = #{userId}
+        ORDER BY C.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <insert id="insertCommodity" parameterType="Commodity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_commodity (name, price, picture, shipping_cost, create_time, size_width, size_height, uid)
+        VALUES (#{name}, #{price}, #{picture}, #{shippingCost}, #{createTime}, #{sizeWidth}, #{sizeHeight}, #{user.id})
+    </insert>
+
+    <select id="queryAllCommodity" resultType="Commodity">
+        SELECT *
+        FROM shop_commodity
+        ORDER BY create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="queryCommodityById" resultType="Commodity">
+        SELECT C.*, U.id "user.id", U.nickname "user.nickname", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email"
+        FROM shop_commodity C
+        INNER JOIN shop_user U ON C.uid = U.id
+        WHERE C.id = #{id}
+    </select>
+
+    <select id="queryCommodityByTagId" resultType="Commodity">
+        SELECT C.id, C.name, C.price, C.picture, C.shipping_cost, C.create_time, C.size_width, C.size_height, C.uid "user.id"
+        FROM shop_commodity_rel_tag CRT
+        INNER JOIN shop_commodity C ON CRT.cid = C.id
+        WHERE CRT.tid = #{tagId}
+        ORDER BY C.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+    
+    <insert id="insertCommodityRelTag" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_commodity_rel_tag (cid, tid) VALUES (#{commodityId}, #{tagId})
+    </insert>
+
+</mapper>
