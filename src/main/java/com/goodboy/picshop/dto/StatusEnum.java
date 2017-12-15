@@ -4,7 +4,15 @@ package com.goodboy.picshop.dto;
  * 使用枚举类表述常量数据字典
  */
 public enum StatusEnum {
-    SUCCESS(1, "成功");
+    FAILURE(0, "失败"),
+    SUCCESS(1, "成功"),
+    FILE_TOO_LARGE(1020, "文件过大"),
+    NOT_ALLOW_FILE_TYPE(1010, "不被允许上传的文件类型"),
+    REPEAT_USER(2001,"用户名已被注册"),
+    USER_ERROR(2002,"用户名不存在或密码错误"),
+    UNKNOWN_ERROR(9999, "未知错误");
+
+
 
     private int status;     //状态标识符
     private String info;    //状态标识信息

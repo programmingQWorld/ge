@@ -11,7 +11,7 @@ public interface UserDao {
      * @param password 用户密码
      * @return 用户id
      */
-    int queryUserIdByAccountAndPassword(@Param("account") String account, @Param("password") String password);
+    User queryUserIdByAccountAndPassword(@Param("account") String account, @Param("password") String password);
 
     /**
      * 更新用户个人信息
