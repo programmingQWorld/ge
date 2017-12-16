@@ -7,7 +7,6 @@ import com.goodboy.picshop.entity.Cart;
 import com.goodboy.picshop.entity.CartItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class CartDaoTest extends BaseTest{
      */
     @Test
     public void testGetCart() {
-        Cart cart =  cartDao.queryCartByUserId(1);
+        Cart cart =  cartDao.queryCartByUserId(3);
         System.out.println(cart);
         List<CartItem> list = cartItemDao.queryCartItemsByCartId(cart.getId());
         CartDto dto = cart.toDto();
@@ -61,4 +60,11 @@ public class CartDaoTest extends BaseTest{
             System.out.println(i);
         }
     }
+
+    @Test
+    public void testSaveUserCartInfo() throws Exception {
+        int value = cartDao.saveUserCartInfo(5);
+        System.out.println("-->添加完成");
+    }
+
 }
