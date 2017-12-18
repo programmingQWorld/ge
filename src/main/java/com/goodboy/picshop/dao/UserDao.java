@@ -33,4 +33,12 @@ public interface UserDao {
      * @return 单个用户实体
      */
     User queryUserById(int id);
+
+    /**
+     * 通过用户email查询单个用户实体,主要用于忘记密码操作
+     * @param email
+     * @return 单个用户实体
+     */
+
+    User findUserByEmail(String email);
 }

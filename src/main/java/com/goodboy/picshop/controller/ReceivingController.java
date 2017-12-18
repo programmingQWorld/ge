@@ -58,9 +58,9 @@ public class ReceivingController {
     @RequestMapping(value = "/setIsDefault/{receivingId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<ReceivingDto> setIsDefault(@PathVariable int receivingId,HttpSession session){
         User user=(User)session.getAttribute("user");
-        int defaultReceiving=receivingService.queryDefaultReceiving(user.getId()).getReceiving().getId();
-        receivingService.setIsDefault(defaultReceiving,0);
-        ReceivingDto receivingDto =receivingService.setIsDefault(receivingId,1);
+        int defaultReceiving=receivingService.queryDefaultReceiving(user.getId()).getReceiving().getId();//获取用户当前默认地址
+        receivingService.setIsDefault(defaultReceiving,0);//将原先默认地址设为非默认
+        ReceivingDto receivingDto =receivingService.setIsDefault(receivingId,1);//将地址设为默认地址
         return new JSONResult<ReceivingDto>(true,receivingDto);
     }
 }

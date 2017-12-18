@@ -12,6 +12,7 @@ import com.goodboy.picshop.exception.UnknownException;
 import com.goodboy.picshop.exception.UserErrorException;
 import com.goodboy.picshop.service.UploaderService;
 import com.goodboy.picshop.service.UserService;
+import com.goodboy.picshop.util.md5Password;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,8 +41,9 @@ public class UserController {
     //登录验证
     @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> login(String account,String password,HttpSession session){
+        String pwd= md5Password.md5Password(password);
         try{
-            userDto=userService.userLogin(account,password);
+            userDto=userService.userLogin(account,pwd);
         }catch (UserErrorException uie){
             userDto=new UserDto(StatusEnum.USER_ERROR);
         }
@@ -64,11 +66,12 @@ public class UserController {
     }
 
     //注册用户
-    @RequestMapping(value = "/insert", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/insertUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> insert(String account, String password, String email, String phone){
 
         try {
-            userDto = userService.insert(account, password, email, phone);
+            String pwd= md5Password.md5Password(password);
+            userDto = userService.insert(account, pwd, email, phone);
         }
         catch (DuplicateKeyException e){
             userDto=new UserDto(StatusEnum.REPEAT_USER);
@@ -77,7 +80,7 @@ public class UserController {
     }
 
     //更新信息
-    @RequestMapping(value = "/update", method = RequestMethod.POST/*, produces = MediaType.APPLICATION_JSON_UTF8_VALUE*/)
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST/*, produces = MediaType.APPLICATION_JSON_UTF8_VALUE*/)
     public JSONResult<UserDto> update(@RequestParam("nickname")String nickname, @RequestParam("file") MultipartFile file, @RequestParam("sex")String sex, @DateTimeFormat(pattern = "yyyy-MM-dd")Date birthday, @RequestParam("email") String email, HttpSession session){
         User user=(User)session.getAttribute("user");
 
