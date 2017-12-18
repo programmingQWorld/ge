@@ -10,16 +10,62 @@
         VALUES (#{commodity.id}, #{receiving.id}, #{isPay}, #{orderNo}, #{createTime}, #{status}, #{user.id})
     </insert>
 
+   <!-- <insert id="createOrders" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_order (cid, rid, is_pay, order_no, create_time, status, uid)
+        VALUES
+        <foreach collection="list" item="order" separator=",">
+            (#{order.commodity.id}, #{order.receiving.id}, #{order.isPay}, #{order.orderNo}, #{order.createTime}, #{order.status}, #{order.user.id})
+        </foreach>
+    </insert>-->
+
     <select id="queryOrderById" resultType="Order">
         SELECT * FROM shop_order WHERE id = #{id}
     </select>
 
-    <select id="queryOrderByUserId" resultType="Order">
-        SELECT * FROM shop_order WHERE uid = #{userId} LIMIT #{offset}, #{limit}
+    <!-- 根据用户id查询买家订单列表 -->
+    <select id="queryBuyerOrderById"  resultMap="ordermap">
+
+        select
+            o.id, o.is_pay, o.order_no, o.create_time, o.status,
+            comm.id commid,comm.name, comm.price, comm.picture, comm.shipping_cost, seller.id sellerid, seller.nickname sellername,
+            receiver.receiver, receiver.address, receiver.phone,
+            buyer.id buyerid, buyer.nickname buyername
+        from shop_order o
+            left JOIN shop_commodity comm on comm.id = o.cid
+            left JOIN  shop_user seller on seller.id = comm.uid
+            left JOIN shop_receiving receiver on receiver.id = o.rid
+            left JOIN shop_user buyer on buyer.id = o.uid
+        where o.uid = #{userId} limit #{offset}, #{limit};
+
     </select>
+    <resultMap id="ordermap" type="Order">
+        <id property="id" column="id" />
+        <result property="isPay" column="is_pay" />
+        <result property="orderNo" column="order_no" />
+        <result property="createTime" column="create_time" />
+        <result property="status" column="status" />
+        <association property="user" javaType="User">
+            <id property="id" column="buyerid" />
+            <result property="nickname" column="buyername" />
+        </association>
+        <association property="commodity" javaType="Commodity">
+            <id column="buyerid" property="id" />
+            <result column="name" property="name" />
+            <result column="price" property="price" />
+            <result column="picture" property="picture" />
+            <result column="shipping_cost" property="shippingCost" />
+            <association property="user" javaType="User">
+                <id column="sellerid" property="id" />
+                <result property="nickname" column="sellername" />
+            </association>
+        </association>
+    </resultMap>
 
     <select id="queryOrderByUserIdAndIsPay" resultType="Order">
         SELECT * FROM shop_order WHERE uid = #{userId} AND is_pay = #{isPay} LIMIT #{offset}, #{limit}
     </select>
 
+    <delete id = "deleteByOrderId">
+        delete from shop_order where id = #{orderid}
+    </delete>
 </mapper>

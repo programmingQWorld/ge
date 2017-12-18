@@ -256,3 +256,5 @@ LOCK TABLES `shop_user` WRITE;
 INSERT INTO `shop_user` VALUES (1,'test0001','test0001','java','http:xxx.xxx/xxx.jpg','男','2017-11-30','test0001@qq.com','12345678910');
 UNLOCK TABLES;
 
+## 修改订单中的商品外键为 唯一
+alter table shop_order add UNIQUE (cid);

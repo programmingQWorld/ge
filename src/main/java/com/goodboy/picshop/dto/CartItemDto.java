@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class CartItemDto {
 	private int commid;   // 商品id
-	private String commName;  // 商品名
+	private  String commName;  // 商品名
 	private float price;
 	private String sallerName;   // 老板姓名
 	@JsonInclude(JsonInclude.Include.NON_NULL)

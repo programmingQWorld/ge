@@ -23,7 +23,6 @@
         FROM shop_cart cart
             left join shop_user user on user.id = cart.uid
         where cart.uid = #{userd};
-
     </select>
     <resultMap id="cartmap" type="Cart">
         <id column = "id" property="id" />
@@ -31,19 +30,15 @@
             <id property="id" column="uid" />
             <result property="nickname" column="nickname" />
         </association>
-       <!-- <collection property="cartItems" ofType="CartItem">
-            <id column="items.id" property="id" />
-            <association property="commodity" javaType="Commodity">
-                <id property="id" column="commodity.id" />
-                <result property="name" column="commodity.name" />
-                <result property="price" column="commodity.price" />
-                <result property="picture" column="commodity.picture" />
-            </association>
-        </collection>-->
     </resultMap>
 
     <delete id="deleteCart">
         DELETE FROM shop_cart WHERE id = #{id}
     </delete>
-    
+
+    <!-- 根据用户id新建购物车记录 -->
+    <insert id="saveUserCartInfo" parameterType="com.goodboy.picshop.entity.Cart" useGeneratedKeys="true" keyProperty="id" >
+        insert into shop_cart (uid) values (#{user.id});
+    </insert>
+
 </mapper>

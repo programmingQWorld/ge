@@ -1,14 +1,18 @@
 package com.goodboy.picshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 订单实体类
  */
-public class Order {
+public class Order implements Serializable {
     private int id;             //订单id
     private int isPay;          //是否付款
     private String orderNo;     //订单号
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:dd", timezone = "GMT+8")
     private Date createTime;    //订单创建时间
     private int status;         //订单发货状态
     private User user;          //所属用户实体，多对一
