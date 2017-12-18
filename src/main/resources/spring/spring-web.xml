@@ -16,6 +16,9 @@
         <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
+    
+    <!-- 配置html静态页面目录 -->
+    <mvc:resources mapping="/*.html" location="/html/" />
 
     <!-- 配置资源目录 -->
     <mvc:resources mapping="/**" location="/resources/" />
