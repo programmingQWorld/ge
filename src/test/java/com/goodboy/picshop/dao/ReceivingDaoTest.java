@@ -37,7 +37,7 @@ public class ReceivingDaoTest extends BaseTest {
 
     @Test
     public void testSetIsDefault() throws Exception{
-        int set = receivingDao.setIsDefault(2,1);
+        int set = receivingDao.setIsDefault(3,1);
         System.out.println("update = " + set);
     }
 

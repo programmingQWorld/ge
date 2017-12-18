@@ -6,16 +6,6 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
 
-  <!-- 配置项目路径 -->
-  <context-param>
-    <param-name>webAppRootKey</param-name>
-    <param-value>evan.webapp</param-value>
-  </context-param>
-  <listener>
-    <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
-  </listener>
-
-  <!-- 配置dispatcher -->
   <servlet>
     <servlet-name>picshop-dispatcher</servlet-name>
     <servlet-class>
@@ -27,7 +17,8 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  <servlet-mapping>
+
+    <servlet-mapping>
     <servlet-name>picshop-dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>

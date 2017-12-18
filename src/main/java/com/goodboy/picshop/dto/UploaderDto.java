@@ -28,3 +28,4 @@ public class UploaderDto extends BaseDto {
         this.fileName = fileName;
     }
 }
+

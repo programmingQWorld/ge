@@ -6,7 +6,7 @@
 <mapper namespace="com.goodboy.picshop.dao.UserDao">
 
     <select id="queryUserIdByAccountAndPassword" resultType="User" >
-        SELECT id,avatar,nickname,birthday,email,phone
+        SELECT id,avatar,nickname
         FROM shop_user
         WHERE account = #{account} AND password = #{password}
     </select>
@@ -25,12 +25,5 @@
     <select id="queryUserById" resultType="User">
         SELECT id,nickname,avatar,email,sex,birthday FROM shop_user WHERE id = #{id}
     </select>
-
-    <select id="findUserByEmail" resultType="User">
-        SELECT id,nickname FROM shop_user WHERE email = #{email}
-    </select>
-
-
-
 
 </mapper>
