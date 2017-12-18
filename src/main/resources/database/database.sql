@@ -90,7 +90,7 @@ CREATE TABLE `shop_commodity` (
   UNIQUE KEY `name` (`name`),
   KEY `uid` (`uid`),
   CONSTRAINT `shop_commodity_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,7 @@ CREATE TABLE `shop_commodity` (
 
 LOCK TABLES `shop_commodity` WRITE;
 /*!40000 ALTER TABLE `shop_commodity` DISABLE KEYS */;
-INSERT INTO `shop_commodity` VALUES (1,'hello',100,'http://goodboy.com/picture.png',10,1,'2017-12-06 00:00:00',0,0),(2,'hello223',1001,'http://goodboy.com/picture.png',0,1,'2017-12-21 00:00:00',0,0),(3,'hello5555',1001,'http://goodboy.com/picture.png',0,1,'2017-12-25 00:00:00',0,0),(4,'h123213',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 07:34:13',0,0),(5,'z231094',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 09:16:50',12,12),(6,'q12345',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:00:53',12,12),(7,'q123456',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:02:50',12,12);
+INSERT INTO `shop_commodity` VALUES (1,'hello',100,'http://goodboy.com/picture.png',10,1,'2017-12-06 00:00:00',0,0),(2,'hello223',1001,'http://goodboy.com/picture.png',0,1,'2017-12-21 00:00:00',0,0),(3,'hello5555',1001,'http://goodboy.com/picture.png',0,1,'2017-12-25 00:00:00',0,0),(4,'h123213',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 07:34:13',0,0),(5,'z231094',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 09:16:50',12,12),(6,'q12345',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:00:53',12,12),(7,'q123456',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:02:50',12,12),(9,'q123456234',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:53:34',12,12),(10,'流水',120,'http://10.10.112.170/images/Original/image1.png',0,1,'2017-12-12 07:31:57',120,120),(12,'小桥',120,'http://10.10.112.170/images/Original/image2.png',0,1,'2017-12-12 07:34:06',120,120),(13,'人家',120,'http://10.10.112.170/images/Original/image3.png',0,1,'2017-12-12 07:35:09',120,120),(14,'古道',120,'http://10.10.112.170/images/Original/image4.png',0,1,'2017-12-12 07:35:50',120,120),(15,'瘦马',120,'http://10.10.112.170/images/Original/image5.png',0,1,'2017-12-12 07:36:19',120,120),(16,'西风',120,'http://10.10.112.170/images/Original/image6.png',0,1,'2017-12-12 07:36:36',120,120);
 /*!40000 ALTER TABLE `shop_commodity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +119,7 @@ CREATE TABLE `shop_commodity_rel_tag` (
   KEY `tid` (`tid`),
   CONSTRAINT `shop_commodity_rel_tag_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `shop_commodity_rel_tag_ibfk_2` FOREIGN KEY (`tid`) REFERENCES `shop_tag` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `shop_commodity_rel_tag` (
 
 LOCK TABLES `shop_commodity_rel_tag` WRITE;
 /*!40000 ALTER TABLE `shop_commodity_rel_tag` DISABLE KEYS */;
-INSERT INTO `shop_commodity_rel_tag` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,6,1),(6,7,1);
+INSERT INTO `shop_commodity_rel_tag` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,6,1),(6,7,1),(7,9,1),(8,10,1),(9,12,3),(10,13,6),(11,14,7),(12,15,7),(13,16,6);
 /*!40000 ALTER TABLE `shop_commodity_rel_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,8 +210,9 @@ DROP TABLE IF EXISTS `shop_tag`;
 CREATE TABLE `shop_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +221,7 @@ CREATE TABLE `shop_tag` (
 
 LOCK TABLES `shop_tag` WRITE;
 /*!40000 ALTER TABLE `shop_tag` DISABLE KEYS */;
-INSERT INTO `shop_tag` VALUES (1,'test');
+INSERT INTO `shop_tag` VALUES (1,'test'),(2,'test2'),(3,'书画'),(6,'国画'),(7,'山水画');
 /*!40000 ALTER TABLE `shop_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,4 +266,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-06 15:43:36
+-- Dump completed on 2017-12-13 20:40:01

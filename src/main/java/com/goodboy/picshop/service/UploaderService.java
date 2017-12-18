@@ -3,7 +3,6 @@ package com.goodboy.picshop.service;
 import com.goodboy.picshop.dto.UploaderDto;
 import org.springframework.web.multipart.MultipartFile;
 
-
 /**
  * 上传业务接口
  */
