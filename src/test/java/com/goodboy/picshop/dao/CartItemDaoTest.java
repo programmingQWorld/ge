@@ -6,10 +6,7 @@ import com.goodboy.picshop.entity.Commodity;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CartItemDaoTest extends BaseTest {
     @Autowired
@@ -19,22 +16,22 @@ public class CartItemDaoTest extends BaseTest {
     public void testAddItemList () {
         // 数据准备
         Map<String, Object> map = new HashMap<String, Object>();
-        // 为用户 张起灵(2) 的购物车添加商品
-        map.put("cartid", 2);
-
         List<CartItemDto> items = new ArrayList<>();
-        //int[] cids = new int[] {12, 13, 14};
-        int[] cids = new int[] {1,2,3,4,5};
-        for (int i=0; i<cids.length; i++ ) {
 
-            int id = cids[i];
+        int[] cids = new int[] {11, 13, 14, 15};
+        for ( int i = 0; i<cids.length; i++ ) {
             CartItemDto dto = new CartItemDto();
-            dto.setCommid(id);
+            dto.setCommid(cids[i]);
             items.add( dto );
-
         }
-        map.put("itemList", items);
+        map.put("items", cids);
+        map.put("cartid", 2);         // 为用户 张起灵(2) 的购物车添加商品
         // 调用
         cartItemDao.saveCartItemList(map);
     }
+    @Test
+    public void testDelCartItems () {
+        cartItemDao.clearCartItemsByCartid(2);
+    }
+
 }

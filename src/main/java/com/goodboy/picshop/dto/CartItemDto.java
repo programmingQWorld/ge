@@ -18,6 +18,14 @@ public class CartItemDto {
 		this.sallerName = sallerName;
 	}
 
+	public String getSallerPhone() {
+		return sallerPhone;
+	}
+
+	public void setSallerPhone(String sallerPhone) {
+		this.sallerPhone = sallerPhone;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -35,7 +43,6 @@ public class CartItemDto {
 	public CartItemDto() {
 
 	}
-
 
 
 	public int getCommid() {

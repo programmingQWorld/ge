@@ -26,13 +26,18 @@
     </select>
 
     <!-- 插入购物车商品信息 -->
-    <insert id = "saveCartItemList" parameterType="map">
+    <insert id = "saveCartItemList" parameterType="java.util.Map">
         insert into shop_cart_items (cid, cart_id) values
-        <foreach collection="#{itemList}" item="item"  separator=",">
-            (#{item.commid},#{cartid})
+        <foreach collection="map.items" item="cid" separator=",">
+            (#{cid.commid}, #{map.cartid})
         </foreach>
     </insert>
 
-    <!-- 我刚刚做的修改 -->
+
+
+    <!-- 清空指定购物车中的商品信息 -->
+    <delete id="clearCartItemsByCartid" parameterType="int">
+        delete from shop_cart_items where cart_id = #{cartid};
+    </delete>
 
 </mapper>

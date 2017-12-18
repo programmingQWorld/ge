@@ -21,10 +21,11 @@ public interface CartService {
 	 */
 	public CartDto getCartInfoByUserId(int userid);
 
-	/***
-	 * 保存用户的信息
-	 * @param cartDto  购物车dto对象
+	/**
+	 * 保存用户购物车信息
+	 * @param userid  购物车车主id
+	 * @param cartDto  购物车dto 会用到里面的cartid, itemlist
 	 */
-	public void saveUserCartInfo(CartDto cartDto);
+	public void saveUserCartInfo(int userid, CartDto cartDto);
 }
 

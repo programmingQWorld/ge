@@ -5,6 +5,7 @@ import com.goodboy.picshop.dto.CartDto;
 import com.goodboy.picshop.dto.CartItemDto;
 import com.goodboy.picshop.entity.Cart;
 import com.goodboy.picshop.entity.CartItem;
+import com.goodboy.picshop.entity.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
@@ -63,8 +64,12 @@ public class CartDaoTest extends BaseTest{
 
     @Test
     public void testSaveUserCartInfo() throws Exception {
-        int value = cartDao.saveUserCartInfo(5);
-        System.out.println("-->添加完成");
+        Cart cart = new Cart();
+        User user = new User();
+        user.setId(1);
+        cart.setUser( user );
+        int id = cartDao.saveUserCartInfo(cart);
+        System.out.println("-->添加完成 : " + cart.getId());
     }
 
 }

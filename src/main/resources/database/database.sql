@@ -50,14 +50,14 @@ DROP TABLE IF EXISTS `shop_cart`;
 CREATE TABLE `shop_cart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
-  `cid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
-  KEY `pid` (`cid`),
-  CONSTRAINT `shop_cart_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `shop_cart_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `shop_cart_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+/* 为uid添加唯一索引 */
+alter table shop_cart add UNIQUE (uid);
 
 --
 -- Dumping data for table `shop_cart`
@@ -175,8 +175,7 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `shop_receiving`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `shop_receiving` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `receiver` varchar(16) NOT NULL,
@@ -191,9 +190,6 @@ CREATE TABLE `shop_receiving` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `shop_receiving`
---
 
 LOCK TABLES `shop_receiving` WRITE;
 /*!40000 ALTER TABLE `shop_receiving` DISABLE KEYS */;
@@ -201,19 +197,13 @@ INSERT INTO `shop_receiving` VALUES (2,'jack2','12345678910','123456','广东省
 /*!40000 ALTER TABLE `shop_receiving` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `shop_tag`
---
 
 DROP TABLE IF EXISTS `shop_tag`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `shop_tag`
@@ -230,8 +220,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `shop_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `account` varchar(16) NOT NULL,
@@ -245,11 +233,6 @@ CREATE TABLE `shop_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `shop_user`
---
 
 -- 添加 创建时间、 宽度、高度 到商品表
 alter table shop_commodity add create_time timestamp;
@@ -269,20 +252,7 @@ create table shop_cart_items (
 
 -- 测试分支是否会被主分支自动分并
 
-
 LOCK TABLES `shop_user` WRITE;
-/*!40000 ALTER TABLE `shop_user` DISABLE KEYS */;
 INSERT INTO `shop_user` VALUES (1,'test0001','test0001','java','http:xxx.xxx/xxx.jpg','男','2017-11-30','test0001@qq.com','12345678910');
-/*!40000 ALTER TABLE `shop_user` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-12-06 15:43:36

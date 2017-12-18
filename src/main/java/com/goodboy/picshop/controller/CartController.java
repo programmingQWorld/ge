@@ -41,20 +41,20 @@ public class CartController {
 	 */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public JSONResult<Object> login (User user, HttpSession session) {
-
-		//
-
 		/*  模拟在线用户 - 晓琳*/
 		User userOnline = new User();
-		user.setId(3);
+		userOnline.setId(6);
 		userOnline.setNickname("晓琳");
 		session.setAttribute("user", userOnline );
 		/* */
 		// 设置用户的购物车
-		CartDto dbCartDto =  cartService.getCartInfoByUserId(user.getId());
+		if ( session.getAttribute("islogin") != null ) { // 用户已经登陆，则不能再从数据库中查找用户的购物车信息
+			return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
+		}
+		CartDto dbCartDto =  cartService.getCartInfoByUserId(userOnline.getId());
 		CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
 
-		if (sessionCartDto != null) {
+		if (sessionCartDto != null && dbCartDto != null ) {
 			if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
 				// 合并
 				for ( CartItemDto dto : sessionCartDto.getItems() ) {
@@ -64,10 +64,10 @@ public class CartController {
 				}
 			}
 		}
-		session.setAttribute("usercart", dbCartDto);
-
-		System.out.println("00>");
-		return new JSONResult<>(true, "登录成功,用户id:" + 3);
+		CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
+		session.setAttribute("usercart", dto);
+		session.setAttribute("islogin", true);  // 标记用户已经登录，避免用户重复登录
+		return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
 	}
 
 	@RequestMapping( value  = "logout", method = RequestMethod.GET)
@@ -75,13 +75,14 @@ public class CartController {
 
 		// 保存信息回到数据库
 		CartDto cartDto = (CartDto) session.getAttribute("usercart");
-		cartService.saveUserCartInfo(cartDto);
+		User userOnline = (User)session.getAttribute("user");
+		cartService.saveUserCartInfo( userOnline.getId(), cartDto  );
 		// 在数据导入到数据库之后，才可以将购物车对象以及用户对象删除
 		session.setAttribute("usercart", null);
 		session.setAttribute("user", null);
+		session.setAttribute("islogin", null);
 		return null;
 	}
-
 
 
 	/**
@@ -140,7 +141,6 @@ public class CartController {
 		return new JSONResult<>(true, "购物车已被清空");
 	}
 
-
 	/**
 	 * 购物车列表信息查询
 	 * @param session
@@ -159,7 +159,6 @@ public class CartController {
 		}
 		return new JSONResult<CartDto>(true, cartDtoFromSession);
 	}
-
 	/**
 	 * 从session中获得当前的购物车对象
 	 * @param session 存放购物车的session
@@ -178,6 +177,4 @@ public class CartController {
 	public void synchronizeWithSession (CartDto cartDto, HttpSession session) {
 		session.setAttribute("usercart", cartDto);
 	}
-
-
 }

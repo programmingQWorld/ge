@@ -50,6 +50,7 @@ public class Cart {
 
     public CartDto toDto() {
         CartDto dto = new CartDto();
+        dto.setCartid(this.getId());
         dto.setUsername(this.user.getNickname());
         List<CartItemDto> list = new ArrayList<>();
         if (getCartItems() != null && getCartItems().size()>0) {
