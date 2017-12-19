@@ -72,4 +72,24 @@ public class CartDaoTest extends BaseTest{
         System.out.println("-->添加完成 : " + cart.getId());
     }
 
+    @Test
+    public void testListPage () {
+        List intel = new ArrayList();
+        for (int i = 0; i < 100; i++) {
+            intel.add(i);
+        }
+        System.out.println(intel);
+        List res = pageIntel(intel, 33,7);
+        System.out.println(res);
+
+    }
+
+    public List pageIntel (List intel, int offset, int limit) {
+        List res = new ArrayList();
+        for (int i=offset; i<offset+limit; i++) {
+            res.add(intel.get(i));
+        }
+        return res;
+    }
+
 }

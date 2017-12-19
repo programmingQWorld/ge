@@ -13,15 +13,13 @@ import com.goodboy.picshop.service.CommodityService;
 import com.mysql.cj.api.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 @RestController
 @RequestMapping("cart")
@@ -41,14 +39,19 @@ public class CartController {
 	 */
 	@RequestMapping(value = "login/{uid}", method = RequestMethod.GET)
 	public JSONResult<Object> login (@PathVariable("uid")int uid, HttpSession session) {
+
+	    // 登录前
+        User olduser = (User)session.getAttribute("user");  // 判断用户是否重新登录时用到
+
 		/*  模拟在线用户 - 晓琳*/
 		User userOnline = new User();
 		userOnline.setId(uid);
 		userOnline.setNickname("晓琳");
 		session.setAttribute("user", userOnline );
 		/* */
+		// 登录后
 		// 设置用户的购物车
-		if ( session.getAttribute("islogin") != null ) { // 用户已经登陆，则不能再从数据库中查找用户的购物车信息
+		if ( olduser != null && olduser.getId()==userOnline.getId() ) { // 用户已经登陆，则不能再从数据库中查找用户的购物车信息
 			return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
 		}
 		CartDto dbCartDto =  cartService.getCartInfoByUserId(userOnline.getId());
@@ -66,7 +69,6 @@ public class CartController {
 		}
 		CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
 		session.setAttribute("usercart", dto);
-		session.setAttribute("islogin", true);  // 标记用户已经登录，避免用户重复登录
 		return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
 	}
 
@@ -115,9 +117,6 @@ public class CartController {
 	 */
 	@RequestMapping(value = "reduceitem/{cno}", method = RequestMethod.GET)
 	public JSONResult<Object> reduceItem (@PathVariable("cno") int commID, HttpSession session) {
-
-		System.out.println("进入移除商品的方法");
-
 		CartDto cartDto = (CartDto)session.getAttribute("usercart");
 		Iterator<CartItemDto> it =  cartDto.getItems().iterator();
 		while ( it.hasNext() ) {
@@ -147,17 +146,26 @@ public class CartController {
 	 * @return
 	 */
 	@RequestMapping("list")
-	public JSONResult<CartDto> cartInfo(HttpSession session) {
-
-		CartDto cartDtoFromSession = (CartDto)session.getAttribute("usercart");
+	public JSONResult<CartDto> cartInfo(@RequestParam( value = "offset", defaultValue = "0") int offset,
+			@RequestParam(value = "limit", defaultValue = "4") int limit,
+			HttpSession session) {
+    		CartDto cartDtoFromSession = (CartDto)session.getAttribute("usercart");
 		User user = (User)session.getAttribute("user");
-
 		if ( cartDtoFromSession == null ) {
 			cartDtoFromSession = new CartDto();
 			cartDtoFromSession.setItems( new ArrayList<CartItemDto>() );
 			session.setAttribute("usercart", cartDtoFromSession);
 		}
-		return new JSONResult<CartDto>(true, cartDtoFromSession);
+		CartDto beReturn = cartDtoFromSession;
+		List<CartItemDto> cidto = new ArrayList<>();
+		if ( beReturn.getItems().size()>=limit ) {  // dto.getItems()的数据需要分页
+            for (int i = 0; i < offset+limit; i++ ) {
+                cidto.add( cartDtoFromSession.getItems().get(i) );
+            }
+            beReturn.setItems( cidto );
+        }
+		// dto.getItems()的数据不需要分页
+		return new JSONResult<CartDto>(true, beReturn);
 	}
 	/**
 	 * 从session中获得当前的购物车对象

@@ -1,7 +1,7 @@
-# ge
+# ge(10.10.112.207)
 A website for showing and selling painting, deploy by SSM framework.
 枨锜 -- working
-##购物车
+## 购物车
 ### 用户大锜创建了购物车
 ```sql
 insert into shop_cart (uid) values (3);
