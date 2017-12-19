@@ -27,7 +27,7 @@ public class OrderDto extends BaseDto {
 
 	@Override
 	public String toString() {
-		return "OrderDto{" +
+		return super.toString() + "OrderDto{" +
 				"orderList=" + orderList +
 				", expList=" + expList +
 				'}';

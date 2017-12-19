@@ -15,6 +15,19 @@ public class BaseDto {
 		this.info = info;
 	}
 
+	public BaseDto(StatusEnum statusEnum) {
+		this.status = statusEnum.getStatus();
+		this.info = statusEnum.getInfo();
+	}
+
+	@Override
+	public String toString() {
+		return "BaseDto{" +
+				"status=" + status +
+				", info='" + info + '\'' +
+				'}';
+	}
+
 	public int getStatus() {
 		return status;
 	}

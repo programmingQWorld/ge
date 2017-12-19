@@ -36,14 +36,14 @@ public class CartController {
 
 	/**
 	 * 模拟一个在线用户
-	 * @param user
+	 * @param uid  用户id
 	 * @return
 	 */
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public JSONResult<Object> login (User user, HttpSession session) {
+	@RequestMapping(value = "login/{uid}", method = RequestMethod.GET)
+	public JSONResult<Object> login (@PathVariable("uid")int uid, HttpSession session) {
 		/*  模拟在线用户 - 晓琳*/
 		User userOnline = new User();
-		userOnline.setId(6);
+		userOnline.setId(uid);
 		userOnline.setNickname("晓琳");
 		session.setAttribute("user", userOnline );
 		/* */
