@@ -21,7 +21,7 @@ public interface OrderDao {
      * @param orderid
      * @return
      */
-    int deleteByOrderId(int orderid);
+    int deleteByOrderId(@Param("orderid") int orderid, @Param("userid") int userid);
 
     /**
      * 通过订单id查询单个订单详情

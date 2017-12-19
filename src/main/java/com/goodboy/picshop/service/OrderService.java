@@ -20,10 +20,19 @@ public interface OrderService {
 
 	/**
 	 * 根据id删除订单信息
-	 * @param orderid  订单id号
-	 * @return  包含删除成功的信息
+	 * @param orderid 订单id
+	 * @param userid 用户id
+	 * @return
 	 */
-	public OrderDto deleteByOrderId(int orderid);
+	public OrderDto deleteByOrderId(int orderid, int userid);
+
+	/**
+	 * 创建订单
+	 * @param commids 订单关联的商品id
+	 * @param rid 订单关联的收获人id
+	 * @param userid 创建订单的用户id
+	 * @return
+	 */
 	public OrderDto insertOrders(List<Integer>commids, int rid, int userid);
 
 }

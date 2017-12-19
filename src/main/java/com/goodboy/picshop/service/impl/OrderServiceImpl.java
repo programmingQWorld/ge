@@ -40,8 +40,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderDto deleteByOrderId(int orderid) {
-		int result = orderDao.deleteByOrderId(orderid);
+	public OrderDto deleteByOrderId(int orderid, int userid) {
+		int result = orderDao.deleteByOrderId(orderid, userid);
 		if (result == 0) { // 删除失败
 			return new OrderDto(StatusEnum.DEL_ORDER_FAILD);
 		}
@@ -50,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
+	// 创建订单信息
 	@Override
 	public OrderDto insertOrders(List<Integer> commids, int rid, int userid) {
 
@@ -87,10 +88,9 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return orderDto;
 	}
-
+	// 生成订单编号
 	public static String generateOrderNo(int userid) {
 		long timestamp = new Date().getTime();
 		return "" + timestamp + "" + userid + "";
 	}
-
 }

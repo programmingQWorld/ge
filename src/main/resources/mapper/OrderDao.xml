@@ -29,7 +29,7 @@
             o.id, o.is_pay, o.order_no, o.create_time, o.status,
             comm.id commid,comm.name, comm.price, comm.picture, comm.shipping_cost, seller.id sellerid, seller.nickname sellername,
             receiver.receiver, receiver.address, receiver.phone,
-            buyer.id buyerid, buyer.nickname buyername
+            buyer.id buyerid, buyer.nickname buyername, buyer.phone buyerphone
         from shop_order o
             left JOIN shop_commodity comm on comm.id = o.cid
             left JOIN  shop_user seller on seller.id = comm.uid
@@ -47,6 +47,7 @@
         <association property="user" javaType="User">
             <id property="id" column="buyerid" />
             <result property="nickname" column="buyername" />
+            <result property="phone" column="buyerphone" />
         </association>
         <association property="commodity" javaType="Commodity">
             <id column="buyerid" property="id" />
@@ -66,6 +67,6 @@
     </select>
 
     <delete id = "deleteByOrderId">
-        delete from shop_order where id = #{orderid}
+        delete from shop_order where id = #{orderid} and uid = #{userid}
     </delete>
 </mapper>

@@ -67,7 +67,7 @@ public class OrderDaoTest extends BaseTest {
     // 根据订单id删除订单信息
     @Test
     public void testDeleteOrder () {
-        int result = orderDao.deleteByOrderId(3);
+        int result = orderDao.deleteByOrderId(3, 8);
         if (result == 1) {
             System.out.println("删除订单成功");
         }

@@ -1,7 +1,5 @@
 package com.goodboy.picshop.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationConfig;
 import com.goodboy.picshop.BaseTest;
 import com.goodboy.picshop.dto.OrderDto;
 import com.goodboy.picshop.service.OrderService;
@@ -22,19 +20,18 @@ public class OrderServiceImplTest extends BaseTest {
 	// 根据id获得订单信息，并获得时间戳。
 	@Test
 	public void testGetAll () {
-		OrderDto dto = orderService.queryBuyerOrders(1, 1, 2);
+		OrderDto dto = orderService.queryBuyerOrders(1, 0, 2);
 		System.out.println(dto);
 		/*  == 测试工作完成 */
 		Date timestamp = dto.getOrderList().get(0).getCreateTime();
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
-		String result = sf.format(timestamp);
-		System.out.println(result);
+		System.out.println(sf.format(timestamp));
 	}
 
 	// 根据id删除订单信息
 	@Test
 	public void testDelOrderById() {
-		orderService.deleteByOrderId(2);
+		orderService.deleteByOrderId(8,3);
 	}
 
 	// 新增订单信息
@@ -43,7 +40,7 @@ public class OrderServiceImplTest extends BaseTest {
 		List<Integer>list = new ArrayList<>();
 		list.add(4);
 		list.add(2);
-		OrderDto dto = orderService.insertOrders(list, 1, 3);
+		OrderDto dto = orderService.insertOrders(list, 2, 3);
 		System.out.println(dto);
 	}
 }
