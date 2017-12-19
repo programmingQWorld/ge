@@ -11,7 +11,7 @@ public enum StatusEnum {
     NOT_ALLOW_FILE_TYPE(1010, "不被允许上传的文件类型"),
     REPEAT_USER(2001,"用户名已被注册"),
     USER_ERROR(2002,"用户名不存在或密码错误"),
-    UNKNOWN_ERROR(9999, "未知错误")
+    UNKNOWN_ERROR(9999, "未知错误"),
     NO_COMMODITY_FOUND(1404, "没有找到商品"),
     NO_TAG_FOUND(5404, "没有找到标签");
 
