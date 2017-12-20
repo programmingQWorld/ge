@@ -1,85 +1,156 @@
-# ge(10.10.112.207)
+# ge
 A website for showing and selling painting, deploy by SSM framework.
-枨锜 -- working
-## 购物车
-### 用户大锜创建了购物车
-```sql
-insert into shop_cart (uid) values (3);
-```
-### 大锜 添加 《铅笔画》《好人画》《惠普卡通画》 到他的购物车中
-```sql
-insert into shop_cart_items (cid, cart_id)  
-values 
-(4, 6),
-(3, 6),
-(7, 6);
-```
+
+********
+API 文档
+====
+目录
+----
+* [获取商品接口](#获取商品接口)
+* [根据标签id获取商品接口](#根据标签id获取商品接口)
+* [根据商品id获取单个商品接口](#根据商品id获取单个商品接口)
+* [获取标签接口](#获取标签接口)
+* [上传商品图片接口](#上传商品图片接口)
 
 
-### 用户 java 创建了购物车
-```sql
-insert into shop_cart (uid) values (1);
-```
-### java 添加 《宝石菇》《手绘藤花画》《惠普卡通画》 到他的购物车中
-```sql
-insert into shop_cart_items (cid, cart_id) 
-values 
-(10, 7),
-(5, 7),
-(7, 7);
-```
+获取商品接口
+----
+查询存在的商品，按上架时间倒序排序
 
+#### HTTP请求方式
+GET
 
-### 用户大锜查看了他的购物车
-商品名称 -- 价格 -- 图片 -- 用户的姓名
-```sql
-select  comm.id, comm.name, comm.price, comm.picture, user.nickname, cart.uid, user.id
-FROM shop_cart cart
-left join shop_cart_items items on cart.id = items.cart_id 
-left join shop_commodity comm on items.cid = comm.id
-left join shop_user user on user.id = cart.uid
-where cart.uid = 3;
-```
-### 用户java也按照上面的方法查看了他的购物车
+#### 请求URL
+http://10.10.112.170:8080/commodity/list
 
-## 购物车内的商品操作
-### 用户大锜不打算购买《惠普卡通画》了 
-```sql
-#delete from shop_cart_items where pid= 3 and cart_id = 5;
-# 为实现可批量操作
-#delete from shop_cart_items where id in (<foreach item="id" collection="list" separator=",">#{id}</foreach>) and cart_id = #{map.cartD}
-delete from shop_cart_items where id = 6;
-```
-### 大锜查看购物车是否已经删除掉不要的商品《惠普卡通画》
-删除前
+#### 请求参数
+|   参数名 |   必选 |   类型 |   说明 |
+| :------  | :----: | :----: | :----: |
+| offset   |   否   |   int  | 从哪条记录开始查询，默认为0 | 
+| limit    |   否   |   int  | 查询多少条记录，默认为4     |
 
-| id   | name            | price | picture | nickname | uid | id 
-|----|---------------|------|---------|----------|-----|------
-|    4 | 铅笔画          |    16 | ui.jpg  | 大锜     |   3 |    3 
-|    3 | 好人画          |    16 | ui.jpg  | 大锜     |   3 |    3 
-|    7 | 惠普卡通画      |    16 | ui.jpg  | 大锜     |   3 |    3 
-```sql
-select  comm.id, comm.name, comm.price, comm.picture, user.nickname, cart.uid, user.id
-FROM shop_cart cart
-left join shop_cart_items items on cart.id = items.cart_id 
-left join shop_commodity comm on items.cid = comm.id
-left join shop_user user on user.id = cart.uid
-where cart.uid = 3;
-```
-这是删除后的结果：（3条记录 变为 2条记录）
+#### 返回数据
+|   参数名 |   类型 |   说明 |
+| :------  | :----: | :----: |
+| success  | boolean| 请求是否成功标识 | 
+| errorMsg | string | 默认为空，success不为true时返回错误信息 |
+| data     | json   | 结果数据，成功时返回，失败时返回空      |
+| __status | int    | 状态码，具体解释看info参数 |
+| __info   | string | 具体的状态信息 |
+| __commodityList| json | 查询出来的商品json数据集合 |
+| __commodity| json | 单个商品json数据，在此请求默认为空 |
 
-id        | name         | price   |picture     |nickname | uid   |id       
---------|------------|--------|-----------|-----------|-----|--------
-    3      | 好人画       |    16   | ui.jpg       | 大锜         |   3    |    3     
-    4      | 铅笔画       |    16   | ui.jpg       | 大锜         |   3    |    3     
+----
 
-### 关于删除购物项商品信息的设想
-每一次的删除信息其实只需要2个购物项的属性信息：
-1. 商品的 id | name
-2. 商品所在的购物车号
-所以，每次只需要传入map对象。map对象中包含商品的id|name 和商品所在的购物车号应该就可以实现。
+根据标签id获取商品接口
+----
+查询某标签下的商品，按上架时间倒序排序
 
-### 由于用户java实在是太喜欢《宝石菇》了，想买下来，于是他决定生成订单 -- <可批量操作>
-insert into shop_order ()
-values
-(),
+#### HTTP请求方式
+GET
+
+#### 请求URL
+http://10.10.112.170:8080/tag/{tagId}/commodity
+
+#### 请求参数
+|   参数名 |   必选 |   类型 |   说明 |
+| :------  | :----: | :----: | :----: |
+| {tagId}  |   是   |   int  | 标签id | 
+| offset   |   否   |   int  | 从哪条记录开始查询，默认为0 | 
+| limit    |   否   |   int  | 查询多少条记录，默认为4     |
+
+#### 返回数据
+|   参数名 |   类型 |   说明 |
+| :------  | :----: | :----: |
+| success  | boolean| 请求是否成功标识 | 
+| errorMsg | string | 默认为空，success不为true时返回错误信息 |
+| data     | json   | 结果数据，成功时返回，失败时返回空      |
+| __status | int    | 状态码，具体解释看info参数 |
+| __info   | string | 具体的状态信息 |
+| __commodityList| json | 查询出来的商品json数据集合 |
+| __commodity| json | 单个商品json数据，在此请求默认为空 |
+
+----
+
+根据商品id获取单个商品接口
+----
+查询单个商品
+
+#### HTTP请求方式
+GET
+
+#### 请求URL
+http://10.10.112.170:8080/commodity/{commodityId}/detail
+
+#### 请求参数
+|   参数名 |   必选 |   类型 |   说明 |
+| :------  | :----: | :----: | :----: |
+| {commodityId}|   是   |   int  | 商品id | 
+
+#### 返回数据
+|   参数名 |   类型 |   说明 |
+| :------  | :----: | :----: |
+| success  | boolean| 请求是否成功标识 | 
+| errorMsg | string | 默认为空，success不为true时返回错误信息 |
+| data     | json   | 结果数据，成功时返回，失败时返回空      |
+| __status | int    | 状态码，具体解释看info参数 |
+| __info   | string | 具体的状态信息 |
+| __commodityList| json | 查询出来的商品json数据集合，在此请求默认为空 |
+| __commodity| json | 单个商品json数据 |
+
+----
+
+获取标签接口
+----
+查询已存在的标签
+
+#### HTTP请求方式
+GET
+
+#### 请求URL
+http://10.10.112.170:8080/tag/list
+
+#### 请求参数
+|   参数名 |   必选 |   类型 |   说明 |
+| :------  | :----: | :----: | :----: |
+| offset   |   否   |   int  | 从哪条记录开始查询，默认为0 | 
+| limit    |   否   |   int  | 查询多少条记录，默认为4     |
+
+#### 返回数据
+|   参数名 |   类型 |   说明 |
+| :------  | :----: | :----: |
+| success  | boolean| 请求是否成功标识 | 
+| errorMsg | string | 默认为空，success不为true时返回错误信息 |
+| data     | json   | 结果数据，成功时返回，失败时返回空      |
+| __status | int    | 状态码，具体解释看info参数 |
+| __info   | string | 具体的状态信息 |
+| __tagList| json   | 查询出来的标签json数据集合 |
+
+----
+
+上传商品图片接口
+----
+上传商品图片
+
+#### HTTP请求方式
+POST
+
+#### 请求URL
+http://10.10.112.170:8080/commodity/upload
+
+#### 请求参数
+|   参数名 |   必选 |   类型 |   说明 |
+| :------  | :----: | :----: | :----: |
+| file     |   是   |   MultipartFile  | 上传的图片文件 |
+
+#### 返回数据
+|   参数名 |   类型 |   说明 |
+| :------  | :----: | :----: |
+| success  | boolean| 请求是否成功标识 | 
+| errorMsg | string | 默认为空，success不为true时返回错误信息 |
+| data     | json   | 结果数据，成功时返回，失败时返回空      |
+| __status | int    | 状态码，具体解释看info参数 |
+| __info   | string | 具体的状态信息 |
+| __filename| string| 上传后的文件路径 |
+
+----

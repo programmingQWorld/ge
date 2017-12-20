@@ -7,6 +7,9 @@ import com.goodboy.picshop.dto.UserDto;
 import com.goodboy.picshop.entity.Receiving;
 import com.goodboy.picshop.entity.User;
 import com.goodboy.picshop.service.ReceivingService;
+
+import com.goodboy.picshop.service.UserService;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,12 +19,13 @@ public class ReceivingServiceImplTest extends BaseTest{
     @Autowired
     private ReceivingService receivingService;
 
+    @Autowired
+    private UserService userService;
 
     @Test
     public void testInsertReceiving() throws Exception{
-        //UserDto userDto = userService.queryUserById(1);
-        //User user=userDto.getUser();
-        User user = null;
+        UserDto userDto = userService.queryUserById(1);
+        User user=userDto.getUser();
         Receiving receiving=new Receiving("jack3", "12345678910", "123456", "广东省珠海市金湾区广东科学技术职业学院", user);
         ReceivingDto receivingDto=receivingService.insertReceiving(receiving);
         System.out.println(receivingDto);
@@ -38,7 +42,7 @@ public class ReceivingServiceImplTest extends BaseTest{
     }
     @Test
     public void testQueryDefaultReceiving() throws Exception{
-        ReceivingDto receivingDto=receivingService.queryDefaultReceiving(4);
+        ReceivingDto receivingDto=receivingService.queryDefaultReceiving(1);
         System.out.println(receivingDto);
     }
 }

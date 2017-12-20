@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>draw_shopping</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/js/jquery/jquery-3.2.1.min.js"></script>
+	<script src="/js/bootstrap/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/css/layui/layui.css">
+	<link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/login.css" />
+	<link rel="stylesheet" href="/css/index.css">
+	<link rel="stylesheet" href="/css/iconfont.css">
+	<script type="text/javascript" src="/js/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/vue/vue.js"></script>
+	<script type="text/javascript" src="/js/login.js"></script>
+	<script type="text/javascript" src="/js/function.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	<style>
+		#navbar-collapse ul{
+			margin-top: 0;
+		}
+		#myCarousel{
+			margin: 0 0 0 0;
+		}
+		.carousel-inner img{
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<div data-spy="scroll" data-target="#myScrollspy">
+<!-- 导航开始 -->
+<div class="container">
+	<div class="nav_person container navbar-default pageheader" role="navigation">
+		<div class="container">
+			<div class="nav-logo">
+				<a class="navbar-brand" href="javaScript:;"><img src="images/logo.png"></a>
+			</div>
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse navbar-right" id="navbar">
+				<ul class="nav navbar-nav">
+					<div class="move_line1"></div>
+					<li id="workspage"><a href="#workPage"><p>zuò</p><span>作品</span></a></li>
+					<div class="move_line2"></div>
+					<li id="AboutUspage"><a href="#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
+					<li class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 导航结束 -->
+<!--登录注册弹出框开始-->
+<div class="modal fade comwidth" id="Show_LoginResgister" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="com login">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<div class="Button">
+				<button class="Btn btnLog onBtn">登录</button>
+				<button class="Btn btnReg">注册</button>
+			</div>
+			<form class="logForm" onsubmit="return login_submit_sure();">
+				<div class="formgroup">
+					<span class="bt">邮箱</span>
+					<input type="text" name="name1" placeholder="请输入邮箱" class="input">
+				</div>
+				<div class="formgroup">
+					<span class="bt">密码</span>
+					<input type="password" name="pwd1" class="input">
+				</div>
+				<div class="">
+					<span class="bt">验证码</span>
+					<input type="text" name="yzm" class="input yzm">
+					<span class="YZM text-center">asdf</span>
+					<a href="Forget.html"><span class="ForgetPas">忘记密码</span></a>
+				</div>
+				<div class="btnSubmit1">
+					<input type="submit" value="登录" class="btnSub btnSub1">
+				</div>
+
+			</form>
+		</div>
+		<div class="com register">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<div class="Button">
+				<button class="Btn btnLog onBtn">登录</button>
+				<button class="Btn btnReg">注册</button>
+			</div>
+			<form method="post" name="regForm" class="regForm" onsubmit="return register_submit_sure()">
+				<div class="">
+					<span class="bt">邮箱</span>
+					<input type="text" name="email" class="input">
+				</div>
+				<div class="">
+					<span class="bt">密码</span>
+					<input type="password" name="pwd2" class="input">
+				</div>
+				<div class="">
+					<span class="bt">昵称</span>
+					<input type="text" name="name2" placeholder="请输入昵称" class="input">
+				</div>
+				<div class="">
+					<span class="bt">电话</span>
+					<input type="text" name="iphone" class="input">
+				</div>
+				<div class="btnSubmit2">
+					<input type="submit" value="注册" class="btnSub btnSub2">
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+<!--登录注册弹出框结束-->
+<div class="content">
+<!-- 轮播图开始 -->
+<div class="slide_img">
+	<!--data-ride="carousel" 自动轮播-->
+	<div id="myCarousel" class="carousel slide">
+		<!-- <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol> -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<a href="Detail.html"><img class="images_carousel" src="images/HomePage/Carousel1.png" alt="1"/></a>
+				<div class="carousel-caption"></div>
+			</div>
+			<div class="item">
+				<a href="Detail.html"><img class="images_carousel" src="images/HomePage/Carousel2.png" alt="2"/></a>
+				<div class="carousel-caption"></div>
+			</div>
+			<div class="item">
+				<a href="Detail.html"><img class="images_carousel" src="images/HomePage/Carousel3.png" alt="3"/></a>
+				<div class="carousel-caption"></div>
+			</div>
+		</div>
+		<a href="#myCarousel" data-slide="prev" class="carousel-control left"><!--&lsaquo;-->
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		</a>
+		<a href="#myCarousel" data-slide="next" class="carousel-control right"><!--&rsaquo;-->
+			<span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+		<div class="mouse">
+			<div class="long_line"></div>
+			<div class="short_line"></div>
+		</div>
+	</div>
+	<!--自动轮播结束-->
+
+</div>
+<!-- 轮播图结束 -->
+<!-- 悬浮按钮开始 -->
+<div class="container">
+	<div class="fly_btn">
+		<div class="fly_search_btn">
+				<span>
+					<i class="iconfont">&#xe960;</i>
+				</span>
+			<div class="zuohuachu">
+				<input type="text">
+			</div>
+		</div>
+		<a href="Shopping.html">
+			<div class="fly_buycar_btn">
+				<i class="iconfont">&#xe603;</i>
+			</div>
+		</a>
+	</div>
+</div>
+<!-- 悬浮按钮结束 -->
+
+<!-- 商品标题开始 -->
+<div class="container">
+	<div class="work_title">
+		<p>Works</p>
+		<span id="workPage" style="float:right;">作品</span>
+	</div>
+</div>
+<!-- 商品标题结束 -->
+
+<!-- 商品列表开始 -->
+<div class="container">
+	<div class="work_list">
+		<div class="line_box"></div>
+		<div class="box_works">
+			<div class="box_top ">
+				<div class="box_one hkzh">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0).id)">
+						<img v-bind:src="indexOfTagCommodities(0).picture" width="500" height="281" alt="作品1">
+						<div class="mengban" style="height:281px;top:-140px;"></div>
+						<div class="move_border_line">
+							<div class="top_b_line" style="top:-120px"></div>
+							<div class="right_b_line" style="top:-134px"></div>
+							<div class="bottom_b_line" style="top:120px"></div>
+							<div class="left_b_line" style="top:-134px"></div>
+						</div>
+						<div class="drow_n"><span class="span0">{{ indexOfTagCommodities(0).name }}</span></div>
+					</a>
+				</div>
+				<div class="box_tow hkzh">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1).id)">
+						<img v-bind:src="indexOfTagCommodities(1).picture" width="216" height="281" style="padding-top: 22%" alt="作品2">
+						<div class="mengban" style="top:47.516px"></div>
+						<div class="move_border_line" style="top:72px">
+							<div class="top_b_line1"></div>
+							<div class="right_b_line1"></div>
+							<div class="bottom_b_line1"></div>
+							<div class="left_b_line1"></div>
+						</div>
+						<div class="drow_n" style="top:47.516px"><span class="span1" style="top:47.516px">{{ indexOfTagCommodities(1).name }}</span></div>
+					</a>
+				</div>
+			</div>
+			<div class="box_bottom">
+				<div class="box_three hkzh">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2).id)">
+						<img v-bind:src="indexOfTagCommodities(2).picture" width="216" height="234" style="margin-bottom: 45%;" alt="作品3">
+						<div class="mengban" style="left:-20px"></div>
+						<div class="move_border_line" style="left:-20px">
+							<div class="top_b_line2"></div>
+							<div class="right_b_line2"></div>
+							<div class="bottom_b_line2"></div>
+							<div class="left_b_line2"></div>
+						</div>
+						<div class="drow_n"><span class="span2">{{ indexOfTagCommodities(2).name }}</span></div>
+					</a>
+				</div>
+				<div class="box_four hkzh">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3).id)">
+						<img v-bind:src="indexOfTagCommodities(3).picture" width="250" height="333" alt="作品4">
+						<div class="mengban" style="left:-20px"></div>
+						<div class="move_border_line" style="left:-20px">
+							<div class="top_b_line3"></div>
+							<div class="right_b_line3"></div>
+							<div class="bottom_b_line3"></div>
+							<div class="left_b_line3"></div>
+						</div>
+						<div class="drow_n"><span class="span3">{{ indexOfTagCommodities(3).name }}</span></div>
+					</a>
+				</div>
+				<div class="box_five hkzh">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(4).id)">
+						<img v-bind:src="indexOfTagCommodities(4).picture" width="250" height="333" alt="作品5">
+						<div class="mengban" style="left:-20px"></div>
+						<div class="move_border_line" style="left:-20px">
+							<div class="top_b_line4"></div>
+							<div class="right_b_line4"></div>
+							<div class="bottom_b_line4"></div>
+							<div class="left_b_line4"></div>
+						</div>
+						<div class="drow_n"><span class="span4">{{ indexOfTagCommodities(4).name }}</span></div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="work_list_referral">
+			<p>書法</p>
+			<span>無言的詩，無行的舞，無圖的畫，無聲的樂。</span>
+		</div>
+		<a href="commodity.html"><button class="btn"><span>更多</span></button></a>
+	</div>
+</div>
+<!-- 商品列表结束 -->
+
+<!-- 新商品展示开始 -->
+<div class="container">
+	<div class="new_works_list">
+		<div class="new_line_box"></div>
+		<div class="new_works_title">
+			<p>New</p>
+			<span>新品</span>
+		</div>
+		<div class="new_works_box">
+			<div class="new_works_top">
+				<div class="new_works_one tanchuname_baba">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0).id)"><img v-bind:src="indexOfCommodities(0).picture"  width="300" height="225" alt="新品1"></a>
+					<div class="tanchuname">
+						<span class="drow_name">{{ indexOfCommodities(0).name }}</span>
+					</div>
+				</div>
+				<div class="new_works_tow tanchuname_baba">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1).id)"><img v-bind:src="indexOfCommodities(1).picture" width="225" height="300" alt="新品2"></a>
+					<div class="tanchuname">
+						<span class="drow_name">{{ indexOfCommodities(1).name }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="new_works_bottom">
+				<div class="new_works_three tanchuname_baba">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2).id)"><img v-bind:src="indexOfCommodities(2).picture" width="225" height="300" alt="新品3"></a>
+					<div class="tanchuname">
+						<span class="drow_name">{{ indexOfCommodities(2).name }}</span>
+					</div>
+				</div>
+				<div class="new_works_four tanchuname_baba">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3).id)"><img v-bind:src="indexOfCommodities(3).picture" width="300" height="225" alt="新品3"></a>
+					<div class="tanchuname">
+						<span class="drow_name">{{ indexOfCommodities(3).name }}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="commodity.html"><button class="btn_new"><span>更多</span></button></a>
+	</div>
+</div>
+<!-- 新商品展示结束 -->
+</div>
+
+<!-- banner开始 -->
+<div class="banner"><a href="javaScript:;"><img src="images/HomePage/contact.png"></a></div>
+<!-- banner结束 -->
+
+<!-- 底部开始 -->
+<div class="container">
+	<div class="footer">
+		<div class="box_left_one">
+			<span id="AboutUs" class="contact">Contact</span><br/>
+			<span class="query">關於產品的疑問等從这里開始</span>
+		</div>
+		<div class="contact_way">
+			<span>聯繋電话:0755-32864957</span><br>
+			<span>電子郵件:haoren@163.com</span><br>
+			<span>工作時間:週一至週五</span>
+		</div>
+		<div class="tk_bb">
+			<div class="span">
+				<a href="refund.html"><span>關於退款</span></a>
+				<span class="line">|</span>
+				<a href="Introduction.html"><span>負責聲明</span></a>
+			</div>
+			<div class="three_icon">
+				<div class="icon_one"><a href="javaScript:;"><img src="images/HomePage/QQ.png"></a></div>
+				<div class="icon_tow"><a href="javaScript:;"><img src="images/HomePage/WeChat.png"></a></div>
+				<div class="icon_three"><a href="javaScript:;"><img src="images/HomePage/blog.png"></a></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 底部结束 -->
+</body>
+</html>
+<script>
+	/*轮播图图片效果开始*/
+    $(window).on('load', function () {
+        $(function () {
+            //自动轮播
+            $('#myCarousel').carousel({
+                interval : 2500,
+                pause : 'hover',
+                warp : true,
+            });
+        });
+    });
+	/*轮播图图片效果结束*/
+    $(function(){
+        $('.mouse').css('left',$('.carousel-inner').width()/2 - $('.mouse').width()/2);
+        $('.fly_btn').css('right',($(window).width()-$('.container').width())/2);
+        $('.tanchuname_baba').mouseenter(function(){
+            $(this).children('.tanchuname').stop().animate({
+                marginTop:-50
+            },500);
+            $(this).animate({
+                boxShadow:'5px 5px 10px rgba(0, 0, 0, .6)'
+            },500);
+        });
+        $('.tanchuname_baba').mouseleave(function(){
+            $(this).children('.tanchuname').stop().animate({
+                marginTop:50
+            },500);
+            $(this).animate({
+
+            },500);
+        });
+        //悬浮按钮左弹窗
+        $('.fly_search_btn').mouseenter(function(){
+            $(this).children('.zuohuachu').stop().animate({
+                width:200
+            },500);
+            $(this).children().children('input').stop().animate({
+                paddingLeft:18
+            },500);
+        });
+        $('.fly_search_btn').mouseleave(function(){
+            $(this).children('.zuohuachu').stop().animate({
+                width:0
+            },500);
+            $(this).children().children('input').stop().animate({
+                paddingLeft:0
+            },500);
+            $(this).children().children('input').val('');
+        });
+
+		/*主页菜单栏下划线开始*/
+        $('#AboutUspage').click(function () {
+            $('.move_line2').css("backgroundColor","red");
+            $('.move_line1').css("backgroundColor","white");
+        });
+        $('#workspage').click(function () {
+            $('.move_line2').css("backgroundColor","white");
+            $('.move_line1').css("backgroundColor","red");
+        });
+		/*主页菜单栏下划线结束*/
+
+        //sssssssssssssssssssssssssssssss
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children('.mengban').stop().animate({
+                opacity:1
+            });
+            $(this).children().children().children('.left_b_line,.right_b_line').stop().animate({
+                height:270
+            },500);
+            $(this).find('.span0').stop().animate({
+                opacity:1,
+                top:-70
+            },500);
+            $(this).find('.span1').stop().animate({
+                opacity:1,
+                top:60
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.left_b_line,.right_b_line').stop().animate({
+                height:0
+            },500);
+            $(this).children().children('.mengban').stop().animate({
+                opacity:0
+            });
+            $(this).find('.span0').stop().animate({
+                opacity:0,
+                top:-90
+            },500);
+            $(this).find('.span1').stop().animate({
+                opacity:0,
+                top:40
+            },500);
+        });
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.top_b_line,.bottom_b_line').stop().animate({
+                width:440
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.top_b_line,.bottom_b_line').stop().animate({
+                width:0
+            },500);
+        });
+
+
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.left_b_line1,.right_b_line1').stop().animate({
+                height:210
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.left_b_line1,.right_b_line1').stop().animate({
+                height:0
+            },500);
+
+        });
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.top_b_line1,.bottom_b_line1').stop().animate({
+                width:200
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.top_b_line1,.bottom_b_line1').stop().animate({
+                width:0
+            },500);
+        });
+
+
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.left_b_line2,.right_b_line2').stop().animate({
+                height:210
+            },500);
+            $(this).children().children('.mengban').stop().animate({
+                opacity:1
+            });
+            $(this).find('.span2,.span3,.span4').stop().animate({
+                opacity:1,
+                top:40
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.left_b_line2,.right_b_line2').stop().animate({
+                height:0
+            },500);
+            $(this).children().children('.mengban').stop().animate({
+                opacity:0
+            });
+            $(this).find('.span2,.span3,.span4').stop().animate({
+                opacity:0,
+                top:20
+            },500);
+
+        });
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.top_b_line2,.bottom_b_line2').stop().animate({
+                width:200
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.top_b_line2,.bottom_b_line2').stop().animate({
+                width:0
+            },500);
+        });
+
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.left_b_line3,.right_b_line3').stop().animate({
+                height:300
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.left_b_line3,.right_b_line3').stop().animate({
+                height:0
+            },500);
+
+        });
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.top_b_line3,.bottom_b_line3').stop().animate({
+                width:220
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.top_b_line3,.bottom_b_line3').stop().animate({
+                width:0
+            },500);
+        });
+
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.left_b_line4,.right_b_line4').stop().animate({
+                height:300
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.left_b_line4,.right_b_line4').stop().animate({
+                height:0
+            },500);
+
+        });
+        $('.hkzh').mouseenter(function(){
+            $(this).children().children().children('.top_b_line4,.bottom_b_line4').stop().animate({
+                width:220
+            },500);
+        });
+        $('.hkzh').mouseleave(function(){
+            $(this).children().children().children('.top_b_line4,.bottom_b_line4').stop().animate({
+                width:0
+            },500);
+        });
+        //sssssssssssssssssssssssssssssssssssssssssss
+    });
+    $(window).resize(function () {
+        $('.mouse').css('left',$('.carousel-inner').width()/2 - $('.mouse').width()/2);
+        $('.fly_btn').css('right',($(window).width()-$('.container').width())/2);
+    });
+</script>

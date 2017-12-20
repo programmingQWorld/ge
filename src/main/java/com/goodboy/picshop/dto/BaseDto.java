@@ -1,7 +1,7 @@
 package com.goodboy.picshop.dto;
 
 /**
- * dto父类
+ * dto父类  封装操作基类
  */
 public class BaseDto {
 	private int status;     // 标识
@@ -43,4 +43,5 @@ public class BaseDto {
 	public void setInfo(String info) {
 		this.info = info;
 	}
+
 }
