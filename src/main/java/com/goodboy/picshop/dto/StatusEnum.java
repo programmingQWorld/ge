@@ -12,7 +12,8 @@ public enum StatusEnum {
     PAY_SUCCESS(3004, "支付成功"),
     NONE_ORDERS(3005, "没有任何关于你的订单" ),
     ORDER_UNKNOW(3006, "未知的订单"),
-    NOT_PAY_YET(3007, "用户未付款");
+    NOT_PAY_YET(3007, "用户未付款"),
+    NONE_CART_ITEMS(3008, "购物车是空的");
 
     private int status;     //状态标识符
     private String info;    //状态标识信息

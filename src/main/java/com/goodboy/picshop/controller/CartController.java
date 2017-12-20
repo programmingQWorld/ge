@@ -42,7 +42,6 @@ public class CartController {
 
 	    // 登录前
         User olduser = (User)session.getAttribute("user");  // 判断用户是否重新登录时用到
-
 		/*  模拟在线用户 - 晓琳*/
 		User userOnline = new User();
 		userOnline.setId(uid);
@@ -56,7 +55,6 @@ public class CartController {
 		}
 		CartDto dbCartDto =  cartService.getCartInfoByUserId(userOnline.getId());
 		CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
-
 		if (sessionCartDto != null && dbCartDto != null ) {
 			if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
 				// 合并
@@ -158,14 +156,22 @@ public class CartController {
 		}
 		CartDto beReturn = cartDtoFromSession;
 		List<CartItemDto> cidto = new ArrayList<>();
+
+		if ( beReturn.getItems().isEmpty() ) {  // 设置购物车的状态信息
+			beReturn.setStatus(3008);
+			 beReturn.setInfo("购物车是空的");
+		} else {
+			beReturn.setStatus(1);
+			beReturn.setInfo("成功");
+		}
+
 		if ( beReturn.getItems().size()>=limit ) {  // dto.getItems()的数据需要分页
             for (int i = 0; i < offset+limit; i++ ) {
                 cidto.add( cartDtoFromSession.getItems().get(i) );
             }
             beReturn.setItems( cidto );
         }
-		// dto.getItems()的数据不需要分页
-		return new JSONResult<CartDto>(true, beReturn);
+		return new JSONResult<CartDto>(true, beReturn);  // dto.getItems()的数据不需要分页处理， 直接返回
 	}
 	/**
 	 * 从session中获得当前的购物车对象
