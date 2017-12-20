@@ -39,4 +39,5 @@ public interface ReceivingService {
      * @return 影响行数
      */
     ReceivingDto setIsDefault(int id,int isDefault);
+
 }

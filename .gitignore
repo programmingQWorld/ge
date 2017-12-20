@@ -26,3 +26,9 @@ hs_err_pid*
 
 # target files
 target/
+
+# out files
+out/
+
+# classes files
+classes/

@@ -14,12 +14,92 @@
         SELECT * FROM shop_order WHERE id = #{id}
     </select>
 
-    <select id="queryOrderByUserId" resultType="Order">
-        SELECT * FROM shop_order WHERE uid = #{userId} LIMIT #{offset}, #{limit}
+    <!-- 根据用户id查询买家订单列表 -->
+    <select id="queryBuyerOrderById"  resultMap="ordermap">
+
+        select
+            o.id, o.is_pay, o.order_no, o.create_time, o.status,
+            comm.id commid,comm.name, comm.price, comm.picture, comm.shipping_cost, seller.id sellerid, seller.nickname sellername,
+            receiver.receiver, receiver.address, receiver.phone,
+            buyer.id buyerid, buyer.nickname buyername, buyer.phone buyerphone
+        from shop_order o
+            left JOIN shop_commodity comm on comm.id = o.cid
+            left JOIN  shop_user seller on seller.id = comm.uid
+            left JOIN shop_receiving receiver on receiver.id = o.rid
+            left JOIN shop_user buyer on buyer.id = o.uid
+        where o.uid = #{userId}
+        <if test = "payStatus != null" >
+            and is_pay = #{payStatus}
+        </if>
+        limit #{offset}, #{limit};
+
     </select>
+    <resultMap id="ordermap" type="Order">
+        <id property="id" column="id" />
+        <result property="isPay" column="is_pay" />
+        <result property="orderNo" column="order_no" />
+        <result property="createTime" column="create_time" />
+        <result property="status" column="status" />
+        <association property="user" javaType="User">
+            <id property="id" column="buyerid" />
+            <result property="nickname" column="buyername" />
+            <result property="phone" column="buyerphone" />
+        </association>
+        <association property="commodity" javaType="Commodity">
+            <id column="buyerid" property="id" />
+            <result column="name" property="name" />
+            <result column="price" property="price" />
+            <result column="picture" property="picture" />
+            <result column="shipping_cost" property="shippingCost" />
+            <association property="user" javaType="User">
+                <id column="sellerid" property="id" />
+                <result property="nickname" column="sellername" />
+            </association>
+        </association>
+        <association property="receiving" javaType="Receiving">
+            <id property="id" column="recid" />
+            <result property="receiver" column="receiver" />
+            <result property="address" column="address" />
+            <result property="phone" column="phone" />
+        </association>
+    </resultMap>
 
     <select id="queryOrderByUserIdAndIsPay" resultType="Order">
         SELECT * FROM shop_order WHERE uid = #{userId} AND is_pay = #{isPay} LIMIT #{offset}, #{limit}
     </select>
+
+    <delete id = "deleteByOrderId">
+        delete from shop_order where id = #{orderid} and uid = #{userid} and is_pay=0
+    </delete>
+
+    <!-- 支付 -->
+    <update id = "pay">
+        update shop_order set is_pay=1 where cid=#{commid} and uid = #{userid} and is_pay = 0
+    </update>
+
+    <!-- 查询卖家拥有的订单列表 -->
+    <select id = "querySellerOrderBySellerID" resultMap="ordermap">
+        select
+            o.id, o.create_time, o.status,
+            comm.id commid, comm.name, comm.picture, comm.price,
+            seller.id sellerid, seller.nickname sellername,
+            buyer.id buyerid, buyer.nickname,
+            r.id recid, r.receiver, r.address, r.phone
+        from ((((shop_order o
+            left JOIN shop_commodity comm on o.cid = comm.id)
+            left JOIN shop_user seller on comm.uid = seller.id)
+            left JOIN shop_user buyer on o.uid = buyer.id)
+            left JOIN shop_receiving r on r.id = o.rid)
+        where comm.uid = #{sellerid}
+        <if test = "deliverystatuts != null" >
+            and status = #{deliverystatuts}
+        </if>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!-- 为用户发货 -->
+    <update id = "handlerOrder">
+        update shop_order set status = #{status} where id= #{orderid}
+    </update>
 
 </mapper>
