@@ -129,4 +129,11 @@ public class OrderDaoTest extends BaseTest {
 		System.out.println("结果有" + list.size() + "条记录");
 	}
 
+	// 测试：指定的订单是否已经付款
+	@Test
+	public void testCheckPay () {
+    	Order order= orderDao.queryOrderById(8);
+		System.out.println(order);
+	}
+
 }

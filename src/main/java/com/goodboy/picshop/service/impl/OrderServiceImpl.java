@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderDao orderDao;
 	/**
-	 * 查找买家的所有订单
+	 * 查找买家的订单
 	 * @return 数据传输对象 orderdto
 	 */
 	@Override
@@ -35,15 +35,19 @@ public class OrderServiceImpl implements OrderService {
 			OrderDto orderDto = new OrderDto(StatusEnum.SUCCESS, list);
 			return orderDto;
 		}
-		return null;
+		return  new OrderDto(StatusEnum.NONE_ORDERS);
 	}
 
 	@Override
 	public OrderDto deleteByOrderId(int orderid, int userid) {
-		int result = orderDao.deleteByOrderId(orderid, userid);
-		if (result == 0) { // 删除失败
-			return new OrderDto(StatusEnum.DEL_ORDER_FAILD);
+		Order orderFromdb = orderDao.queryOrderById(orderid);
+		if ( null == orderFromdb ) {
+			return new OrderDto(StatusEnum.ORDER_NOT_EXIST);
 		}
+		if ( orderFromdb.getIsPay() == 1 ) {
+			return new OrderDto(StatusEnum.ORDER_PAID);
+		}
+		int result = orderDao.deleteByOrderId(orderid, userid);
 		// 删除成功
 		OrderDto dto = new OrderDto();
 		return null;
@@ -134,12 +138,15 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public OrderDto handlerSellerOrder(int status, int orderid) {
 		OrderDto dto = null;
-		int result = orderDao.checkPay(orderid);
-		if (result == 0) {  // 该订单未付款
+		Order orderFromdb = orderDao.queryOrderById(orderid);
+		if ( null == orderFromdb ) {
+			return new OrderDto(StatusEnum.ORDER_NOT_EXIST);
+		}
+		if (orderFromdb.getIsPay() == 0) {  // 该订单未付款
 			dto = new OrderDto(StatusEnum.NOT_PAY_YET);
 			return dto;
 		}
-		result = orderDao.handlerOrder(status, orderid);
+		int result = orderDao.handlerOrder(status, orderid);
 		if ( result == 0) {  // 修改失败
 			dto = new OrderDto(StatusEnum.ORDER_UNKNOW);
 			List<Integer> list = new ArrayList<>();

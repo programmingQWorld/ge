@@ -5,7 +5,6 @@ import com.goodboy.picshop.entity.Order;
 import com.goodboy.picshop.entity.User;
 import com.goodboy.picshop.service.OrderService;
 import com.goodboy.picshop.service.ReceivingService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +30,11 @@ public class OrderController {
 	public JSONResult<OrderDto> orderList (@RequestParam(value = "offset", defaultValue = "0") int offset,
 										    @RequestParam(value = "limit", defaultValue = "4") int limit, HttpSession session) {
 		User userOnline = (User)session.getAttribute("user");
+
+		if ( userOnline == null ) {
+			return new JSONResult<>(false, "用户未登录");
+		}
+
 		int buyerid = userOnline.getId();
 		OrderDto dto = null;
 		dto =  orderService.queryBuyerOrders(buyerid, offset, limit);

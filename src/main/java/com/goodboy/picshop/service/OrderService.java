@@ -11,7 +11,7 @@ import java.util.List;
 public interface OrderService {
 
 	/**
-	 * 查找买家的所有订单
+	 * 查找买家的订单
 	 * @param userid  用户（买家）id
 	 * @param offset 偏移量
 	 * @param limit

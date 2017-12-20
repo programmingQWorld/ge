@@ -84,6 +84,5 @@ public interface OrderDao {
 	int handlerOrder (@Param("status") int status,
 	                           @Param("orderid") int orderid );
 
-	int checkPay(int orderid);
 
 }

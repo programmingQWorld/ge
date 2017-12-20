@@ -102,8 +102,4 @@
         update shop_order set status = #{status} where id= #{orderid}
     </update>
 
-    <!-- 监测是否付款 -->
-    <select id = "checkPay" parameterType="int" resultType="int">
-        select is_pay from shop_order where id  = #{orderid};
-    </select>
 </mapper>
