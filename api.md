@@ -14,12 +14,16 @@ GET
 |offset|否|int|偏移量
 |limit|否|int|查询条数
 
+用户已经登录
 ```json
-{"success":true,"data":{"status":0,"info":null,"cartid":2,"username":"张起灵","items":[{"commid":11,"commName":"城市夜景","price":5.0,"sallerName":"大锜","sallerPhone":""},{"commid":13,"commName":"不一样的品味","price":344.0,"sallerName":"大锜","sallerPhone":""},{"commid":14,"commName":"阿樱的亲子盖饭","price":1346.0,"sallerName":"大锜","sallerPhone":""}]},"error":null}
+{"success":true,"data":{"status":1,"info":"成功","cartid":15,"username":"张起灵","items":[{"commid":5,"commName":"手绘藤花画","price":16.0,"sallerName":"惠普","sallerPhone":""}]},"error":null}
 ```
 ```json
-{"success":true,"data":{"status":0,"info":null,"cartid":0,"username":null,"items":[]},"error":null}
+{"success":true,"data":{"status":3008,"info":"购物车是空的","cartid":15,"username":"张起灵","items":[]},"error":null}
 ```
+用户暂未登录
+
+
 
 ### 添加商品到购物车接口
 > 从url中获得商品id，然后将对应添加到购物车中。
@@ -58,5 +62,23 @@ GET
 ```json
 {"success":true,"data":null,"error":"移除商品成功"}
 ```
+
+### 清空购物车商品接口
+> 清空session中的购物车缓存
+
+#### HTTP请求方式
+GET
+#### 请求URL
+[http://10.10.112.207:8080/shop/cart/clear](http://10.10.112.207:8080/shop/cart/clear)
+#### 请求参数
+
+参数名 | 必选 | 类型 | 说明
+|------|------|------|----|
+|无
+
+```json
+{"success":true,"data":null,"error":"购物车已被清空"}
+```
+
 
 
