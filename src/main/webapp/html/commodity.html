@@ -54,7 +54,7 @@
     </div>
     <div class="works-pic grid" >
         <div v-for="commodity in commodities" class="col-md-3 col-md-4 col-sm-4 col-sm-6 tanchuname_baba grid-item">
-            <a href="Detail.html">
+            <a v-bind:href="makeDetailUrl(commodity.id)">
                 <img v-bind:src="commodity.picture" v-on:mouseenter="fadeImg(0,$event)" v-on:mouseleave="fadeImg(1,$event)" alt="图片找不到了" width="268" >
                 <div class="slide_name">
                     <span>{{ commodity.name }}</span>

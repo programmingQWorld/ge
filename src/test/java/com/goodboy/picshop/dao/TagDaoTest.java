@@ -24,4 +24,10 @@ public class TagDaoTest extends BaseTest {
         int insert = tagDao.insertTag(tag);
         System.out.println("insert = " + insert);
     }
+
+    @Test
+    public void testQueryTagByCommodityId() throws Exception{
+        List<Tag> tagList = tagDao.queryTagByCommodityId(10);
+        System.out.println(tagList);
+    }
 }

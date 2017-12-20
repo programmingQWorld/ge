@@ -97,7 +97,7 @@
 				<button class="Btn btnLog onBtn">登录</button>
 				<button class="Btn btnReg">注册</button>
 			</div>
-			<form action="" method="get" name="regForm" class="regForm" onsubmit="return register_submit_sure()">
+			<form method="post" name="regForm" class="regForm" onsubmit="return register_submit_sure()">
 				<div class="">
 					<span class="bt">邮箱</span>
 					<input type="text" name="email" class="input">
@@ -288,13 +288,13 @@
 		<div class="new_works_box">
 			<div class="new_works_top">
 				<div class="new_works_one tanchuname_baba">
-					<a href="#"><img v-bind:src="indexOfCommodities(0).picture"  width="300" height="225" alt="新品1"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0).id)"><img v-bind:src="indexOfCommodities(0).picture"  width="300" height="225" alt="新品1"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(0).name }}</span>
 					</div>
 				</div>
 				<div class="new_works_tow tanchuname_baba">
-					<a href="#"><img v-bind:src="indexOfCommodities(1).picture" width="225" height="300" alt="新品2"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1).id)"><img v-bind:src="indexOfCommodities(1).picture" width="225" height="300" alt="新品2"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(1).name }}</span>
 					</div>
@@ -302,13 +302,13 @@
 			</div>
 			<div class="new_works_bottom">
 				<div class="new_works_three tanchuname_baba">
-					<a href="#"><img v-bind:src="indexOfCommodities(2).picture" width="225" height="300" alt="新品3"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2).id)"><img v-bind:src="indexOfCommodities(2).picture" width="225" height="300" alt="新品3"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(2).name }}</span>
 					</div>
 				</div>
 				<div class="new_works_four tanchuname_baba">
-					<a href="#"><img v-bind:src="indexOfCommodities(3).picture" width="300" height="225" alt="新品3"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3).id)"><img v-bind:src="indexOfCommodities(3).picture" width="300" height="225" alt="新品3"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(3).name }}</span>
 					</div>

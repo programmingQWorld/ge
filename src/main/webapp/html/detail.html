@@ -86,13 +86,13 @@
                 <div class="modal-header">
                     <h5>收貨信息：</h5>
                    <div style="float: left;padding-top: 3%;padding-left: 9%">
-                       <img src="images/Orders/ordersWorks.png">
+                       <img v-bind:src="commodity.picture">
                    </div>
                     <div style="float: left;padding-left: 2%;margin-top: 3%">
-                        <p>《誰》</p>
-                        <p>歐也</p>
-                        <p>32*42cm</p>
-                        <p style="color: red">&yen;200.00</p>
+                        <p>《{{ commodity.name }}》</p>
+                        <p>{{ commodity.user.nickname }}</p>
+                        <p>{{ commodity.sizeWidth }} * {{ commodity.sizeHeight }} cm</p>
+                        <p style="color: red">&yen;{{ commodity.price }}</p>
                     </div>
                 </div>
             <div class="buttonBox"><button type="button" class="BuyNowButtom ">確認支付</button></div>
@@ -119,7 +119,7 @@
                 <div class="MsgBox">
                     <div class="titleBox">
                         <div><span>《{{ commodity.name }}》</span></div>
-                        <div class="Type">風景類</div></span>
+                        <div v-for="tag in tags" class="Type">{{ tag.name }}</div>
                     </div>
                         <div class="MsgBox_DetailMsg"><span>作者：<p><a href="Author.html"> {{ commodity.user.nickname }}</a></p></span></div>
                         <div class="MsgBox_DetailMsg"><span>尺寸：<p>{{ commodity.sizeWidth }} * {{ commodity.sizeHeight }} cm</p></span></div>

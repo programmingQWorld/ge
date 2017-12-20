@@ -66,7 +66,7 @@ public class UserController {
     }
 
     //注册用户
-    @RequestMapping(value = "/insertUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/insertUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> insert(String account, String password, String email, String phone){
 
         try {

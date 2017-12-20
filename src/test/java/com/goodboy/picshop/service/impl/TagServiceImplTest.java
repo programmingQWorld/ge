@@ -25,4 +25,10 @@ public class TagServiceImplTest extends BaseTest {
         TagDto tagDto = tagService.add("山水画");
         System.out.println(tagDto);
     }
+
+    @Test
+    public void testGetByCommodityId() throws Exception{
+        TagDto tagDto = tagService.getByCommodityId(10);
+        System.out.println(tagDto);
+    }
 }

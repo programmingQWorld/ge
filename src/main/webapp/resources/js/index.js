@@ -15,6 +15,7 @@ $(document).ready(function () {
             indexOfCommodities: function (index) {
                 return this.tagCommodities[index];
             },
+            // 生成商品详情页链接
             makeDetailUrl: function (id) {
                 return "detail-" + id + ".html";
             }

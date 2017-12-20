@@ -6,6 +6,7 @@ $(document).ready(function () {
         el: '.content',
         data: {
             commodity: {user:{}},
+            tags: [],
         }
     });
 
@@ -16,5 +17,8 @@ $(document).ready(function () {
     var commodityId = patt.exec(url)[1];
 
     // 请求商品详情
-    setVueData("http://10.10.112.170:8080/commodity/" + commodityId + "/detail", vm, "commodity")
+    setVueData("http://10.10.112.170:8080/commodity/" + commodityId + "/detail", vm, "commodity");
+
+    // 请求商品标签
+    setVueData("http://10.10.112.170:8080/commodity/" + commodityId + "/tag", vm, "tagList");
 });

@@ -52,6 +52,10 @@ $(document).ready(function () {
                 // 设置该标签下的第一页
                 page = 1;
                 setVueData(commodityUrl, vm, "commodityList");
+            },
+            // 生成商品详情页链接
+            makeDetailUrl: function (id) {
+                return "detail-" + id + ".html";
             }
         }
     });
