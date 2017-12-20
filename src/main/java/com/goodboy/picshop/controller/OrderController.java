@@ -30,11 +30,9 @@ public class OrderController {
 	public JSONResult<OrderDto> orderList (@RequestParam(value = "offset", defaultValue = "0") int offset,
 										    @RequestParam(value = "limit", defaultValue = "4") int limit, HttpSession session) {
 		User userOnline = (User)session.getAttribute("user");
-
 		if ( userOnline == null ) {
 			return new JSONResult<>(false, "用户未登录");
 		}
-
 		int buyerid = userOnline.getId();
 		OrderDto dto = null;
 		dto =  orderService.queryBuyerOrders(buyerid, offset, limit);
@@ -89,6 +87,9 @@ public class OrderController {
 	public JSONResult<OrderDto> sellerOrders (@RequestParam(value = "offset", defaultValue = "0") int offset,
 	                                                                               @RequestParam(value="limit", defaultValue = "4") int limit, HttpSession session) {
 		User userOnline = (User) session.getAttribute("user");
+		if ( userOnline == null ) {
+			return new JSONResult<>(false, "用户未登录");
+		}
 		OrderDto dto = orderService.querySellerOrdersBySellerid(userOnline.getId(), offset, limit);
 		if ( !dto.getOrderList().isEmpty() ) {  // 存入session中
 			session.setAttribute("sellerorder", dto.getOrderList());
@@ -148,6 +149,9 @@ public class OrderController {
 	                                                                                                 @RequestParam(value = "limit", defaultValue = "4")int limit,
 	                                                                                                  HttpSession  session) {
 		User userOnline = (User) session.getAttribute("user");
+		if ( userOnline == null ) {
+			return new JSONResult<>(false, "用户未登录");
+		}
 		OrderDto dto = orderService.getOrdersByPayStatus(userOnline.getId(), offset, limit, 0);
 		boolean flag = false;
 		switch ( dto.getStatus() ) {
@@ -169,6 +173,9 @@ public class OrderController {
 	                                                                            @RequestParam(value = "limit", defaultValue = "4") int limit,
 	                                                                                 HttpSession  session) {
 		User userOnline = (User) session.getAttribute("user");
+		if ( userOnline == null ) {
+			return new JSONResult<>(false, "用户未登录");
+		}
 		OrderDto dto = orderService.getOrdersByPayStatus(userOnline.getId(), offset, limit, 1);
 		boolean flag = false;
 		switch ( dto.getStatus() ) {
@@ -186,6 +193,9 @@ public class OrderController {
 	                                                                            @RequestParam(value = "limit", defaultValue = "4") int limit,
 	                                                                            HttpSession session) {
 		User userOnline = (User) session.getAttribute("user");
+		if ( userOnline == null ) {
+			return new JSONResult<>(false, "用户未登录");
+		}
 		OrderDto dto = orderService.querySellerOrdersBySelleridAndStatus(userOnline.getId(), offset, limit, 0);
 		boolean flag = false;
 		switch ( dto.getStatus() ) {
@@ -203,6 +213,9 @@ public class OrderController {
 	                                                                             @RequestParam(value = "limit", defaultValue = "4") int limit,
 	                                                                             HttpSession session) {
 		User userOnline = (User) session.getAttribute("user");
+		if ( userOnline == null ) {
+			return new JSONResult<>(false, "用户未登录");
+		}
 		OrderDto dto = orderService.querySellerOrdersBySelleridAndStatus(userOnline.getId(), offset, limit, 1);
 		boolean flag = false;
 		switch ( dto.getStatus() ) {

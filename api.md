@@ -164,7 +164,7 @@ GET
 #### HTTP请求方式
 GET
 #### 请求URL
-[http://10.10.112.207:8080/shop/order/del/3](http://10.10.112.207:8080/shop/order/del/3)
+[http://10.10.112.207:8080/shop/order/addOrder](http://10.10.112.207:8080/shop/order/addOrder)
 #### 请求参数
 
 参数名 | 必选 | 类型 | 说明
@@ -178,3 +178,26 @@ GET
 {"success":true,"data":{"status":3002,"info":"生成订单订单失败，商品已被别人抢先下单了，如果那边1小时内没有完成付款，您还有机会","expList":[7,6]},"error":null}
 ```
 
+### 获得买家订单列表接口
+> 获得买家订单列表
+
+#### HTTP请求方式
+GET
+#### 请求URL
+[http://10.10.112.207:8080/shop/order/list](http://10.10.112.207:8080/shop/order/list)
+#### 请求参数
+
+参数名 | 必选 | 类型 | 说明
+|------|------|------|----|
+无|
+
+```json
+{"success":false,"data":null,"error":"用户未登录"}
+```
+```json
+{"success":true,"data":{"status":1,"info":"成功","orderList":[{"id":69,"isPay":0,"orderNo":"15137511126611","createTime":"2017年12月20日 14:25:20","status":0,"user":{"id":1,"account":null,"password":null,"nickname":"java","avatar":null,"sex":"\u0000","birthday":null,"email":null,"phone":"12345678910"},"receiving":{"id":0,"receiver":"jack","phone":"12345678910","zipCode":null,"address":"广东省珠海市金湾区广东科学技术职业学院","isDefault":0,"user":null},"commodity":{"id":1,"name":"惠普卡通画","price":16.0,"picture":"ui.jpg","shippingCost":9.0,"createTime":null,"sizeWidth":0.0,"sizeHeight":0.0,"user":{"id":4,"account":null,"password":null,"nickname":"惠普","avatar":null,"sex":"\u0000","birthday":null,"email":null,"phone":null}}}]},"error":null}
+```
+
+```json
+{"success":true,"data":{"status":3005,"info":"没有任何关于你的订单"},"error":null}
+```

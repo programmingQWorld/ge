@@ -55,6 +55,7 @@ public class CartController {
 		}
 		CartDto dbCartDto =  cartService.getCartInfoByUserId(userOnline.getId());
 		CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
+
 		if (sessionCartDto != null && dbCartDto != null ) {
 			if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
 				// 合并
@@ -75,6 +76,7 @@ public class CartController {
 
 		// 保存信息回到数据库
 		CartDto cartDto = (CartDto) session.getAttribute("usercart");
+
 		User userOnline = (User)session.getAttribute("user");
 		cartService.saveUserCartInfo( userOnline.getId(), cartDto  );
 		// 在数据导入到数据库之后，才可以将购物车对象以及用户对象删除
