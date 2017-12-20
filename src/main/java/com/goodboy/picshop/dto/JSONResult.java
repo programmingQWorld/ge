@@ -7,7 +7,7 @@ package com.goodboy.picshop.dto;
 public class JSONResult<T> {
     private boolean success;    // 是否成功标志
     private T data;             // 成功时返回的数据
-    private String error;       // 错误信息
+    private String errorMsg;       // 错误信息
 
     public JSONResult() {
     }
@@ -19,9 +19,9 @@ public class JSONResult<T> {
     }
 
     // 失败时的构造器
-    public JSONResult(boolean success, String error) {
+    public JSONResult(boolean success, String errorMsg) {
         this.success = success;
-        this.error = error;
+        this.errorMsg = errorMsg;
     }
 
     public boolean isSuccess() {
@@ -40,11 +40,11 @@ public class JSONResult<T> {
         this.data = data;
     }
 
-    public String getError() {
-        return error;
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setErrorMsg(String error) {
+        this.errorMsg = error;
     }
 }
