@@ -45,5 +45,18 @@ public interface UserService {
      */
     UserDto findUserByEmail(String email);
 
+    /**
+     * 发送邮件
+     * @param mail
+     * @return
+     */
     UserDto sendEmail(SimpleMailMessage mail);
+
+    /**
+     * 修改密码
+     * @param password
+     * @param email
+     * @return 影响行数
+     */
+    UserDto updatePwd(String password,String email);
 }
