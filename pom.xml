@@ -113,7 +113,6 @@
             <version>2.3</version>
         </dependency>
 
-
         <!--发送邮箱-->
         <dependency>
             <groupId>javax.mail</groupId>
