@@ -13,4 +13,11 @@
         INSERT INTO shop_tag (name) VALUES (#{name})
     </insert>
 
+    <select id="queryTagByCommodityId" resultType="Tag">
+        SELECT T.id, T.name
+        FROM shop_commodity_rel_tag CRT
+        INNER JOIN shop_tag T ON CRT.tid = T.id
+        WHERE CRT.cid = #{commodityId}
+    </select>
+
 </mapper>

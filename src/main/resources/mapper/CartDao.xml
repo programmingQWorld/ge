@@ -8,18 +8,37 @@
     <insert id="insertCart" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO shop_cart (uid, pid) VALUES (#{userId}, #{commodityId})
     </insert>
-    
-    <select id="queryCartByUserId" resultType="Cart">
-        SELECT CART.id, U.id "user.id", U.account "user.account", U.password "user.password",
-                U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone",
-                C.id "commodity.id", C.name "commodity.name", C.price "commodity.price", C.picture "commodity.picture", C.shipping_cost "commodity.shippingCost"
-        FROM (shop_cart CART INNER JOIN shop_commodity C ON CART.pid = C.id)
-        INNER JOIN shop_user U ON CART.uid = u.id
-        WHERE CART.uid = #{userId}
+
+    <!-- commodity.id, commodity.name, commodity.price, commodity.picture, user.nickname, cart.uid, user.id -->
+    <!--commodity.id, commodity.name, commodity.price, commodity.picture, , items.id-->
+
+    <!--
+    left join shop_cart_items items on cart.id = items.cart_id
+    left join shop_commodity commodity on items.cid = commodity.id
+    -->
+
+    <select id="queryCartByUserId" parameterType="int" resultMap="cartmap">
+
+        select   user.nickname, cart.id, cart.uid
+        FROM shop_cart cart
+            left join shop_user user on user.id = cart.uid
+        where cart.uid = #{userd};
     </select>
+    <resultMap id="cartmap" type="Cart">
+        <id column = "id" property="id" />
+        <association property="user"  javaType="User">
+            <id property="id" column="uid" />
+            <result property="nickname" column="nickname" />
+        </association>
+    </resultMap>
 
     <delete id="deleteCart">
         DELETE FROM shop_cart WHERE id = #{id}
     </delete>
-    
+
+    <!-- 根据用户id新建购物车记录 -->
+    <insert id="saveUserCartInfo" parameterType="com.goodboy.picshop.entity.Cart" useGeneratedKeys="true" keyProperty="id" >
+        insert into shop_cart (uid) values (#{user.id});
+    </insert>
+
 </mapper>

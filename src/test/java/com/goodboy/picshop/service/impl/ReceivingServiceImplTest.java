@@ -7,7 +7,9 @@ import com.goodboy.picshop.dto.UserDto;
 import com.goodboy.picshop.entity.Receiving;
 import com.goodboy.picshop.entity.User;
 import com.goodboy.picshop.service.ReceivingService;
+
 import com.goodboy.picshop.service.UserService;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +18,7 @@ public class ReceivingServiceImplTest extends BaseTest{
 
     @Autowired
     private ReceivingService receivingService;
+
     @Autowired
     private UserService userService;
 

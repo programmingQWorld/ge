@@ -21,4 +21,11 @@ public interface TagService {
      * @return 标签的数据传输对象
      */
     TagDto add(String name);
+
+    /**
+     * 根据商品id获取该商品标签
+     * @param commodityId 商品id
+     * @return 标签的数据传输对象
+     */
+    TagDto getByCommodityId(int commodityId);
 }

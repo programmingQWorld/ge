@@ -2,7 +2,6 @@ package com.goodboy.picshop.service;
 
 import com.goodboy.picshop.dto.UserDto;
 import com.goodboy.picshop.entity.User;
-import org.springframework.mail.SimpleMailMessage;
 
 /**
  * 用户模块接口
@@ -45,6 +44,7 @@ public interface UserService {
      */
     UserDto findUserByEmail(String email);
 
+
     /**
      * 发送邮件
      * @param mail
@@ -59,4 +59,5 @@ public interface UserService {
      * @return 影响行数
      */
     UserDto updatePwd(String password,String email);
+
 }

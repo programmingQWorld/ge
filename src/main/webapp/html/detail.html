@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <script src="/js/vue/vue.js"></script>
+    <script src="/js/function.js"></script>
+    <script src="/js/detail.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+<body>
+<!-- 导航开始 -->
+<div class="nav_person container navbar-default pageheader" role="navigation">
+    <div class="container">
+        <div class="nav-logo">
+            <a class="navbar-brand" href="javaScript:;"><img src="images/logo.png"></a>
+        </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="navbar">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html"><p>yè</p><span>主頁</span></a></li>
+                <li><a href="works.html"><p>zuò</p><span>作品</span></a></li>
+                <li><a href="index.html#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
+                <li class="logn_up"><a href="#">登录</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 导航结束 -->
+<div class="content">
+<!--立即购买弹出框开始-->
+    <div class="modal fade" id="BuyNow" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 450px;height: 300px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">確認訂單</h4>
+                </div>
+                <div class="modal-header Info">
+                    <h5>收貨信息：</h5>
+                    <span id="Msg">阿二 13510145121 廣東科學技術職業學院23棟No.513</span>
+                    <span id="ShowAddress" class="glyphicon glyphicon-chevron-down"></span>
+                    <div id="MoreAddress" style="display:none;margin-top: 2%;">
+                        <table style="width: 97.5%;">
+                            <form name="SelectMsg">
+                                <input type="radio" name="address" value="阿一 10089 23棟No.514">阿一 10089 23棟No.514<br/></label>
+                                <input type="radio" name="address" value="阿二 10088 23棟No.513">阿二 10088 23棟No.513<br/></label>
+                                <input type="radio" name="address" value="阿六 10087 3棟No.222">阿六 10087 3棟No.222<br/></label>
+                                <!--<div id="showMeg">
+                                    <label style=" margin-top:10px;width: 20px;height: 45px">
+                                        <input type="checkbox"><span></span>
+                                    </label>
+                                    <span>阿一 10086 23棟No.513</span>
+                                </div>
+                                <div id="showMeg">
+                                    <label style=" margin-top:10px;width: 20px;height: 45px">
+                                        <input type="checkbox"><span></span>
+                                    </label>
+                                    <span>阿一 10086 23棟No.513</span>
+                                </div>
+                                <div id="showMeg">
+                                    <label style=" margin-top:10px;width: 20px;height: 45px">
+                                        <input type="checkbox"><span></span>
+                                    </label>
+                                   <span>阿一 10086 23棟No.513</span>
+                                </div>-->
+                               <!--<label><input type="radio" name="address" value="阿二 10087 23棟No.514">阿二 10087 23棟No.514<br/></label><br>
+                               <label><input type="radio" name="address" value="阿蔡 10088 3棟No.222">阿蔡 10088 3棟No.222<br/></label><br>-->
+                            </form>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-header">
+                    <h5>收貨信息：</h5>
+                   <div style="float: left;padding-top: 3%;padding-left: 9%">
+                       <img v-bind:src="commodity.picture">
+                   </div>
+                    <div style="float: left;padding-left: 2%;margin-top: 3%">
+                        <p>《{{ commodity.name }}》</p>
+                        <p>{{ commodity.user.nickname }}</p>
+                        <p>{{ commodity.sizeWidth }} * {{ commodity.sizeHeight }} cm</p>
+                        <p style="color: red">&yen;{{ commodity.price }}</p>
+                    </div>
+                </div>
+            <div class="buttonBox"><button type="button" class="BuyNowButtom ">確認支付</button></div>
+            </div>
+        </div>
+    </div>
+<!--立即购买弹出框结束-->
+<div class="bigbox" style="padding-left: 20%;">
+ <div class="container">
+        <div class="centerbox">
+            <div class="header">
+                <h1>Detail</h1>
+                <h4>商品詳情</h4>
+            </div>
+         </div>
+        <div class="Detail_TopMsg">
+            <!--<div class="col-md-6">-->
+                <div class="Detail_img">
+                    <img v-bind:src="commodity.picture">
+                </div>
+            <!--    </div>-->
+            <!--<div class="col-md-6">-->
+                <div class="Detail_Msg">
+                <div class="MsgBox">
+                    <div class="titleBox">
+                        <div><span>《{{ commodity.name }}》</span></div>
+                        <div v-for="tag in tags" class="Type">{{ tag.name }}</div>
+                    </div>
+                        <div class="MsgBox_DetailMsg"><span>作者：<p><a href="Author.html"> {{ commodity.user.nickname }}</a></p></span></div>
+                        <div class="MsgBox_DetailMsg"><span>尺寸：<p>{{ commodity.sizeWidth }} * {{ commodity.sizeHeight }} cm</p></span></div>
+                        <div class="MsgBox_DetailMsg"><span>價格：<p id="price">￥{{ commodity.price }}</p></span></div>
+                        <div class="buttomBox">
+                            <div class="buttonBox"><button type="button" class="Detail-buttom" data-toggle="modal" data-target="#BuyNow">立即購買</button></div>
+                            <div class="buttonBox"><a href="Shopping.html"><button type="button" class="Detail-buttom ">加入購物車</button></a></div>
+                            <br>
+                        </div>
+                    </div>
+                <!--</div>-->
+            </div>
+        </div>
+        <br>
+        <div class="Detail_MinBox">
+           <!-- <h5 style="margin-top: 31%;">細節圖：</h5>-->
+            <h5>細節圖:</h5>
+            <img v-bind:src="commodity.picture">
+        </div>
+        </div>
+
+  <div class="container" >
+      <h3>作者介紹</h3>
+        <div class="Author_Detail">
+
+            <span>姓名：{{ commodity.user.nickname }}</span>
+                <br>
+            <span>性別：{{ commodity.user.sex }}</span>
+                <br>
+            <span>出生年月：{{ commodity.user.birthday }}</span>
+                <br>
+            <span>郵箱：{{ commodity.user.email }}</span>
+        </div>
+      <footer>
+          <h5>&copy;haoren</h5>
+      </footer>
+  </div>
+</div>
+</div>
+<script>
+  $(document).ready(function () {
+      var OrderMsg = $("span#Msg").text();
+      var SelectMsg = $(':radio[name="address"]:checked').val();
+      var i = 0;
+      $("#ShowAddress").click(function () {
+          if (i == 0){
+              $("#MoreAddress").show();
+              i = 1;
+//              alert(OrderMsg);
+//              alert(SelectMsg);
+              /*alert($("input[name='address']:checked").text());*/
+              OrderMsg = SelectMsg;
+          }
+          else {
+              $("#MoreAddress").hide();
+              i = 0;
+          }
+          /* $("span#Msg").text();*/
+          /*  alert($(':radio[name="address"]:checked').val());*/
+          });
+      });
+</script>
+</body>
+</html>

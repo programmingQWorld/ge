@@ -51,4 +51,20 @@ public class TagServiceImpl implements TagService {
         }
         return null;
     }
+
+    public TagDto getByCommodityId(int commodityId) {
+        // 查询标签
+        List<Tag> tagList = tagDao.queryTagByCommodityId(commodityId);
+        try {
+            // 判断是否有标签
+            if(!tagList.isEmpty()){
+                TagDto tagDto = new TagDto(StatusEnum.SUCCESS, tagList);
+                return tagDto;
+            }else {     // 没有标签
+                throw new NoTagFoundException("no tag found");
+            }
+        }catch (NoTagFoundException ntfe){
+            throw ntfe;
+        }
+    }
 }

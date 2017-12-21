@@ -11,10 +11,25 @@
     <mvc:default-servlet-handler />
 
     <!-- 配置jsp -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >-->
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />-->
+        <!--<property name="prefix" value="/WEB-INF/jsp/" />-->
+        <!--<property name="suffix" value=".jsp" />-->
+    <!--</bean>-->
+
+    <!-- 配置thymeleaf模板引擎 -->
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/html/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+        <property name="characterEncoding" value="utf-8" />
+    </bean>
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="utf-8" />
     </bean>
     
     <!-- 配置html静态页面目录 -->

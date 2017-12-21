@@ -12,9 +12,9 @@
 
     <select id="queryReceivingByUserId" resultType="Receiving">
         SELECT R.*, U.id "user.id", U.account "user.account", U.password "user.password",
-                U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone"
+                    U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone"
         FROM shop_receiving R
-        INNER JOIN shop_user U ON R.uid = U.id
+            INNER JOIN shop_user U ON R.uid = U.id
         WHERE R.uid = #{userId}
     </select>
 
@@ -30,9 +30,9 @@
 
     <select id="queryDefaultReceiving" resultType="Receiving">
         SELECT R.*, U.id "user.id", U.account "user.account", U.password "user.password",
-                U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone"
+                    U.nickname "user.nickname", U.avatar "user.avatar", U.sex "user.sex", U.birthday "user.birthday", U.email "user.email", U.phone "user.phone"
         FROM shop_receiving R
-        INNER JOIN shop_user U ON R.uid = U.id
+            INNER JOIN shop_user U ON R.uid = U.id
         WHERE R.uid = #{userId} AND R.is_default = 1
     </select>
 

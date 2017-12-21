@@ -27,6 +27,7 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>picshop-dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
@@ -34,3 +35,4 @@
 
 
 </web-app>
+

@@ -12,6 +12,7 @@ import com.goodboy.picshop.service.UploaderService;
 import com.goodboy.picshop.service.UserService;
 import com.goodboy.picshop.util.GenerateLinkUtils;
 import com.goodboy.picshop.util.md5Password;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,8 +46,8 @@ public class UserController {
 
     UserDto userDto=null;
     //登录验证
-    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JSONResult<UserDto> login(String account,String password,HttpSession session){
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<UserDto> login(@Param("account") String account,@Param("password") String password,HttpSession session){
         String pwd= md5Password.md5Password(password);
         try{
             userDto=userService.userLogin(account,pwd);
@@ -72,7 +73,7 @@ public class UserController {
 
     //注册用户
     @RequestMapping(value = "/insertUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JSONResult<UserDto> insert(String account, String password, String email, String phone){
+    public JSONResult<UserDto> insert(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("email") String email,@RequestParam("phone") String phone){
 
         try {
             String pwd= md5Password.md5Password(password);

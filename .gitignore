@@ -26,8 +26,15 @@ hs_err_pid*
 
 # target files
 target/
+
 picshop.iml
 picshop.iml
 picshop.iml
 picshop.iml
+
+
+# out files
 out/
+
+# classes files
+classes/
