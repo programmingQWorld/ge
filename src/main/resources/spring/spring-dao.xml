@@ -44,6 +44,24 @@
         <property name="mapperLocations" value="classpath:mapper/*.xml" />
     </bean>
 
+
+    <!--配置JavaMailSenderImpl类的bean-->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.qq.com"/>
+        <property name="port" value="25"/>
+        <property name="username" value="xx@qq.com"/>
+        <property name="password" value="xxx"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.from">xxx</prop>
+                <prop key="mail.smtp.socketFactory.fallback">false</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <!-- <prop key="mail.debug">true</prop> -->
+            </props>
+        </property>
+    </bean>
+
     <!-- 配置扫描Dao接口包，动态实现Dao接口，注入到Spring容器中 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 注入sqlSessionFactory -->

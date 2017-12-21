@@ -5,6 +5,7 @@ import com.goodboy.picshop.dao.UserDao;
 import com.goodboy.picshop.dto.ReceivingDto;
 import com.goodboy.picshop.dto.StatusEnum;
 import com.goodboy.picshop.entity.Receiving;
+import com.goodboy.picshop.exception.UserNoLoginException;
 import com.goodboy.picshop.service.ReceivingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

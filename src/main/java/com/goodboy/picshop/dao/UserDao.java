@@ -41,4 +41,13 @@ public interface UserDao {
      */
 
     User findUserByEmail(String email);
+
+    /**
+     * 根据用户邮箱更新用户密码
+     * @param email
+     * @return 影响行数
+     */
+    int updatePwd(@Param("password")String password,@Param("email")String email);
+
+
 }

@@ -3,8 +3,10 @@ package com.goodboy.picshop.controller;
 
 import com.goodboy.picshop.dto.JSONResult;
 import com.goodboy.picshop.dto.ReceivingDto;
+import com.goodboy.picshop.dto.StatusEnum;
 import com.goodboy.picshop.entity.Receiving;
 import com.goodboy.picshop.entity.User;
+import com.goodboy.picshop.exception.UserNoLoginException;
 import com.goodboy.picshop.service.ReceivingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,9 +25,12 @@ public class ReceivingController {
     private ReceivingService receivingService;
 
     //添加用户地址
-    @RequestMapping(value = "/insert", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/insert", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<ReceivingDto> insertReceiving(String receiver,String phone,String zipCode,String address,HttpSession session){
         User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<ReceivingDto>(false,"用户未登录");
+        }
         Receiving receiving=new Receiving(receiver,phone,zipCode,address,user);
         ReceivingDto receivingDto = receivingService.insertReceiving(receiving);
         return new JSONResult<ReceivingDto>(true, receivingDto);
@@ -42,6 +47,9 @@ public class ReceivingController {
     @RequestMapping(value = "/searchReceiving", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<ReceivingDto> queryReceivingByUserId(HttpSession session){
         User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<ReceivingDto>(false,"用户未登录");
+        }
         ReceivingDto receivingDto = receivingService.queryReceivingByUserId(user.getId());
         return new JSONResult<ReceivingDto>(true,receivingDto);
     }
@@ -50,6 +58,9 @@ public class ReceivingController {
     @RequestMapping(value = "/searchDefaultReceiving", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<ReceivingDto> queryDefaultReceiving(HttpSession session){
         User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<ReceivingDto>(false,"用户未登录");
+        }
         ReceivingDto receivingDto = receivingService.queryDefaultReceiving(user.getId());
         return new JSONResult<ReceivingDto>(true,receivingDto);
     }
@@ -58,6 +69,9 @@ public class ReceivingController {
     @RequestMapping(value = "/setIsDefault/{receivingId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<ReceivingDto> setIsDefault(@PathVariable int receivingId,HttpSession session){
         User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<ReceivingDto>(false,"用户未登录");
+        }
         int defaultReceiving=receivingService.queryDefaultReceiving(user.getId()).getReceiving().getId();//获取用户当前默认地址
         receivingService.setIsDefault(defaultReceiving,0);//将原先默认地址设为非默认
         ReceivingDto receivingDto =receivingService.setIsDefault(receivingId,1);//将地址设为默认地址
