@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <form action="${pageContext.request.contextPath}/user/update" enctype="multipart/form-data" method="POST">
+    <form action="${pageContext.request.contextPath}/user/updateUser" enctype="multipart/form-data" method="POST">
 
         <input type="text" name="nickname"><br>
         <input type="text" name="sex"><br>

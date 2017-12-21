@@ -37,28 +37,46 @@ function login_submit_sure(){
 		//密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
 		var pPattern = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
 	 	if(name==""){
-	 		ErroAlert("请输入账号");
+	 		ErrorAlert("请输入账号");
 	 		return false;
 	 	}else if(!uPattern.test(name)){
-	 			ErroAlert("账号为4到16位（字母，数字，下划线，减号）");
+	 			ErrorAlert("账号为4到16位（字母，数字，下划线，减号）");
 	 			return false;
 	 	}
 	 	if(pwd==""){
-	 		ErroAlert("请输入密码");
+	 		ErrorAlert("请输入密码");
 	 		return false;
 	 	   }
-	 	   // else if(!pPattern.test(pwd)){
-	 	// 		ErroAlert("密码最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符");
+		// else if(!pPattern.test(pwd)){
+	 	// 		ErrorAlert("密码最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符");
 	 	// 		return false;
 	 	// }
 	 	if(yzm==""){
-	 		ErroAlert("请输入验证码");
+	 		ErrorAlert("请输入验证码");
 	 		return false;
 	 	}else if(yzm.length!=4){
-	 		ErroAlert("请输入正确验证码");
+	 		ErrorAlert("请输入正确验证码");
 	 		return false;
 	 	}
-	 	return true;	
+	 	// 用户登录请求
+		$.ajax({
+			url: "http://10.10.112.170:8080/user/login",
+			method: "POST",
+			data: {"account":name, "password":pwd},
+			success: function (data, status) {
+				// 登录成功
+				if(data.data.status == 1){
+					successAlert("Welcome Back!");
+					// 设置cookie
+					setCookie("isLogin", 1, null);
+					// 跳转用户个人中心
+					jumpAfterTime("http://10.10.112.170:8080/user.html", 2000);
+				}else{
+					ErrorAlert(data.data.info);
+				}
+            }
+		});
+	 	return false;
 }
 function register_submit_sure(){
 		var name=$("input[name='name2']").val();
@@ -71,43 +89,56 @@ function register_submit_sure(){
 		//密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
 		var pPattern = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
 	 	if(name==""){
-	 		ErroAlert("请输入昵称");
+	 		ErrorAlert("请输入账号");
 	 		return false;
 	 	}else if(!uPattern.test(name)){
-	 			ErroAlert("账号为4到16位（字母，数字，下划线，减号）");
+	 			ErrorAlert("账号为4到16位（字母，数字，下划线，减号）");
 	 			return false;
 	 	}
 	 	if(pwd==""){
-	 		ErroAlert("请输入密码");
+	 		ErrorAlert("请输入密码");
 	 		return false;
 	 	   }
 
-	 	   // else if(!pPattern.test(pwd)){
-	 	// 		ErroAlert("密码最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符");
+		// else if(!pPattern.test(pwd)){
+	 	// 		ErrorAlert("密码最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符");
 	 	// 		return false;
 	 	// }
 	 	if(email==""){
-	 		ErroAlert("请输入邮箱");
+	 		ErrorAlert("请输入邮箱");
 	 		return false;
 	 	}
 	 	if(iphone==""){
-	 		ErroAlert("请输入电话号码");
+	 		ErrorAlert("请输入电话号码");
 	 		return false;
 	 	}
-		// 用户注册
+		// 用户注册请求
 		$.ajax({
 			url: "http://10.10.112.170:8080/user/insertUser",
 			method: "post",
-			data: {"email":email, "password":pwd, "nickname":name, "phone":iphone},
+			data: {"account":name, "email":email, "password":pwd, "phone":iphone},
 			success: function (data, status) {
-				console.log(data);
+				// 注册成功
+				if(data.data.status == 1){
+					successAlert("Welcome Register");
+				}else{		// 注册失败
+					ErrorAlert(data.data.info);
+				}
             }
 		});
 	 	return false;
 }
 /*提示信息弹出框*/
-function ErroAlert(e){
+function ErrorAlert(e){
 	layui.use("layer",function(){
 		var index=layer.alert(e,{title:"温馨提示",offset:"50px",icon:5,closeBtn:2,time:3000,anim:2});
-	})
+	});
+}
+
+// 成功弹框
+function successAlert(msg) {
+	layui.use("layer", function () {
+		layer.alert(msg,{title:"温馨提示",offset:"50px",icon:6,closeBtn:2,time:3000,anim:2});
+    });
+
 }

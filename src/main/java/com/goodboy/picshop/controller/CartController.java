@@ -2,7 +2,7 @@ package com.goodboy.picshop.controller;
 
 import com.goodboy.picshop.dto.CartDto;
 import com.goodboy.picshop.dto.CartItemDto;
-import com.goodboy.picshop.dto.CommodityGetDto;
+import com.goodboy.picshop.dto.CommodityDto;
 import com.goodboy.picshop.dto.JSONResult;
 import com.goodboy.picshop.entity.Cart;
 import com.goodboy.picshop.entity.CartItem;
@@ -95,7 +95,7 @@ public class CartController {
 	 */
 	@RequestMapping(value = "additem/{cno}", method = RequestMethod.GET)
 	public JSONResult<CartDto> addItem (@PathVariable("cno") int commID, HttpSession session) {
-		CommodityGetDto commoditydto = commodityService.getById(commID);  //  根据商品id获取相应的商品数据
+		CommodityDto commoditydto = commodityService.getById(commID);  //  根据商品id获取相应的商品数据
 		if ( commoditydto.getCommodity() == null ) {
 			return new JSONResult<>(false, "指定的商品不存在");
 		}
