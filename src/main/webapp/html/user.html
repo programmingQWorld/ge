@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="/js/jquery/jquery-3.2.1.min.js"></script>
 	<script src="/js/bootstrap/bootstrap.min.js"></script>
+	<script src="/js/vue/vue.js"></script>
 	<script src="/js/function.js"></script>
 	<script src="/js/user.js"></script>
 
@@ -39,11 +40,11 @@
 </div>
 <!-- 导航结束 -->
 <!-- 个人中心开始 -->
-<div class="container">
+<div class="container content">
 	<div class="buy_user">
 		<div class="user_header">
-			<div class="header_image"><img src="images/Orders/avatar.png"></div>
-			<span>阿二</span>
+			<div class="header_image"><img v-bind:src="userAvatar" width="100" height="100"></div>
+			<span>{{ username }}</span>
 			<div class="user_heart">
 				<div class="buy_user_heart selected">买家中心</div>
 				<div class="sell_user_heart">卖家中心</div>
@@ -54,9 +55,9 @@
 				<span class="heart_title" style="float:right;color: black">买家中心</span><br>
 				<div id="mjzx">
 					<ul style="float:right;">
-						<li><a href="javascript:;" class="selectede" id="mjzx_sx">我的訂單</a></li>
-						<li><a href="javascript:;" id="mjzx_sx">個人信息</a></li>
-						<li><a href="javascript:;" id="mjzx_sx">地址管理</a></li>
+						<li><a href="javascript:;" class="selectede" id="mjzx_sx1">我的訂單</a></li>
+						<li><a href="javascript:;" id="mjzx_sx2">個人信息</a></li>
+						<li><a href="javascript:;" id="mjzx_sx3">地址管理</a></li>
 					</ul>
 				</div>
 			</div>
@@ -72,9 +73,10 @@
 					</div>
 					<div class="line_top"></div>
 					<div class="bdxq">
-						<div class="time_table">
+						<div v-for="(order, index) in orders" class="time_table">
 							<div class="time">
-								<span>2017</span>-<span>02</span>-<span>25</span>&nbsp;&nbsp;&nbsp;<span>14</span>:<span>20</span>:<span>09</span>
+								{{ order.createTime }}
+								<!--<span>2017</span>-<span>02</span>-<span>25</span>&nbsp;&nbsp;&nbsp;<span>14</span>:<span>20</span>:<span>09</span>-->
 							</div>
 							<table border="1" class="payment_table">
 								<tr class="table_header">
@@ -87,17 +89,18 @@
 								</tr>
 								<tr class="table_footer">
 									<td class="work_samllimg_box">
-										<div class="work_smallimg"><img src="images/Orders/ordersWorks.png"></div>
+										<div class="work_smallimg"><img v-bind:src="order.commodity.picture" width="100" height="75"></div>
 										<div class="pic_information">
-											<span class="pic_name" style="float:left;">《風》</span>
-											<span class="author" style="float:right;">馮一</span>
+											<span class="pic_name" style="float:left;">《{{ order.commodity.name }}》</span>
+											<span class="author" style="float:right;">{{ order.commodity.user.nickname }}</span>
 										</div>
 									</td>
-									<td class="money">&yen;100</td>
+									<td class="money">&yen;{{ order.commodity.price }}</td>
 									<td class="number">1</td>
-									<td class="gross_pirce">&yen;100</td>
+									<td class="gross_pirce">&yen;{{ getTotalCost(index) }}</td>
 									<td class="state">
-										<span class="n_judge_pay">未付款<br><span class="red_font">请在一小时内完成付款</span></span>
+										<span v-if="order.isPay" class="y_judge_pay">已付款<br></span>
+										<span v-else class="n_judge_pay">未付款<br><span class="red_font">请在一小时内完成付款</span></span>
 									</td>
 									<td class="dothing">
 										<div class="delete">删除</div>
@@ -107,76 +110,8 @@
 								</tr>
 							</table>
 						</div>
-						<div class="time_table">
-							<div class="time">
-								<span>2017</span>-<span>02</span>-<span>25</span>&nbsp;&nbsp;&nbsp;<span>14</span>:<span>20</span>:<span>09</span>
-							</div>
-							<table border="1" class="payment_table">
-								<tr class="table_header">
-									<td style="width:130px;">商品</td>
-									<td>单价</td>
-									<td>数量</td>
-									<td>总价</td>
-									<td>状态</td>
-									<td>操作</td>
-								</tr>
-								<tr class="table_footer">
-									<td class="work_samllimg_box">
-										<div class="work_smallimg"><img src="images/Orders/ordersWorks.png"></div>
-										<div class="pic_information">
-											<span class="pic_name" style="float:left;">《風》</span>
-											<span class="author" style="float:right;">馮一</span>
-										</div>
-									</td>
-									<td class="money">&yen;100</td>
-									<td class="number">1</td>
-									<td class="gross_pirce">&yen;100</td>
-									<td class="state">
-										<span class="y_judge_pay">已付款<br><span class="red_font"><!-- 请在一小时内完成付款 --></span></span>
-									</td>
-									<td class="dothing">
-										<!-- <div class="delete">删除</div>
-										<div class="pay" data-toggle="modal" data-target="#Paypage">付款</div> -->
-										<div class="xq" data-toggle="modal" data-target="#PaidpOreder_Detail">详情</div>
-									</td>
-								</tr>
-							</table>
-						</div>
 					</div>
 				</div>
-				<script>
-					$(function(){
-						$('.payment').click(function(){
-							$(this).addClass('selected').siblings('.payment').removeClass('selected');
-						});
-						$('.payment:eq(0)').click(function(){
-							$('.time_table').show();
-						});
-						$('.payment:eq(1)').click(function(){
-							// $('.payment_table').find('.n_judge_pay').closest('.time_table').show().siblings('.time_table').hide();
-							$('.payment_table').find('.y_judge_pay').closest('.time_table').hide();
-							$('.payment_table').find('.n_judge_pay').closest('.time_table').show();
-						});
-						$('.payment:eq(2)').click(function(){
-							$('.payment_table').find('.y_judge_pay').closest('.time_table').show().siblings('.time_table').hide();
-						});
-						// var list_number = document.getElementsByClassName('time_table');
-						// $('.indent_number').html(list_);
-						// $('.payment:eq(2)').click(function(){
-						// 	$('.payment_table').find('.n_judge_pay').closest('.time_table').hide().siblings('.time_table').show();
-						// });
-						$('.delete').click(function(){
-							if(confirm('你确认删除吗？')){
-								$(this).closest('.time_table').remove();
-							}
-						});
-						$('.content_del').click(function(){
-							if(confirm('你确认删除吗？')){
-								$(this).closest('.confortation_address_content').remove();
-							}
-						});
-					});
-				</script>
 				<!-- 詳情（已付款）彈出框開始-->
 				<div class="modal fade" id="PaidpOreder_Detail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog" role="document">
@@ -276,12 +211,14 @@
 				<!-- **************2 -->
 				<div class="person_information hide">
 					<div class="name">
-						<span>名稱：</span><input type="text" class="name_text">
+						<span>名稱：</span><input v-model="user.updateNickname" type="text" class="name_text">
 					</div>
 					<div class="header_pic">
 						<span>頭像：</span>
 						<div class="pic_photo">
-							<img style="margin:90px 0 0 110px;cursor:pointer;" class="addImg" id="addImg" src="images/Orders/add.png"><input style="margin:90px 0 0 110px;cursor:pointer;" type="file" name="opusUrl" id="file" onchange="showimg()"><img src="" id="show" alt="">
+							<img style="margin:90px 0 0 110px;cursor:pointer;" class="addImg" id="addImg1" src="images/Orders/add.png">
+							<input style="margin:90px 0 0 110px;cursor:pointer;" type="file" name="opusUrl" id="avatar" >
+							<img v-bind:src="user.updateAvatar" id="showAvatar" width="140" height="140" alt="">
 						</div>
 						<div class="pic_format">
 							<span>支持JPG、JPEG、PEG，建议140*140像素，300k左右。</span>
@@ -289,34 +226,24 @@
 					</div>
 					<div class="sex">
 						<span>性别：</span>
-						<form style="display:inline;">
-							<input type="radio" name="sex" value="男">男
-							<input type="radio" name="sex" value="女">女
-						</form>
+						<div style="display:inline;">
+							<input v-model="user.sex" type="radio" name="sex" value="男">男
+							<input v-model="user.sex" type="radio" name="sex" value="女">女
+						</div>
 					</div>
 					<div class="birthday">
 						<span>生日：</span>
-						<form action="">
-							<input type="text" class="birthday_text">
-							<input type="text" class="birthday_text">
-							<input type="text" class="birthday_text">
-						</form>
-					</div>
-					<div class="address">
-						<span>地址：</span>
-						<form action="">
-							<input type="text" class="address_text">
-						</form>
+							<input v-model="user.birthYear" type="text" class="birthday_text">
+							<input v-model="user.birthMonth" type="text" class="birthday_text">
+							<input v-model="user.birthDay" type="text" class="birthday_text">
 					</div>
 					<div class="birthday">
 						<span>邮箱：</span>
-						<form action="">
-							<input type="text" class="e-mial_text">
-						</form>
+							<input v-model="user.email" type="text" class="e-mial_text">
 					</div>
-					<div class="btn btn-default">
+					<button class="btn btn-default saveUserBtn">
 						保存
-					</div>
+					</button>
 				</div>
 				<!-- **************3 -->
 				<div id="EditAddress" class="address_manage hide">
@@ -325,29 +252,21 @@
 					</div>
 					<div class="contact_person">
 						<span>聯繋人：</span>
-						<form action="">
-							<input type="text" class="">
-						</form>
+							<input type="text" class="receiver">
 					</div>
 					<div class="phone_number">
 						<span>電話號碼：</span>
-						<form action="">
-							<input type="text" class="">
-						</form>
+							<input type="text" class="phone">
 					</div>
 					<div class="zip_code">
 						<span>郵政編碼：</span>
-						<form action="">
-							<input type="text" class="">
-						</form>
+							<input type="text" class="zip">
 					</div>
 					<div class="shipping_address">
 						<span>收貨地址：</span>
-						<form action="">
-							<input type="text" class="">
-						</form>
+							<input type="text" class="address">
 					</div>
-					<div class="btn btn-default">
+					<div class="btn btn-default saveReceivingBtn">
 						保存
 					</div>
 					<div class="prestored_address">
@@ -358,14 +277,17 @@
 							<span class="moren">默认</span><span class="lianxiren">聯繋人</span><span class="shouhuodizhi">收货地址</span><span class="dianhuahaoma">电话号码</span><span>操作</span>
 						</div>
 						<div class="line_long"></div>
-						<div class="confortation_address_content">
+						<div v-for="receiving in receivings" class="confortation_address_content">
 							<div style="display: inline-block;">
 								<!--<label style=" margin-top:10px;width: 20px;height: 45px">
 									<input type="checkbox"><span></span>
 								</label>-->
 								<img src="images/Orders/shape-1.png">
 							</div>
-							<span class="content_name">阿二</span><span class="content_address">内蒙古自治区通辽市库伦旗中国路337号</span><span class="content_phone">14964730856</span><span class="content_del">删除</span>
+							<span class="content_name">{{ receiving.receiver }}</span>
+							<span class="content_address">{{ receiving.address }}</span>
+							<span class="content_phone">{{ receiving.phone }}</span>
+							<span class="content_del" v-bind:data-id="receiving.id">删除</span>
 						</div>
 					</div>
 				</div>
@@ -384,114 +306,14 @@
 				<!-- 显示图片我的商品 -->
 				<div class="myPro">
 					<div class="row">
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
+						<div v-for="commodity in commodities" class="col-md-3 bo col-sm-6 col-xs-7">
+							<div v-on:mouseenter="showDetail(0, $event)" v-on:mouseleave="showDetail(1, $event)" class="imgm">
+								<img v-bind:src="commodity.picture" width="230" height="160" class="IMG" style="height: 160px;">
 								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
-											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
-											</div>
-										</span>
-							</div>
-						</div>
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
-								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
-											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
-											</div>
-										</span>
-							</div>
-						</div>
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
-								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
-											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
-											</div>
-										</span>
-							</div>
-						</div>
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
-								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
-											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
-											</div>
-										</span>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
-								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
-											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
-											</div>
-										</span>
-							</div>
-						</div>
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
-								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
-											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
-											</div>
-										</span>
-							</div>
-						</div>
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
-								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
-											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
-											</div>
-										</span>
-							</div>
-						</div>
-						<div class="col-md-3 bo col-sm-6 col-xs-7">
-							<div class="imgm">
-								<img src="images/Orders/AuthorIntro_works1.png" class="IMG">
-								<span class="imgmsg">
-											<p>《码头》</p>
-											<p>作者：阿二</p>
-											<p>尺寸：31*42</p>
-											价格：￥400<p></p>
+											<p>《{{ commodity.name }}》</p>
+											<p>作者：{{ commodity.user.nickname }}</p>
+											<p>尺寸：{{ commodity.sizeWidth }} * {{ commodity.sizeHeight }}</p>
+											价格：￥{{ commodity.price }}<p></p>
 											<div class="edit">
 												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
 											</div>
@@ -502,7 +324,7 @@
 					<!--翻页开始-->
 					<div class="works-page fy">
 						<ul class="pagination">
-							<li><a href="#"><</a></li>
+							<li><a href="#">---</a></li>
 							<li><a href="#">1</a></li>
 							<li><a class="active" href="#">2</a></li>
 							<li><a href="#">3</a></li>
@@ -518,7 +340,7 @@
 						<div class="opusdiv">
 							作品名称：<input type="text" name="opusName">
 							<p>
-								作品：<span class="opusImg"><img class="addImg" id="addImg" src="images/Orders/add.png"><input type="file" name="opusUrl" id="file" onchange="showimg()"><img src="" id="show" alt=""></span>
+								作品：<span class="opusImg"><img class="addImg" id="addImg" src="images/Orders/add.png"><input type="file" name="opusUrl" id="file"><img src="" id="show" alt=""></span>
 								<i>支持JPG、JPEG、PEG格式</i>
 							</p>
 							<p>
@@ -556,10 +378,10 @@
 							</div>
 							<div class="row bottomInfo">
 								<div class="col-md-12">配送信息</div>
-								<div class="col-md-2 bottomText" id="">就是我</div>
-								<div class="col-md-5 bottomText" id="">广东科学技术职业学院</div>
-								<div class="col-md-2 bottomText" id="">11111111111</div>
-								<div class="col-md-3 bottomText" id=""><button class="send">发货</button>
+								<div class="col-md-2 bottomText" id="1">就是我</div>
+								<div class="col-md-5 bottomText" id="2">广东科学技术职业学院</div>
+								<div class="col-md-2 bottomText" id="3">11111111111</div>
+								<div class="col-md-3 bottomText" id="4"><button class="send">发货</button>
 								</div>
 							</div>
 
@@ -601,10 +423,10 @@
 								<h4 class="modal-title">修改信息</h4>
 							</div>
 							<div class="modal-header Info">
-								<h5>作品：<span>《<input id="name" class="form-control"></input>》</span></h5>
-								<h5>作者：<input id="author" class="form-control"></input></h5>
-								<h5>尺寸：<input type="number" min="1" id="size" class="form-control"></input>cm *<input type="number" min="1"id="size" class="form-control"></input>cm</h5>
-								<h5>價格：<span>&yen;<input type="number" min="1"id="price" class="form-control"></input></span></h5>
+								<h5>作品：<span>《<input id="name" class="form-control">》</span></h5>
+								<h5>作者：<input id="author" class="form-control"></h5>
+								<h5>尺寸：<input type="number" min="1" id="size" class="form-control">cm *<input type="number" min="1" id="size1" class="form-control" />cm</h5>
+								<h5>價格：<span>&yen;<input type="number" min="1" id="price" class="form-control"></span></h5>
 							</div>
 							<div class="buttonBox"><button type="button" class="EditButtom ">確認修改</button></div>
 						</div>
@@ -746,5 +568,38 @@
             }
         })
 		/*修改資料結束*/
+    });
+</script>
+<script>
+    $(function(){
+        $('.payment').click(function(){
+            $(this).addClass('selected').siblings('.payment').removeClass('selected');
+        });
+        $('.payment:eq(0)').click(function(){
+            $('.time_table').show();
+        });
+        $('.payment:eq(1)').click(function(){
+            // $('.payment_table').find('.n_judge_pay').closest('.time_table').show().siblings('.time_table').hide();
+            $('.payment_table').find('.y_judge_pay').closest('.time_table').hide();
+            $('.payment_table').find('.n_judge_pay').closest('.time_table').show();
+        });
+        $('.payment:eq(2)').click(function(){
+            $('.payment_table').find('.y_judge_pay').closest('.time_table').show().siblings('.time_table').hide();
+        });
+        // var list_number = document.getElementsByClassName('time_table');
+        // $('.indent_number').html(list_);
+        // $('.payment:eq(2)').click(function(){
+        // 	$('.payment_table').find('.n_judge_pay').closest('.time_table').hide().siblings('.time_table').show();
+        // });
+        $('.delete').click(function(){
+            if(confirm('你确认删除吗？')){
+                $(this).closest('.time_table').remove();
+            }
+        });
+        $('.content_del').click(function(){
+            if(confirm('你确认删除吗？')){
+                $(this).closest('.confortation_address_content').remove();
+            }
+        });
     });
 </script>

@@ -32,6 +32,18 @@ function setVueData(url, vm, type) {
                     break;
                 case "user" :
                     vm.user = data.data.user;
+                    vm.user.updateNickname = data.data.user.nickname;
+                    var birthday = data.data.user.birthday.split('-');
+                    vm.user.birthYear = birthday[0];
+                    vm.user.birthMonth = birthday[1];
+                    vm.user.birthDay = birthday[2];
+                    vm.user.updateAvatar = data.data.user.avatar;
+                    break;
+                case "orderList" :
+                    vm.orders = data.data.orderList;
+                    break;
+                case "receivingList" :
+                    vm.receivings = data.data.receivingList;
                     break;
             }
         }

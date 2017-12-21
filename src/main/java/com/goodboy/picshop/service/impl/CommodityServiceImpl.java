@@ -76,9 +76,19 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     public CommodityDto getByUser(int userId, int offset, int limit) {
+        // 根据用户id查询商品
         List<Commodity> commodityList = commodityDao.queryCommodityByUserId(userId, offset, limit);
-        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
-        return commodityDto;
+        try {
+            // 判断是否有商品
+            if(!commodityList.isEmpty()){
+                CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+                return commodityDto;
+            }else {     // 没有商品
+                throw new NoCommodityFoundException("no commodity found");
+            }
+        }catch (NoCommodityFoundException ncfe){
+            throw ncfe;
+        }
     }
 
     // 使用事务管理

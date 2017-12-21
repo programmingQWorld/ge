@@ -61,7 +61,7 @@ public class CommodityController {
     public JSONResult<UploaderDto> upload(@RequestParam("file") MultipartFile file){
         UploaderDto uploaderDto = null;
         try {
-            uploaderDto = uploaderService.upload(file, "/resources/upload/");
+            uploaderDto = uploaderService.upload(file, "/upload/");
         }catch (NotAllowFileTypeException nafte){   // 不允许上传的文件类型
             uploaderDto = new UploaderDto(StatusEnum.NOT_ALLOW_FILE_TYPE);
         }catch (FileTooLargeException ftle){        // 文件过大

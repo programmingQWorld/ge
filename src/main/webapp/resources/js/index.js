@@ -3,6 +3,7 @@ $(document).ready(function () {
     var vm = new Vue({
         el: ".content",
         data: {
+            user: {},       // 登录用户
             tagCommodities: ['1','2','3','4','5'],     // 根据标签展示商品
             commodities: []     // 新上架商品
         },
@@ -22,10 +23,23 @@ $(document).ready(function () {
         }
     });
 
+    // 判断是否登录
+    var loginUser = getCookie("loginUser");
+    if(loginUser){
+        // 不能弹出登录模态框
+        $('.logn_up').attr("data-target", "");
+        // 改变登录按钮样式
+        $('.logn_up a').attr("href", "user.html");
+        $('.logn_up a').html(getCookie("username"));
+    }
+
     // 设置标签商品
     setVueData("http://10.10.112.170:8080/tag/1/commodity", vm, "tagCommodities");
 
     // 设置新上架商品
     setVueData("http://10.10.112.170:8080/commodity/list", vm, "commodityList");
+
+    // 设置登录用户
+    setVueData()
 
 });
