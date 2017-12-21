@@ -1,0 +1,256 @@
+/*導航條開始*/
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    font-family:Microsoft YaHei;
+}
+.nav_person{
+    margin-top:52px;
+    height:88px;
+    background-color:white;
+    box-shadow:-2px 2px 8px #ccc;
+    border-radius:20px;
+    position:relative;
+    z-index:3;
+}
+.nav_person ul li{
+    line-height:88px;
+    margin-left:55px;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    font-family:Microsoft YaHei;
+    color:black;
+}
+.nav_person ul li a{
+    padding:0;
+    color:black;
+}
+.nav_person ul li a:hover{
+    /*background-color:white;*/
+
+}
+.nav_person .collapse ul li p{
+    margin-bottom:5px;
+    font-size:12px;
+    color:rgb(152,150,150);
+    font-weight:normal;
+}
+.nav_person .collapse ul li.logn_up a{
+    color:white;
+    text-align:center;
+    line-height:60px;
+}
+.nav_person .collapse ul li.logn_up{
+    width:120px;
+    height:60px;
+    display:block;
+    color:white;
+    background-color:black;
+    border-radius:10px;
+    margin-top:16px;
+}
+.nav_person button{
+    margin:22px 17px 16px 0;
+}
+/*导航结束*/
+footer h5{
+    text-align:center;
+    font-weight: bold;
+}
+h1{
+    font-size: 60px;
+    font-weight: bold;
+    color: rgb(255,0,0);
+}
+h4{
+    font-size: 16px;
+    color: rgb(0,0,0);
+    margin-bottom: 5%;
+}
+.buttom p{
+    margin-left: 5px;
+}
+
+.Type{
+    background-color: rgba(178,178,178,0.79);
+    width: 50px;
+    height: 23px;
+    font-size: 10px;
+    color: rgb(255,255,255);
+    text-align: center;
+    padding-top: 3px;
+    border-radius: 5px;
+    float: left;
+    margin-top: 3%;
+}
+.Detail-buttom{
+    font-size: 16px;
+    height: 40px;
+    width: 120px;
+    border-left-color: red;
+    border-left:3px solid red;
+    text-align: center;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 7px;
+}
+.Detail_MinBox{
+    width: 80%;
+    height: 50%;
+}
+.MsgBox {
+    width: 70%;
+    height: 225px;
+    clear: both;
+}
+.MsgBox:after{
+    clear: both;
+    content: '.';
+    display: block;
+}
+.MsgBox .titleBox {
+    width: 100%;
+    height: 40px;
+}
+.buttomBox{
+    width: 100%;
+    height: 60px;
+    /*        float: right;
+            clear: both;*/
+}
+.Detail_TopMsg{
+    width: 90%;
+    height: 250px;
+}
+.Detail_Msg{
+    /* margin-left: 8%;*/
+    width: 55%;
+    height: 230px;
+    float: left;
+    padding-left: 20px;
+}
+.Detail_img{
+    width: 42%;
+    height: 230px;
+    float: left;
+}
+.Detail_img img{
+    max-width: 100%;
+    height: auto;
+}
+.MsgBox .buttonBox{
+    width: 50%;
+    height: 60px;
+    float: left;
+}
+.MsgBox .MsgBox{
+    width: 100%;
+    height: 40px;
+
+}
+
+.MsgBox .titleBox span {
+    font-size: 30px;
+    color: rgb(0,0,0);
+    float: left;
+}
+.MsgBox_DetailMsg{
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+}
+.MsgBox_DetailMsg span{
+    float: left;
+    clear: both;
+}
+.MsgBox_DetailMsg p{
+    display: inline-block;
+}
+.Detail_MinBox h3{
+    text-align: left;
+}
+.Author_Detail{
+    padding-left:5px;
+    height: 85px;
+    border-left: 3px solid red;
+    display: inline-block;
+    margin-top: 8px;
+    border-radius: 2px;
+}
+.Author_Detail span{
+    font-size: 16px;
+}
+
+.container h3{
+    margin-top: 40px;
+    color: rgb(255,1,1);
+    font-size: 20px;
+}
+.Detail_MinBox img{
+    width: 758px;
+    height: 568px;
+}
+.MsgBox_DetailMsg span{
+    font-size: 20px;
+    color: rgb(152,150,150);
+}
+#price{
+    color: red;
+}
+#MoreAddress{
+      display: block;
+    font-size: 12px;
+}
+/*立即購買彈出框樣式開始*/
+.modal-title h4{
+    font-size: 16px;
+    font-family: "Microsoft YaHei UI";
+    color: rgb(0,0,0);
+}
+.modal-header h5{
+    font-size: 14px;
+    color: rgb(0,0,0);
+    font-family: "Microsoft YaHei UI";
+}
+.modal-header p{
+    text-indent: 2em;
+    font-size: 12px;
+    color: black;
+    font-family: "Microsoft YaHei UI";
+    padding-bottom: 0;
+    line-height: 12px;
+}
+.Info span{
+    font-size: 12px;
+    color: black;
+    text-indent: 2em;
+}
+.BuyNowButtom{
+    margin:15px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    font-size: 12px;
+    margin-left: 350px;
+}
+.modal-body .Amt{
+    color: red;
+}
+/*#showMeg{
+    height: 45px;
+}*/
+/*立即購買彈出框樣式開始*/
+/*复选框样式开始*/
+input[type="checkbox"]{appearance: none; -webkit-appearance: none;outline: none;display:none}
+label{width:100px;height:100px;display:inline-block;cursor:pointer;}
+label input[type="checkbox"] + span{width:20px;height:20px;display:inline-block;background:url(../images/checkbox_01.gif)  no-repeat;background-position:0 0;}
+label input[type="checkbox"]:checked + span{background-position:0 -21px;}
+/*复选框样式结束*/

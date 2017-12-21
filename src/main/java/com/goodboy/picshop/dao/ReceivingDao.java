@@ -4,7 +4,6 @@ import com.goodboy.picshop.entity.Receiving;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
 public interface ReceivingDao {
 
     /**

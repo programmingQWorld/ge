@@ -27,8 +27,8 @@ public class UserDaoTest extends BaseTest {
     public void testQueryUserIdByAccountAndPassword() throws Exception{
         String account = "test0001";
         String password = "test0001";
-        int userId = userDao.queryUserIdByAccountAndPassword(account, password);
-        System.out.println("userId = " + userId);
+        User user = userDao.queryUserIdByAccountAndPassword(account, password);
+        System.out.println("userId = " + user.getId());
     }
 
     @Test

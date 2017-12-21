@@ -5,8 +5,8 @@
 
 <mapper namespace="com.goodboy.picshop.dao.UserDao">
 
-    <select id="queryUserIdByAccountAndPassword" resultType="int" >
-        SELECT id
+    <select id="queryUserIdByAccountAndPassword" resultType="User" >
+        SELECT id,avatar,nickname,birthday,email,phone
         FROM shop_user
         WHERE account = #{account} AND password = #{password}
     </select>
@@ -21,9 +21,16 @@
         INSERT INTO shop_user (account, password, nickname, avatar, sex, birthday, email, phone)
         VALUES (#{account}, #{password}, #{nickname}, #{avatar}, #{sex}, #{birthday}, #{email}, #{phone})
     </insert>
-
+    <!---获取用户的信息：昵称，头像，邮箱，性别，生日-->
     <select id="queryUserById" resultType="User">
-        SELECT * FROM shop_user WHERE id = #{id}
+        SELECT id,nickname,avatar,email,sex,birthday FROM shop_user WHERE id = #{id}
     </select>
+
+    <select id="findUserByEmail" resultType="User">
+        SELECT id,nickname FROM shop_user WHERE email = #{email}
+    </select>
+
+
+
 
 </mapper>

@@ -10,6 +10,7 @@
     <script src="/js/masonry/masonry.pkgd.min.js"></script>
     <script src="/js/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="/js/vue/vue.js"></script>
+    <script src="/js/function.js"></script>
     <script src="/js/commodity.js"></script>
     <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/css/iconfont.css">
@@ -42,25 +43,26 @@
     </div>
 </div>
 <!-- 导航结束 -->
+<div class="content">
     <div class="works-top" >
         <div class="row">
             <div style="padding-left: 6%;padding-top: 2%">
-                <a href="Calligraphy.html"><button type="button" class="works-btn">書法</button></a>
-                <a href="ChinesePainting.html"><button type="button" class="works-btn">國畫</button></a>
-                <a href="LandscapePainting.html"><button type="button" class="works-btn">山水畫</button></a>
+                <button v-on:click="clickTag($event)" class="works-btn" data-id="0">全部</button>
+                <button v-for="tag in tags" v-on:click="clickTag($event)" class="works-btn" v-bind:data-id="tag.id">{{ tag.name }}</button>
             </div>
         </div>
     </div>
     <div class="works-pic grid" >
-        <div v-for="item in items" class="col-md-3 col-md-4 col-sm-4 col-sm-6 tanchuname_baba grid-item">
-            <a href="Detail.html">
-                <img v-bind:src="item.picture" alt="图片找不到了" width="268" >
+        <div v-for="commodity in commodities" class="col-md-3 col-md-4 col-sm-4 col-sm-6 tanchuname_baba grid-item">
+            <a v-bind:href="makeDetailUrl(commodity.id)">
+                <img v-bind:src="commodity.picture" v-on:mouseenter="fadeImg(0,$event)" v-on:mouseleave="fadeImg(1,$event)" alt="图片找不到了" width="268" >
                 <div class="slide_name">
-                    <span>{{ item.name }}</span>
+                    <span>{{ commodity.name }}</span>
                 </div>
             </a>
         </div>
     </div>
+</div>
     <!--底部开始-->
     <div class="container">
         <footer>

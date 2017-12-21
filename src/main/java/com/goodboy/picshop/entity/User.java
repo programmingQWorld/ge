@@ -1,5 +1,7 @@
 package com.goodboy.picshop.entity;
 
+
+
 import java.util.Date;
 
 /**
@@ -11,7 +13,7 @@ public class User {
     private String password;    //用户密码
     private String nickname;    //用户昵称
     private String avatar;      //用户头像
-    private char sex;            //用户性别
+    private char sex;           //用户性别
     private Date birthday;      //用户生日
     private String email;       //用户邮箱
     private String phone;       //用户手机
@@ -37,6 +39,15 @@ public class User {
         this.password = password;
         this.email = email;
         this.phone = phone;
+    }
+
+    //更新用户信息业务的构造器
+    public User(String nickname, String avatar, char sex, Date birthday, String email) {
+        this.nickname = nickname;
+        this.avatar = avatar;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.email = email;
     }
 
     public int getId() {

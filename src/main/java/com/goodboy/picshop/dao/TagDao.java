@@ -18,4 +18,11 @@ public interface TagDao {
      * @return 插入行数
      */
     int insertTag(Tag tag);
+
+    /**
+     * 根据商品id查询该商品的标签
+     * @param commodityId 商品id
+     * @return 标签集合
+     */
+    List<Tag> queryTagByCommodityId(int commodityId);
 }

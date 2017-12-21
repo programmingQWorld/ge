@@ -1,25 +1,47 @@
 package com.goodboy.picshop.dto;
 
 /**
- * 封装操作基类
+ * dto父类  封装操作基类
  */
 public class BaseDto {
-    private int status;     //状态标识
-    private String info;    //状态信息
+	private int status;     // 标识
+	private String info;    // 标识信息
 
-    public int getStatus() {
-        return status;
-    }
+	public BaseDto() {
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public BaseDto(int status, String info) {
+		this.status = status;
+		this.info = info;
+	}
 
-    public String getInfo() {
-        return info;
-    }
+	public BaseDto(StatusEnum statusEnum) {
+		this.status = statusEnum.getStatus();
+		this.info = statusEnum.getInfo();
+	}
 
-    public void setInfo(String info) {
-        this.info = info;
-    }
+	@Override
+	public String toString() {
+		return "BaseDto{" +
+				"status=" + status +
+				", info='" + info + '\'' +
+				'}';
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
 }

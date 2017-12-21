@@ -6,7 +6,12 @@ import com.goodboy.picshop.entity.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 /**
  * ReceivingDao的测试类
@@ -37,7 +42,7 @@ public class ReceivingDaoTest extends BaseTest {
 
     @Test
     public void testSetIsDefault() throws Exception{
-        int set = receivingDao.setIsDefault(2,1);
+        int set = receivingDao.setIsDefault(3,1);
         System.out.println("update = " + set);
     }
 
