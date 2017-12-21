@@ -8,6 +8,8 @@ import com.goodboy.picshop.exception.UserErrorException;
 import com.goodboy.picshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     public UserDto userLogin(String account, String password) {
         User user=userDao.queryUserIdByAccountAndPassword(account,password);
