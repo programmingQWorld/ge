@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 
 @RestController
+// 跨域请求
+@CrossOrigin
 @RequestMapping("cart")
 public class CartController {
 

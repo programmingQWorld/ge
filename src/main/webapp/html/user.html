@@ -33,7 +33,8 @@
 				<li><a href="index.html"><p>yè</p><span>主頁</span></a></li>
 				<li><a href="Detail.html"><p>zuò</p><span>作品</span></a></li>
 				<li><a href="index.html#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
-				<li class="logn_up" data-toggle="modal" data-target="#"><a href="#">登录</a></li>
+				<li v-if="user.id" class="logn_up"><a href="user.html">{{ user.nickname }}</a></li>
+				<li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
 			</ul>
 		</div>
 	</div>
@@ -103,82 +104,48 @@
 										<span v-else class="n_judge_pay">未付款<br><span class="red_font">请在一小时内完成付款</span></span>
 									</td>
 									<td class="dothing">
-										<div class="delete">删除</div>
-										<div class="pay" data-toggle="modal" data-target="#Paypage">付款</div>
-										<div class="xq" data-toggle="modal" data-target="#UnpaidOreder_Detail">详情</div>
+										<div v-if="order.isPay == 0" class="pay" data-toggle="modal" data-target="#Paypage">付款</div>
+										<div class="xq" data-toggle="modal" v-bind:data-target="makeModalId(order.id, true)">详情</div>
 									</td>
 								</tr>
 							</table>
-						</div>
-					</div>
-				</div>
-				<!-- 詳情（已付款）彈出框開始-->
-				<div class="modal fade" id="PaidpOreder_Detail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<h4 class="modal-title" id="myModalLabel1">訂單詳情</h4>
-							</div>
-							<div class="modal-header">
-								<h5>商品信息</h5>
-								<p>商品名稱：<span>《谁》</span></p>
-								<p>金額：</p>
-								<p>運費：</p>
-								<p>總金額：</p>
-							</div>
-							<div class="modal-header">
-								<h5>收貨信息</h5>
-								<p>收貨人：</p>
-								<p>地址：</p>
-								<p>電話號碼：</p>
+							<!-- 詳情彈出框開始-->
+							<div class="modal fade" v-bind:id="makeModalId(order.id, false)" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel1">訂單詳情</h4>
+										</div>
+										<div class="modal-header">
+											<h5>商品信息</h5>
+											<p>商品名稱：<span>《{{ order.commodity.name }}》</span></p>
+											<p>金額：<span>{{ order.commodity.price }}</span></p>
+											<p>運費：<span>{{ order.commodity.shippingCost }}</span></p>
+											<p>總金額：<span>{{ getTotalCost(index) }}</span></p>
+										</div>
+										<div class="modal-header">
+											<h5>收貨信息</h5>
+											<p>收貨人：{{ order.receiving.receiver }}</p>
+											<p>地址：{{ order.receiving.address }}</p>
+											<p>電話號碼：{{ order.receiving.phone }}</p>
 
+										</div>
+										<div class="modal-header">
+											<h5>配送信息</h5>
+											<p>訂單狀態：<span v-if="order.isPay" class="paid">已付款</span><span v-else class="paid">未付款</span></p>
+											<p>下單信息：<span>{{ order.orderNo }}</span></p>
+											<p>配送信息：<span v-if="order.status == 1" class="DelInfo">已送出（<b>1小时之内到達</b>）</span></p>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="modal-header">
-								<h5>配送信息</h5>
-								<p>訂單狀態：<span class="paid">已付款</span></p>
-								<p>下單信息：</p>
-								<p>配送信息：<span class="DelInfo">已送出（<b>1小时之内到達</b>）</span></p>
-							</div>
+							<!-- 詳情彈出框結束-->
 						</div>
 					</div>
 				</div>
-				<!-- 詳情（已付款）彈出框結束-->
-				<!-- 詳情（未付款）彈出框開始-->
-				<div class="modal fade" id="UnpaidOreder_Detail" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<h4 class="modal-title" id="myModalLabel2">訂單詳情</h4>
-							</div>
-							<div class="modal-header">
-								<h5>商品信息</h5>
-								<p>商品名稱：</p>
-								<p>金額：</p>
-								<p>運費：</p>
-								<p>總金額：</p>
-							</div>
-							<div class="modal-header">
-								<h5>收貨信息</h5>
-								<p>收貨人：</p>
-								<p>地址：</p>
-								<p>電話號碼：</p>
-
-							</div>
-							<div class="modal-header">
-								<h5>配送信息</h5>
-								<p>訂單狀態：<span class="paid">未付款</span></p>
-								<p>下單信息：</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- 詳情（已付款）彈出框結束-->
 				<!--付款頁面開始-->
 				<div class="modal fade" id="Paypage" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog" role="document" style="height: 5%;width: 30%">
@@ -287,7 +254,7 @@
 							<span class="content_name">{{ receiving.receiver }}</span>
 							<span class="content_address">{{ receiving.address }}</span>
 							<span class="content_phone">{{ receiving.phone }}</span>
-							<span class="content_del" v-bind:data-id="receiving.id">删除</span>
+							<span class="content_del" v-bind:data-id="receiving.id" v-on:click="delReceiving($event)">删除</span>
 						</div>
 					</div>
 				</div>
@@ -338,19 +305,19 @@
 				<div class="addOpus">
 					<form class="addopusForm">
 						<div class="opusdiv">
-							作品名称：<input type="text" name="opusName">
+							作品名称：<input type="text" name="cname">
 							<p>
-								作品：<span class="opusImg"><img class="addImg" id="addImg" src="images/Orders/add.png"><input type="file" name="opusUrl" id="file"><img src="" id="show" alt=""></span>
+								作品：<span class="opusImg"><img class="addImg" id="addImg" src="images/Orders/add.png"><input type="file" id="commodityPicture"><img src="" id="showCommodityPic" width="200" height="150" alt=""></span>
 								<i>支持JPG、JPEG、PEG格式</i>
 							</p>
 							<p>
-								标题：<input type="radio" value="书法" name="lb">书法<input type="radio" value="国画" name="lb">国画<input type="radio" value="山水画" name="lb">山水画<input type="text" name="opusOther" placeholder="其他"></p>
+								标签：<span v-for="tag in tags"><input type="radio" v-bind:value="tag.id" name="tagId">{{ tag.name }}</span><!--<input type="text" placeholder="其他">--></p>
 							<p>
-								尺寸：<span class="size"><input type="text" name="sizex" class="inputSize">*<input type="text" name="sizey" class="inputSize">cm</span></p>
+								尺寸：<span class="size"><input type="text" name="csizeWidth" class="inputSize"> * <input type="text" name="csizeHeight" class="inputSize">cm</span></p>
 							<p>
-								价格：<input type="text" name="money"></p>
+								价格：<input type="text" name="cprice"></p>
 							<p>
-								<input type="submit" value="保存" name="sub"></p>
+								<input type="button" value="保存" class="sub"></p>
 						</div>
 					</form>
 				</div>
@@ -362,7 +329,7 @@
 						<span class="noworder">待发货</span><span class="orderNum">1</span>
 						<span class="beforeorder">已发货</span><span class="orderNum">1</span>
 					</div>
-					<div class="nowOrder">
+					<div v-for="sellerOrder in sellerOrders" class="nowOrder">
 						<div class="orderContent col-md-7">
 							<!-- <img src="img/作者介绍-作品1.png"> -->
 							<div class="row topInfo">
@@ -370,43 +337,19 @@
 									<img src="images/Orders/AuthorIntro_works1.png">
 								</div>
 								<div class="col-md-4 orderPro">
-									<span class="orderpro">阿二《码头》</span><p><span class="orderpro">￥200.00</span>
+									<span class="orderpro">{{ sellerOrder.user.nickname }}《{{ sellerOrder.commodity.name }}》</span><p><span class="orderpro">￥{{ sellerOrder.commodity.price }}</span>
 								</div>
 								<div class="col-md-5 orderTime">
-									2017-02-25 12:20:45
+									{{ sellerOrder.createTime }}
 								</div>
 							</div>
 							<div class="row bottomInfo">
 								<div class="col-md-12">配送信息</div>
-								<div class="col-md-2 bottomText" id="1">就是我</div>
-								<div class="col-md-5 bottomText" id="2">广东科学技术职业学院</div>
-								<div class="col-md-2 bottomText" id="3">11111111111</div>
-								<div class="col-md-3 bottomText" id="4"><button class="send">发货</button>
+								<div class="col-md-2 bottomText" id="1">{{ sellerOrder.receiving.receiver }}</div>
+								<div class="col-md-5 bottomText" id="2">{{ sellerOrder.receiving.address }}</div>
+								<div class="col-md-2 bottomText" id="3">{{ sellerOrder.receiving.phone }}</div>
+								<div class="col-md-3 bottomText" id="4"><button v-if="sellerOrder.status" class="send sendok">已发货</button><button v-else class="send">发货</button>
 								</div>
-							</div>
-
-						</div>
-					</div>
-					<div class="beforeOrder">
-						<div class="orderContent col-md-7">
-							<!-- <img src="img/作者介绍-作品1.png"> -->
-							<div class="row topInfo">
-								<div class="col-md-3 orderImg">
-									<img src="images/Orders/AuthorIntro_works2.png">
-								</div>
-								<div class="col-md-4 orderPro">
-									<span class="orderpro">阿二《码头》</span><p><span class="orderpro">￥200.00</span>
-								</div>
-								<div class="col-md-5 orderTime">
-									2017-02-25 12:20:45
-								</div>
-							</div>
-							<div class="row bottomInfo">
-								<div class="col-md-12">配送信息</div>
-								<div class="col-md-2 bottomText">就是我</div>
-								<div class="col-md-5 bottomText">广东科学技术职业学院</div>
-								<div class="col-md-2 bottomText">11111111111</div>
-								<div class="col-md-3 bottomText"><button class="send sendok">已发货</button></div>
 							</div>
 
 						</div>

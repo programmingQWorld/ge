@@ -9,10 +9,12 @@ $(document).ready(function () {
     var vm = new Vue({
         el: '.content',
         data: {
-            user: {},       // 登录用户
-            orders: [],     // 订单数据
-            receivings: [], // 收货信息
-            commodities: [] // 商品信息
+            user: {},           // 登录用户
+            orders: [],         // 订单数据
+            receivings: [],     // 收货信息
+            commodities: [],    // 商品信息
+            tags:[],            // 标签
+            sellerOrders: []    // 卖家订单
         },
         computed: {
             // 用户名
@@ -36,21 +38,47 @@ $(document).ready(function () {
                 }else{
                     $(event.currentTarget).find(".imgmsg").hide(200);
                 }
+            },
+            // 生成模态框id
+            makeModalId: function (id, t) {
+                if(t){
+                    return "#Oreder_Detail_" + id;
+                }else
+                    return "Oreder_Detail_" + id;
+            },
+            // 删除收货信息
+            delReceiving: function (e) {
+                $.ajax({
+                    url: "/receiving/delete/" + $(e.currentTarget).attr('data-id'),
+                    success: function (data, status) {
+                        if(data.data.status == 1){
+                            alert(data.status.info);
+                        }else{
+                            alert(data.status.info);
+                        }
+                    }
+                });
             }
         }
     });
 
     // 请求登录用户数据
-    setVueData("http://10.10.112.170:8080/user/queryUserById/" + loginUser, vm, "user");
+    setVueData("/user/queryUserById/" + loginUser, vm, "user");
 
     // 请求订单数据
-    setVueData("http://10.10.112.170:8080/order/list", vm, "orderList");
+    setVueData("/order/list", vm, "orderList");
 
     // 请求收货信息数据
     setVueData("/receiving/searchReceiving", vm, "receivingList");
 
     // 请求卖家商品信息
     setVueData("/user/" + loginUser + "/commodity", vm, "commodityList");
+
+    // 请求标签数据
+    setVueData("/tag/list", vm, "tagList");
+
+    // 请求卖家订单
+    setVueData("/order/seller/list", vm, "sellerOrderList");
 
     // 上传头像
     $('#avatar').change(function () {
@@ -114,6 +142,47 @@ $(document).ready(function () {
                 if(data.data.status == 1){
                     alert(data.data.info);
                 }else {
+                    alert(data.data.info);
+                }
+            }
+        });
+    });
+
+    // 上传商品图片
+    $('#commodityPicture').change(function () {
+        var formData = new FormData();
+        formData.append("file", $('#commodityPicture')[0].files[0]);
+        $.ajax({
+            url: "/commodity/upload",
+            type: "POST",
+            processData: false,
+            cache: false,
+            contentType: false,
+            data: formData,
+            success: function (data, status) {
+                if(data.data.status == 1){
+                    $('#showCommodityPic').attr('src', data.data.fileName);
+                }else{
+                    alert(data.data.info);
+                }
+            }
+        });
+    });
+
+    // 保存新增商品
+    $('.addOpus .sub').click(function () {
+        var formData = new FormData($('.addOpus .addopusForm')[0]);
+        formData.append("cpic", $('.addOpus #showCommodityPic').attr('src'));
+        $.ajax({
+            url: "/user/commodity/add",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status) {
+                if(data.data.status == 1){
+                    alert(data.data.info);
+                }else{
                     alert(data.data.info);
                 }
             }

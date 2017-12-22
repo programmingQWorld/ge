@@ -50,7 +50,8 @@
 					<li id="workspage"><a href="#workPage"><p>zuò</p><span>作品</span></a></li>
 					<div class="move_line2"></div>
 					<li id="AboutUspage"><a href="#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
-					<li class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
+					<li v-if="user.id" class="logn_up"><a href="user.html">{{ user.nickname }}</a></li>
+					<li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
 				</ul>
 			</div>
 		</div>
@@ -136,16 +137,12 @@
             <li data-target="#myCarousel" data-slide-to="2"></li>
         </ol> -->
 		<div class="carousel-inner">
-			<div class="item active">
-				<a href="Detail.html"><img class="images_carousel" src="images/HomePage/Carousel1.png" alt="1"/></a>
+			<div v-for="(levelCommodity, index) in levelCommodities" v-if="index === 0" class="item active">
+				<a v-bind:href="makeDetailUrl(levelCommodity.id)"><img class="images_carousel" v-bind:src="levelCommodity.picture" alt="2"/></a>
 				<div class="carousel-caption"></div>
 			</div>
-			<div class="item">
-				<a href="Detail.html"><img class="images_carousel" src="images/HomePage/Carousel2.png" alt="2"/></a>
-				<div class="carousel-caption"></div>
-			</div>
-			<div class="item">
-				<a href="Detail.html"><img class="images_carousel" src="images/HomePage/Carousel3.png" alt="3"/></a>
+			<div v-else class="item">
+				<a v-bind:href="makeDetailUrl(levelCommodity.id)"><img class="images_carousel" v-bind:src="levelCommodity.picture" alt="2"/></a>
 				<div class="carousel-caption"></div>
 			</div>
 		</div>

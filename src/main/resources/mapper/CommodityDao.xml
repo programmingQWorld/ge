@@ -47,4 +47,8 @@
         INSERT INTO shop_commodity_rel_tag (cid, tid) VALUES (#{commodityId}, #{tagId})
     </insert>
 
+    <select id="queryCommodityByLevel" resultType="Commodity">
+        SELECT id, picture FROM shop_commodity WHERE level = #{level}
+    </select>
+
 </mapper>

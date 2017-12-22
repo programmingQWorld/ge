@@ -83,4 +83,16 @@ public class CommodityController {
         }
         return new JSONResult<TagDto>(true, tagDto);
     }
+
+    // 根据等级获取商品
+    @RequestMapping(value = "/{level}/level", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<CommodityDto> getByLevel(@PathVariable("level") int level){
+        CommodityDto commodityDto = null;
+        try {
+            commodityDto = commodityService.getByLevel(level);
+        }catch (NoCommodityFoundException ncfe){
+            commodityDto = new CommodityDto(StatusEnum.NO_COMMODITY_FOUND);
+        }
+        return new JSONResult<CommodityDto>(true, commodityDto);
+    }
 }

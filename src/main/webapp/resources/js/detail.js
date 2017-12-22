@@ -7,6 +7,12 @@ $(document).ready(function () {
         data: {
             commodity: {user:{}},
             tags: [],
+        },
+        methods: {
+            // 生成作者链接
+            makeAuthorUrl: function (id) {
+                return "author-" + id + ".html";
+            }
         }
     });
 
@@ -17,8 +23,8 @@ $(document).ready(function () {
     var commodityId = patt.exec(url)[1];
 
     // 请求商品详情
-    setVueData("http://10.10.112.170:8080/commodity/" + commodityId + "/detail", vm, "commodity");
+    setVueData("/commodity/" + commodityId + "/detail", vm, "commodity");
 
     // 请求商品标签
-    setVueData("http://10.10.112.170:8080/commodity/" + commodityId + "/tag", vm, "tagList");
+    setVueData("/commodity/" + commodityId + "/tag", vm, "tagList");
 });

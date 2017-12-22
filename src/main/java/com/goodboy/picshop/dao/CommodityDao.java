@@ -54,4 +54,11 @@ public interface CommodityDao {
      * @return 插入行数
      */
     int insertCommodityRelTag(@Param("tagId") int tagId, @Param("commodityId") int commodityId);
+
+    /**
+     * 根据等级获取商品
+     * @param level 商品等级
+     * @return  商品集合
+     */
+    List<Commodity> queryCommodityByLevel(int level);
 }

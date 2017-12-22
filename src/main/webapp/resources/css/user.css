@@ -241,12 +241,12 @@ body{
 }
 .opusImg img{
 }
-input[name="opusName"]{
+input[name="cname"]{
 	width:200px;
 	height:30px;
 
 }
-input[name="opusUrl"]{
+input#commodityPicture, input[name="opusUrl"]{
 	position:absolute;
 	top:0;
 	right:0;
@@ -273,7 +273,7 @@ input[name="opusUrl"]{
 	margin-left:19px;
 	font-weight:normal;
 }
-input[name="lb"]{
+input[name="tagId"]{
 	margin-left:28px;
 	margin-right:9px;
 }
@@ -288,12 +288,12 @@ input[name="opusOther"]{
 	margin-left:8px;
 	margin-right:8px;
 }
-input[name="money"]{
+input[name="cprice"]{
 	width:250px;
 	height:30px;
 	margin-left:27px;
 }
-input[name="sub"]{
+input.sub{
 	margin-left:67px;
 	line-height:28px;
 	border-radius:6px;

@@ -59,4 +59,10 @@ public class CommodityDaoTest extends BaseTest{
         int insert = commodityDao.insertCommodityRelTag(1, 4);
         System.out.println("insert = " + insert);
     }
+
+    @Test
+    public void testQueryCommodityByLevel() throws Exception{
+        List<Commodity> commodityList = commodityDao.queryCommodityByLevel(5);
+        System.out.println(commodityList);
+    }
 }

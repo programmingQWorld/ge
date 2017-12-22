@@ -173,4 +173,38 @@ public class UserController {
         }
         return new JSONResult<CommodityDto>(true, commodityDto);
     }
+
+    // 新增商品
+    @RequestMapping(value = "/commodity/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<CommodityDto> addCommodity(@RequestParam("cname") String name,
+                                                 @RequestParam("cpic") String picture,
+                                                 @RequestParam("tagId") int tagId,
+                                                 @RequestParam("csizeWidth") float sizeWidth,
+                                                 @RequestParam("csizeHeight") float sizeHeight,
+                                                 @RequestParam("cprice") float price,
+                                                 HttpSession session){
+        User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<CommodityDto>(false,"用户未登录");
+        }
+        CommodityDto commodityDto = null;
+        try {
+            commodityDto = commodityService.add(name, picture, tagId, sizeWidth, sizeHeight, price, user.getId());
+        }catch (NoUserException nue){       // 用户不存在
+            commodityDto = new CommodityDto(StatusEnum.NO_USER);
+        }catch (CommodityRepeatException cre){      // 商品重复
+            commodityDto = new CommodityDto(StatusEnum.COMMODITY_REPEAT);
+        }
+        return new JSONResult<CommodityDto>(true, commodityDto);
+    }
+
+    // 是否登录
+    @RequestMapping(value = "/islogin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<UserDto> isLogin(HttpSession session){
+        User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<UserDto>(false,"用户未登录");
+        }
+        return new JSONResult<UserDto>(true, new UserDto(StatusEnum.SUCCESS, user));
+    }
 }

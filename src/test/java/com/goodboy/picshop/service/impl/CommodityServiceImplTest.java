@@ -40,4 +40,10 @@ public class CommodityServiceImplTest extends BaseTest {
                 6, 120, 120, 120, 2);
         System.out.println(commodityDto);
     }
+
+    @Test
+    public void testGetByLevel() throws Exception{
+        CommodityDto commodityDto = commodityService.getByLevel(5);
+        System.out.println(commodityDto);
+    }
 }

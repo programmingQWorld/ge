@@ -117,4 +117,21 @@ public class CommodityServiceImpl implements CommodityService {
         }
         return null;
     }
+
+    public CommodityDto getByLevel(int level) {
+
+        // 根据商品等级查询
+        List<Commodity> commodityList = commodityDao.queryCommodityByLevel(level);
+        try {
+            // 判断是否有商品
+            if (!commodityList.isEmpty()) {
+                CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+                return commodityDto;
+            } else {    // 没有商品
+                throw new NoCommodityFoundException("no commodity found");
+            }
+        }catch (NoCommodityFoundException ncfe){
+            throw ncfe;
+        }
+    }
 }
