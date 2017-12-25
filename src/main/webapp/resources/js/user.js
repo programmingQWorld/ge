@@ -4,7 +4,7 @@ $(document).ready(function () {
     if(!loginUser){
         window.location.assign("index.html");
         return;
-    }
+    }*/
     // 绑定数据Vue对象
     var vm = new Vue({
         el: '.content',
