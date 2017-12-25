@@ -1,6 +1,7 @@
 package com.goodboy.picshop.controller;
 
 import com.goodboy.picshop.dto.*;
+import com.goodboy.picshop.entity.User;
 import com.goodboy.picshop.exception.*;
 import com.goodboy.picshop.service.CommodityService;
 import com.goodboy.picshop.service.TagService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * 注解为REST控制器，所有方法返回json数据
@@ -93,6 +96,23 @@ public class CommodityController {
         }catch (NoCommodityFoundException ncfe){
             commodityDto = new CommodityDto(StatusEnum.NO_COMMODITY_FOUND);
         }
+        return new JSONResult<CommodityDto>(true, commodityDto);
+    }
+
+    // 修改商品
+    @RequestMapping(value = "/{commodityId}/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<CommodityDto> update(@PathVariable("commodityId") int commodityId,
+                                           @RequestParam("name") String name,
+                                           @RequestParam("sizeW") float sizeWidth,
+                                           @RequestParam("sizeH") float sizeHeight,
+                                           @RequestParam("price") float price,
+                                           HttpSession session){
+        User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<CommodityDto>(false,"用户未登录");
+        }
+        CommodityDto commodityDto = null;
+        commodityDto = commodityService.update(commodityId, name, price, sizeWidth, sizeHeight);
         return new JSONResult<CommodityDto>(true, commodityDto);
     }
 }

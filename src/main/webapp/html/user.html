@@ -31,7 +31,7 @@
 		<div class="collapse navbar-collapse navbar-right" id="navbar">
 			<ul class="nav navbar-nav">
 				<li><a href="index.html"><p>yè</p><span>主頁</span></a></li>
-				<li><a href="Detail.html"><p>zuò</p><span>作品</span></a></li>
+				<li><a href="commodity.html"><p>zuò</p><span>作品</span></a></li>
 				<li><a href="index.html#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
 				<li v-if="user.id" class="logn_up"><a href="user.html">{{ user.nickname }}</a></li>
 				<li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
@@ -105,12 +105,12 @@
 									</td>
 									<td class="dothing">
 										<div v-if="order.isPay == 0" class="pay" data-toggle="modal" data-target="#Paypage">付款</div>
-										<div class="xq" data-toggle="modal" v-bind:data-target="makeModalId(order.id, true)">详情</div>
+										<div class="xq" data-toggle="modal" v-bind:data-target="makeModalId('Oreder_Detail_' +order.id, true)">详情</div>
 									</td>
 								</tr>
 							</table>
 							<!-- 詳情彈出框開始-->
-							<div class="modal fade" v-bind:id="makeModalId(order.id, false)" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal fade" v-bind:id="makeModalId('Oreder_Detail_' + order.id, false)" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -282,11 +282,32 @@
 											<p>尺寸：{{ commodity.sizeWidth }} * {{ commodity.sizeHeight }}</p>
 											价格：￥{{ commodity.price }}<p></p>
 											<div class="edit">
-												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" data-target="#Show_EditPage" title="编辑">
+												<img src="images/Orders/edit.png" class="imgedit" data-toggle="modal" v-bind:data-target="makeModalId('Show_EditPage_' + commodity.id, true)" title="编辑">
 											</div>
 										</span>
 							</div>
+							<!--顯示編輯頁面彈出框開始-->
+							<div class="modal fade" v-bind:id="makeModalId('Show_EditPage_' + commodity.id, false)" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document" style="width: 350px;height: 300px">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title">修改信息</h4>
+										</div>
+										<div class="modal-header Info">
+											<h5>作品：<span>《<input v-bind:value="commodity.name" name="name" class="form-control">》</span></h5>
+											<h5>作者：<input v-bind:value="commodity.user.nickname" name="author" class="form-control"></h5>
+											<h5>尺寸：<input v-bind:value="commodity.sizeWidth" type="number" min="1" name="sizeW" class="form-control">cm * <input v-bind:value="commodity.sizeHeight" type="number" min="1" name="sizeH" class="form-control" />cm</h5>
+											<h5>價格：<span>&yen;<input v-bind:value="commodity.price" type="number" min="1" name="price" class="form-control"></span></h5>
+										</div>
+										<div class="buttonBox"><button type="button" class="EditButton" v-bind:data-id="commodity.id">確認修改</button></div>
+									</div>
+								</div>
+							</div>
 						</div>
+						<!--顯示編輯頁面彈出框結束-->
 					</div>
 					<!--翻页开始-->
 					<div class="works-page fy">
@@ -355,30 +376,9 @@
 						</div>
 					</div>
 				</div>
-				<!--顯示編輯頁面彈出框開始-->
-				<div class="modal fade" id="Show_EditPage" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document" style="width: 350px;height: 300px">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<h4 class="modal-title">修改信息</h4>
-							</div>
-							<div class="modal-header Info">
-								<h5>作品：<span>《<input id="name" class="form-control">》</span></h5>
-								<h5>作者：<input id="author" class="form-control"></h5>
-								<h5>尺寸：<input type="number" min="1" id="size" class="form-control">cm *<input type="number" min="1" id="size1" class="form-control" />cm</h5>
-								<h5>價格：<span>&yen;<input type="number" min="1" id="price" class="form-control"></span></h5>
-							</div>
-							<div class="buttonBox"><button type="button" class="EditButtom ">確認修改</button></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--顯示編輯頁面彈出框結束-->
 			</div>
 		</div>
+	</div>
 </div>
 <!-- 个人中心结束 -->
 <!--底部开始-->
@@ -497,20 +497,6 @@
             keyboard: true
         })*/
 		/*彈出框結束*/
-		/*修改資料開始*/
-        $('.EditButtom').click(function () {
-            if($("#name").val()==""||($("#author").val()=="")||($("#size").val()=="")||($("#price").val()==""))
-            {
-                alert(":(  不能為空");
-                return false;
-            }
-            else {
-                alert(":)  修改成功");
-                $('#Show_EditPage').modal('hide');
-
-            }
-        })
-		/*修改資料結束*/
     });
 </script>
 <script>

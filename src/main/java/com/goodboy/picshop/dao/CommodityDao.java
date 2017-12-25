@@ -61,4 +61,11 @@ public interface CommodityDao {
      * @return  商品集合
      */
     List<Commodity> queryCommodityByLevel(int level);
+
+    /**
+     * 修改商品信息
+     * @param commodity 商品实体
+     * @return 影响行数
+     */
+    int updateCommodity(Commodity commodity);
 }

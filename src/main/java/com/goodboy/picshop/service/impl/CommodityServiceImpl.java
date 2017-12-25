@@ -134,4 +134,14 @@ public class CommodityServiceImpl implements CommodityService {
             throw ncfe;
         }
     }
+
+    public CommodityDto update(int id, String name, float price, float sizeWidth, float sizeHeight) {
+        Commodity commodity = commodityDao.queryCommodityById(id);
+        commodity.setName(name);
+        commodity.setPrice(price);
+        commodity.setSizeWidth(sizeWidth);
+        commodity.setSizeHeight(sizeHeight);
+        commodityDao.updateCommodity(commodity);
+        return new CommodityDto(StatusEnum.SUCCESS);
+    }
 }

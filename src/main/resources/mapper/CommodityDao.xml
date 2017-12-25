@@ -51,4 +51,9 @@
         SELECT id, picture FROM shop_commodity WHERE level = #{level}
     </select>
 
+    <update id="updateCommodity" parameterType="Commodity">
+        UPDATE shop_commodity SET name = #{name}, size_width = #{sizeWidth}, size_height = #{sizeHeight}, price = #{price}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

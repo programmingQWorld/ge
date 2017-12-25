@@ -58,4 +58,15 @@ public interface CommodityService {
      * @return
      */
     CommodityDto getByLevel(int level);
+
+    /**
+     * 修改商品信息
+     * @param id
+     * @param name
+     * @param price
+     * @param sizeWidth
+     * @param sizeHeight
+     * @return
+     */
+    CommodityDto update(int id, String name, float price, float sizeWidth, float sizeHeight);
 }

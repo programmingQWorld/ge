@@ -72,6 +72,9 @@ function setVueData(url, vm, type) {
                         delCookie("loginUser");
                     }
                     break;
+                case "cartitems" :
+                    vm.cartitems = data.data.items;
+                    break;
             }
         }
     });

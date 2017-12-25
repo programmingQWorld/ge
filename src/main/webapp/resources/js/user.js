@@ -42,9 +42,9 @@ $(document).ready(function () {
             // 生成模态框id
             makeModalId: function (id, t) {
                 if(t){
-                    return "#Oreder_Detail_" + id;
+                    return "#" + id;
                 }else
-                    return "Oreder_Detail_" + id;
+                    return id;
             },
             // 删除收货信息
             delReceiving: function (e) {
@@ -52,9 +52,9 @@ $(document).ready(function () {
                     url: "/receiving/delete/" + $(e.currentTarget).attr('data-id'),
                     success: function (data, status) {
                         if(data.data.status == 1){
-                            alert(data.status.info);
+                            alert(data.data.info);
                         }else{
-                            alert(data.status.info);
+                            alert(data.data.info);
                         }
                     }
                 });
@@ -187,5 +187,39 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+    // 修改商品
+    $(document).on("click", ".EditButton", function (e) {
+        var id = $(this).attr("data-id");
+        var name = $(this).parent().prev().find('input[name="name"]').val();
+        var author = $(this).parent().prev().find('input[name="author"]').val();
+        var sizeW = $(this).parent().prev().find('input[name="sizeW"]').val();
+        var sizeH = $(this).parent().prev().find('input[name="sizeH"]').val();
+        var price = $(this).parent().prev().find('input[name="price"]').val();
+        if(name == "" || author == "" || sizeW == "" || sizeH == "" || price == "") {
+            alert(":(  不能為空");
+            return false;
+        } else {
+            $.ajax({
+                url: "/commodity/" + id + "/update",
+                method: "POST",
+                data: {
+                    "id": id,
+                    "name": name,
+                    "sizeW": sizeW,
+                    "sizeH": sizeH,
+                    "price": price
+                },
+                success: function (data, status) {
+                    if(data.data.status == 1){
+                        alert(":)  修改成功");
+                        $('.modal').modal('hide');
+                    }else{
+                        alert(data.data.info);
+                    }
+                }
+            });
+
+        }
     });
 });

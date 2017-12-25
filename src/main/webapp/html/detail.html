@@ -30,7 +30,7 @@
         <div class="collapse navbar-collapse navbar-right" id="navbar">
             <ul class="nav navbar-nav">
                 <li><a href="index.html"><p>yè</p><span>主頁</span></a></li>
-                <li><a href="works.html"><p>zuò</p><span>作品</span></a></li>
+                <li><a href="commodity.html"><p>zuò</p><span>作品</span></a></li>
                 <li><a href="index.html#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
                 <li v-if="user.id" class="logn_up"><a href="user.html">{{ user.nickname }}</a></li>
                 <li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
@@ -52,34 +52,12 @@
                 </div>
                 <div class="modal-header Info">
                     <h5>收貨信息：</h5>
-                    <span id="Msg">阿二 13510145121 廣東科學技術職業學院23棟No.513</span>
+                    <span id="Msg">{{ getDefaultReceiving('receiver') }} {{ getDefaultReceiving('phone') }} {{ getDefaultReceiving('address') }}</span>
                     <span id="ShowAddress" class="glyphicon glyphicon-chevron-down"></span>
                     <div id="MoreAddress" style="display:none;margin-top: 2%;">
                         <table style="width: 97.5%;">
                             <form name="SelectMsg">
-                                <input type="radio" name="address" value="阿一 10089 23棟No.514">阿一 10089 23棟No.514<br/></label>
-                                <input type="radio" name="address" value="阿二 10088 23棟No.513">阿二 10088 23棟No.513<br/></label>
-                                <input type="radio" name="address" value="阿六 10087 3棟No.222">阿六 10087 3棟No.222<br/></label>
-                                <!--<div id="showMeg">
-                                    <label style=" margin-top:10px;width: 20px;height: 45px">
-                                        <input type="checkbox"><span></span>
-                                    </label>
-                                    <span>阿一 10086 23棟No.513</span>
-                                </div>
-                                <div id="showMeg">
-                                    <label style=" margin-top:10px;width: 20px;height: 45px">
-                                        <input type="checkbox"><span></span>
-                                    </label>
-                                    <span>阿一 10086 23棟No.513</span>
-                                </div>
-                                <div id="showMeg">
-                                    <label style=" margin-top:10px;width: 20px;height: 45px">
-                                        <input type="checkbox"><span></span>
-                                    </label>
-                                   <span>阿一 10086 23棟No.513</span>
-                                </div>-->
-                               <!--<label><input type="radio" name="address" value="阿二 10087 23棟No.514">阿二 10087 23棟No.514<br/></label><br>
-                               <label><input type="radio" name="address" value="阿蔡 10088 3棟No.222">阿蔡 10088 3棟No.222<br/></label><br>-->
+                                <span v-for="receiving in receivings"><input type="radio" name="address" value="receiving.id">{{ receiving.receiver }} {{ receiving.phone }} {{ receiving.address }}<br/></span>
                             </form>
                         </table>
                     </div>
@@ -87,7 +65,7 @@
                 <div class="modal-header">
                     <h5>收貨信息：</h5>
                    <div style="float: left;padding-top: 3%;padding-left: 9%">
-                       <img v-bind:src="commodity.picture">
+                       <img v-bind:src="commodity.picture" width="187" height="250" />
                    </div>
                     <div style="float: left;padding-left: 2%;margin-top: 3%">
                         <p>《{{ commodity.name }}》</p>
@@ -126,8 +104,8 @@
                         <div class="MsgBox_DetailMsg"><span>尺寸：<p>{{ commodity.sizeWidth }} * {{ commodity.sizeHeight }} cm</p></span></div>
                         <div class="MsgBox_DetailMsg"><span>價格：<p id="price">￥{{ commodity.price }}</p></span></div>
                         <div class="buttomBox">
-                            <div class="buttonBox"><button type="button" class="Detail-buttom" data-toggle="modal" data-target="#BuyNow">立即購買</button></div>
-                            <div class="buttonBox"><a href="Shopping.html"><button type="button" class="Detail-buttom ">加入購物車</button></a></div>
+                            <div class="buttonBox"><button type="button" class="Detail-buttom btn-buy-now">立即購買</button></div>
+                            <div class="buttonBox"><a href="shopping.html"><button type="button" class="Detail-buttom ">加入購物車</button></a></div>
                             <br>
                         </div>
                     </div>

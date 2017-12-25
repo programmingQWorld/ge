@@ -65,4 +65,18 @@ public class CommodityDaoTest extends BaseTest{
         List<Commodity> commodityList = commodityDao.queryCommodityByLevel(5);
         System.out.println(commodityList);
     }
+
+    @Test
+    public void testUpdateCommodity() throws Exception{
+        User user = userDao.queryUserById(7);
+        Commodity commodity = new Commodity();
+        commodity.setId(18);
+        commodity.setName("阿斯顿");
+        commodity.setUser(user);
+        commodity.setSizeWidth(134);
+        commodity.setSizeHeight(142);
+        commodity.setPrice(10);
+        int update = commodityDao.updateCommodity(commodity);
+        System.out.println("update = " + update);
+    }
 }

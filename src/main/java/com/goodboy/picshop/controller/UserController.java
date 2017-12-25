@@ -4,10 +4,7 @@ package com.goodboy.picshop.controller;
 import com.goodboy.picshop.dto.*;
 import com.goodboy.picshop.entity.User;
 import com.goodboy.picshop.exception.*;
-import com.goodboy.picshop.service.CommodityService;
-import com.goodboy.picshop.service.ResetPwdService;
-import com.goodboy.picshop.service.UploaderService;
-import com.goodboy.picshop.service.UserService;
+import com.goodboy.picshop.service.*;
 import com.goodboy.picshop.util.GenerateLinkUtils;
 import com.goodboy.picshop.util.md5Password;
 import org.apache.ibatis.annotations.Param;
@@ -30,6 +27,8 @@ import java.util.List;
  * 注解为REST控制器，所有方法返回json数据
  */
 @RestController
+// 跨域请求
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
     //注入依赖
@@ -43,6 +42,8 @@ public class UserController {
     private ResetPwdService resetPwdService;
     @Autowired
     private CommodityService commodityService;
+    @Autowired
+    private CartService cartService;
 
     UserDto userDto=null;
     //登录验证
@@ -55,11 +56,32 @@ public class UserController {
             userDto=new UserDto(StatusEnum.USER_ERROR);
         }
         session.setAttribute("user",userDto.getUser());
+
+        CartDto dbCartDto =  cartService.getCartInfoByUserId(userDto.getUser().getId());
+        CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
+
+        if (sessionCartDto != null && dbCartDto != null ) {
+            if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
+                // 合并
+                for ( CartItemDto dto : sessionCartDto.getItems() ) {
+                    if ( !dbCartDto.getItems().contains(dto)  ) {
+                        dbCartDto.getItems().add(dto);
+                    }
+                }
+            }
+        }
+        CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
+        session.setAttribute("usercart", dto);
+
         return  new JSONResult<UserDto>(true,userDto);
     }
     //用户注销
     @RequestMapping("/logout")
     public JSONResult<UserDto> logout(HttpServletRequest request){
+        // 保存信息回到数据库
+        CartDto cartDto = (CartDto) request.getSession().getAttribute("usercart");
+        User userOnline = (User) request.getSession().getAttribute("user");
+        cartService.saveUserCartInfo( userOnline.getId(), cartDto  );
         request.getSession().invalidate();
         return  new JSONResult<UserDto>(true,new UserDto(StatusEnum.SUCCESS));
     }
