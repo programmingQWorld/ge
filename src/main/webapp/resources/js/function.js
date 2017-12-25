@@ -1,4 +1,18 @@
 /**
+ * 管理公共部分的样式
+ */
+$(document).ready(function () {
+    var common = new Vue({
+        el: '.pageheader',
+        data: {
+            user:{}     // 登录用户
+        }
+    });
+    // 请求是否已登录
+    setVueData("/user/islogin", common, "isLogin");
+});
+
+/**
  * 使用ajax请求获取指定url的数据并给Vue对象赋值
  * @param url
  * @param vm
@@ -32,6 +46,34 @@ function setVueData(url, vm, type) {
                     break;
                 case "user" :
                     vm.user = data.data.user;
+                    vm.user.updateNickname = data.data.user.nickname;
+                    var birthday = data.data.user.birthday.split('-');
+                    vm.user.birthYear = birthday[0];
+                    vm.user.birthMonth = birthday[1];
+                    vm.user.birthDay = birthday[2];
+                    vm.user.updateAvatar = data.data.user.avatar;
+                    break;
+                case "orderList" :
+                    vm.orders = data.data.orderList;
+                    break;
+                case "receivingList" :
+                    vm.receivings = data.data.receivingList;
+                    break;
+                case "sellerOrderList" :
+                    vm.sellerOrders = data.data.orderList;
+                    break;
+                case "levelCommodities" :
+                    vm.levelCommodities = data.data.commodityList;
+                    break;
+                case "isLogin" :
+                    if(data.success){
+                        vm.user = data.data.user;
+                    }else{
+                        delCookie("loginUser");
+                    }
+                    break;
+                case "cartitems" :
+                    vm.cartitems = data.data.items;
                     break;
                 case "cartitems" :
                     vm.cartitems = data.data.items;
@@ -69,6 +111,14 @@ function getCookie(key) {
         return encodeURI(patt.exec(document.cookie)[1]);
     }
     return "";
+}
+
+/**
+ * 根据key删除cookie
+ * @param key
+ */
+function delCookie(key) {
+    setCookie(key, "", -1);
 }
 
 /**

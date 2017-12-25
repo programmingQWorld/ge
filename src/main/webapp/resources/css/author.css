@@ -1,0 +1,183 @@
+/*導航條開始*/
+*{
+    margin:0;
+    padding:0;
+    font-family: "Microsoft YaHei UI";
+}
+body{
+    font-family:Microsoft YaHei;
+}
+.nav_person{
+    margin-top:52px;
+    height:88px;
+    background-color:white;
+    box-shadow:-2px 2px 8px #ccc;
+    border-radius:20px;
+    position:relative;
+    z-index:3;
+}
+.nav_person ul li{
+    line-height:88px;
+    margin-left:55px;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    font-family:Microsoft YaHei;
+    color:black;
+}
+.nav_person ul li a{
+    padding:0;
+    color:black;
+}
+.nav_person ul li a:hover{
+    /*background-color:white;*/
+
+}
+.nav_person .collapse ul li p{
+    margin-bottom:5px;
+    font-size:12px;
+    color:rgb(152,150,150);
+    font-weight:normal;
+}
+.nav_person .collapse ul li.logn_up a{
+    color:white;
+    text-align:center;
+    line-height:60px;
+}
+.nav_person .collapse ul li.logn_up{
+    width:120px;
+    height:60px;
+    display:block;
+    color:white;
+    background-color:black;
+    border-radius:10px;
+    margin-top:16px;
+}
+.nav_person button{
+    margin:22px 17px 16px 0;
+}
+/*导航结束*/
+.Author-Box{
+    width: 80%;
+    height: 300px;
+    margin: 0 auto;
+}
+.Author-Box .header h1{
+    margin-left: 8%;
+    font-family: "Microsoft YaHei UI";
+    font-weight: bold;
+    color: rgb(255,0,0);
+    font-size: 60px;
+}
+.Author-Box .header h4{
+    font-family: "Microsoft YaHei UI";
+    font-size: 16px;
+    color: rgb(0,0,0);
+    margin-left: 8%;
+}
+#Author-works{
+    margin: 0 auto;
+    width:80%;
+    height: 800px;
+    text-align:center;
+    margin-left: 13%;
+}
+#Author-works div{
+    padding-bottom: 5%;
+}
+#Author-works h5{
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    margin-top: -2%;
+    padding-bottom: 20px;
+    margin-left: 5%;
+    text-align: left;
+}
+#AuthorTable th{
+    font-size: 24px;
+    color: black;
+}
+#AuthorTable td{
+    font-size: 14px;
+    color: rgb(152,150,150);
+}
+footer h5{
+    text-align:center;
+    font-weight: bold;
+}
+.Author_intro{
+    margin-left: 8%;
+    width: 40%;
+    height: 175px;
+}
+.Author_intro .Author_intro_img{
+    float: left;
+    width: 37%;
+    height: 175px;
+}
+.Author_intro .Author_intro_img img{
+   max-width: 80%;
+  /*  height: auto;
+    margin:auto 0;*/
+}
+.Author_intro .Author_intro_Msg{
+    float: left;
+    width: 50%;
+    height: 175px;
+    padding-bottom: 10px;
+}
+.Author_intro .Author_intro_Msg h4{
+    color: rgb(0,0,0);
+    font-size: 20px;
+    font-weight: 600;
+}
+.Author_intro .Author_intro_Msg span{
+    color: rgb(152,150,150);
+    font-size: 14px;
+}
+.Author_intro_Msg div div{
+    padding-bottom: 10px;
+}
+/*效果代码开始*/
+.tanchuname{
+    width:100%;
+    height:30px;
+    background-color:rgba(0,0,0,.6);
+    position:relative;
+    z-index:4;
+    overflow:hidden;
+
+}
+.tanchuname .drow_name{
+    font-size:12px;
+    color:white;
+    line-height:20px;
+    margin-left:30px;
+    font-weight:bold;
+
+}
+.tanchuname_baba{
+    overflow:hidden;
+}
+.slide_name{
+    margin:0 auto;
+    margin-top:-25px;
+    position:relative;
+    height:25px;
+    line-height:22px;
+    background-color:rgba(0,0,0,.6);
+    display:none;
+    border-radius: 2px;
+}
+.slide_name span{
+    height: 25px;
+    font-size:10px;
+    color:white;
+    font-weight:bold;
+
+}
+a:hover{
+    text-decoration:none;
+}
+/*效果代码结束*/

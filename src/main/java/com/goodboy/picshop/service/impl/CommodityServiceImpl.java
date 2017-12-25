@@ -76,9 +76,19 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     public CommodityDto getByUser(int userId, int offset, int limit) {
+        // 根据用户id查询商品
         List<Commodity> commodityList = commodityDao.queryCommodityByUserId(userId, offset, limit);
-        CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
-        return commodityDto;
+        try {
+            // 判断是否有商品
+            if(!commodityList.isEmpty()){
+                CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+                return commodityDto;
+            }else {     // 没有商品
+                throw new NoCommodityFoundException("no commodity found");
+            }
+        }catch (NoCommodityFoundException ncfe){
+            throw ncfe;
+        }
     }
 
     // 使用事务管理
@@ -106,5 +116,32 @@ public class CommodityServiceImpl implements CommodityService {
             throw new CommodityRepeatException("repeat commodity");
         }
         return null;
+    }
+
+    public CommodityDto getByLevel(int level) {
+
+        // 根据商品等级查询
+        List<Commodity> commodityList = commodityDao.queryCommodityByLevel(level);
+        try {
+            // 判断是否有商品
+            if (!commodityList.isEmpty()) {
+                CommodityDto commodityDto = new CommodityDto(StatusEnum.SUCCESS, commodityList);
+                return commodityDto;
+            } else {    // 没有商品
+                throw new NoCommodityFoundException("no commodity found");
+            }
+        }catch (NoCommodityFoundException ncfe){
+            throw ncfe;
+        }
+    }
+
+    public CommodityDto update(int id, String name, float price, float sizeWidth, float sizeHeight) {
+        Commodity commodity = commodityDao.queryCommodityById(id);
+        commodity.setName(name);
+        commodity.setPrice(price);
+        commodity.setSizeWidth(sizeWidth);
+        commodity.setSizeHeight(sizeHeight);
+        commodityDao.updateCommodity(commodity);
+        return new CommodityDto(StatusEnum.SUCCESS);
     }
 }

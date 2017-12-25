@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
+// 跨域请求
+@CrossOrigin
 @RequestMapping("order")
 public class OrderController {
 
