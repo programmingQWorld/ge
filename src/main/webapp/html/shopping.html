@@ -72,7 +72,7 @@
                                             </label>
                                         </td>
                                     </div>
-                                    <td><img class="img-rounded" v-bind:src="item.picture" /></td>
+                                    <td><img class="img-rounded" v-bind:src="item.pic" /></td>
                                     <td>{{ item.sallerName }}</td>
                                     <td>{{ item.commName }}</td>
                                     <td>&yen;{{ item.price }}</td>
@@ -117,7 +117,7 @@
             <span id="MoreAddress" style="font-size: 14px;color: black;margin-left: 9px;">更多收货地址 <span class="glyphicon glyphicon-chevron-down"></span></span>
         </div>
         <div class="Shopping-col">
-            <p style="margin:0 6px 7px;">總金額：<span id=Col-money>&yen;{{ totalPrice }}</span><button type="button" class="Shopping-buttom">結算</button></p>
+            <p style="margin:0 6px 7px;">總金額：<span id=Col-money>&yen;{{ totalPrice }}</span><button type="button" class="Shopping-buttom checkout">結算</button></p>
         </div>
     </div>
 </div>

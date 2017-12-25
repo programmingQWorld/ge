@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    // 是否登录
+    if(!getCookie("loginUser")){
+        $('.Consigneeinfo').html("请登录...")
+    }
     var vm = new Vue({
         el : '#app',
         data : {
@@ -130,5 +134,21 @@ $(document).ready(function() {
             /*     $("#MoreAddress").html("更多收货地址");*/
 
         }
+    });
+
+    /*判断是否选择商品*/
+    $('.Shopping-buttom.checkout').click(function () {
+        var i = 0;
+        ($('.Shopping-Mid').find(':checkbox').each(function () {
+            if ($(this).is(":checked")){
+                i = 1;
+            }
+        }))
+        if(i){
+            alert("谢谢回顾");
+            window.location.href="user.html";
+        }
+        else
+            alert("请选择商品");
     });
 });

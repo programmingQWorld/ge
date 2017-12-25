@@ -53,21 +53,46 @@ CREATE TABLE `shop_cart` (
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
   CONSTRAINT `shop_cart_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-/* 为uid添加唯一索引 */
-alter table shop_cart add UNIQUE (uid);
 
 --
 -- Dumping data for table `shop_cart`
 --
 
-
 LOCK TABLES `shop_cart` WRITE;
 /*!40000 ALTER TABLE `shop_cart` DISABLE KEYS */;
-INSERT INTO `shop_cart` VALUES (2,1,3);
+INSERT INTO `shop_cart` VALUES (3,1),(4,7);
 /*!40000 ALTER TABLE `shop_cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_cart_items`
+--
+
+DROP TABLE IF EXISTS `shop_cart_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shop_cart_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL COMMENT '商品表',
+  `cart_id` int(11) NOT NULL COMMENT '该项所属购物车的id',
+  PRIMARY KEY (`id`),
+  KEY `cid` (`cid`),
+  KEY `cart_id` (`cart_id`),
+  CONSTRAINT `shop_cart_items_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `shop_cart_items_ibfk_2` FOREIGN KEY (`cart_id`) REFERENCES `shop_cart` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_cart_items`
+--
+
+LOCK TABLES `shop_cart_items` WRITE;
+/*!40000 ALTER TABLE `shop_cart_items` DISABLE KEYS */;
+INSERT INTO `shop_cart_items` VALUES (2,9,3),(3,10,3),(24,15,4),(25,13,4),(26,12,4);
+/*!40000 ALTER TABLE `shop_cart_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -87,11 +112,12 @@ CREATE TABLE `shop_commodity` (
   `create_time` datetime NOT NULL,
   `size_width` decimal(10,0) NOT NULL,
   `size_height` decimal(10,0) NOT NULL,
+  `level` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `uid` (`uid`),
   CONSTRAINT `shop_commodity_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +126,7 @@ CREATE TABLE `shop_commodity` (
 
 LOCK TABLES `shop_commodity` WRITE;
 /*!40000 ALTER TABLE `shop_commodity` DISABLE KEYS */;
-INSERT INTO `shop_commodity` VALUES (1,'hello',100,'http://goodboy.com/picture.png',10,1,'2017-12-06 00:00:00',0,0),(2,'hello223',1001,'http://goodboy.com/picture.png',0,1,'2017-12-21 00:00:00',0,0),(3,'hello5555',1001,'http://goodboy.com/picture.png',0,1,'2017-12-25 00:00:00',0,0),(4,'h123213',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 07:34:13',0,0),(5,'z231094',1001,'http://goodboy.com/picture.png',0,1,'2017-12-05 09:16:50',12,12),(6,'q12345',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:00:53',12,12),(7,'q123456',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:02:50',12,12),(9,'q123456234',120,'http://shierd.info/shio.png',0,1,'2017-12-06 07:53:34',12,12),(10,'流水',120,'http://10.10.112.170/images/Original/image1.png',0,1,'2017-12-12 07:31:57',120,120),(12,'小桥',120,'http://10.10.112.170/images/Original/image2.png',0,1,'2017-12-12 07:34:06',120,120),(13,'人家',120,'http://10.10.112.170/images/Original/image3.png',0,1,'2017-12-12 07:35:09',120,120),(14,'古道',120,'http://10.10.112.170/images/Original/image4.png',0,1,'2017-12-12 07:35:50',120,120),(15,'瘦马',120,'http://10.10.112.170/images/Original/image5.png',0,1,'2017-12-12 07:36:19',120,120),(16,'西风',120,'http://10.10.112.170/images/Original/image6.png',0,1,'2017-12-12 07:36:36',120,120);
+INSERT INTO `shop_commodity` VALUES (1,'hello',100,'http://10.10.112.170:8080/images/Original/image21.png',10,1,'2017-12-06 00:00:00',0,0,5),(2,'hello223',1001,'http://10.10.112.170:8080/images/Original/image26.png',0,1,'2017-12-21 00:00:00',0,0,0),(3,'hello5555',1001,'http://10.10.112.170:8080/images/Original/image22.png',0,7,'2017-12-25 00:00:00',0,0,5),(4,'h123213',1001,'http://10.10.112.170:8080/images/Original/image27.png',0,1,'2017-12-05 07:34:13',0,0,0),(5,'z231094',999,'http://10.10.112.170:8080/images/Original/image23.png',0,7,'2017-12-05 09:16:50',12,12,5),(6,'q12345',120,'http://10.10.112.170:8080/images/Original/image28.png',0,1,'2017-12-06 07:00:53',12,12,0),(7,'q123456',120,'http://10.10.112.170:8080/images/Original/image24.png',0,1,'2017-12-06 07:02:50',12,12,0),(9,'q123456234',120,'http://10.10.112.170:8080/images/Original/image25.png',0,7,'2017-12-06 07:53:34',12,12,0),(10,'流水',120,'http://10.10.112.170:8080/images/Original/image1.png',0,1,'2017-12-12 07:31:57',120,120,0),(12,'小桥',120,'http://10.10.112.170:8080/images/Original/image2.png',0,7,'2017-12-12 07:34:06',120,120,0),(13,'人家',120,'http://10.10.112.170:8080/images/Original/image3.png',0,1,'2017-12-12 07:35:09',120,120,0),(14,'古道',120,'http://10.10.112.170:8080/images/Original/image4.png',0,9,'2017-12-12 07:35:50',120,120,0),(15,'瘦马',120,'http://10.10.112.170:8080/images/Original/image5.png',0,1,'2017-12-12 07:36:19',120,120,0),(16,'西风',120,'http://10.10.112.170:8080/images/Original/image6.png',0,7,'2017-12-12 07:36:36',120,120,0),(17,'白云bbb',161,'/upload/1513914997062.jpg',0,7,'2017-12-22 03:56:45',261,231,0),(18,'阿斯顿aa',134,'',0,7,'2017-12-22 04:47:50',142,150,0),(19,'爱上当',456,'/upload/1514168724812.jpg',0,7,'2017-12-25 02:25:29',25,25,0);
 /*!40000 ALTER TABLE `shop_commodity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +146,7 @@ CREATE TABLE `shop_commodity_rel_tag` (
   KEY `tid` (`tid`),
   CONSTRAINT `shop_commodity_rel_tag_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `shop_commodity_rel_tag_ibfk_2` FOREIGN KEY (`tid`) REFERENCES `shop_tag` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +155,7 @@ CREATE TABLE `shop_commodity_rel_tag` (
 
 LOCK TABLES `shop_commodity_rel_tag` WRITE;
 /*!40000 ALTER TABLE `shop_commodity_rel_tag` DISABLE KEYS */;
-INSERT INTO `shop_commodity_rel_tag` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,6,1),(6,7,1),(7,9,1),(8,10,1),(9,12,3),(10,13,6),(11,14,7),(12,15,7),(13,16,6);
+INSERT INTO `shop_commodity_rel_tag` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,6,1),(6,7,1),(7,9,1),(8,10,1),(9,12,3),(10,13,6),(11,14,7),(12,15,7),(13,16,6),(14,10,3),(15,17,7),(16,18,7),(17,19,7);
 /*!40000 ALTER TABLE `shop_commodity_rel_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +183,7 @@ CREATE TABLE `shop_order` (
   CONSTRAINT `shop_order_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `shop_commodity` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `shop_order_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `shop_receiving` (`id`),
   CONSTRAINT `shop_order_ibfk_3` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,15 +191,8 @@ CREATE TABLE `shop_order` (
 --
 
 LOCK TABLES `shop_order` WRITE;
-/*!40000 
-
-
-
-
-
-
-TABLE `shop_order` DISABLE KEYS */;
-INSERT INTO `shop_order` VALUES (1,1,2,0,'No000001','2017-12-04 09:40:59',0,1),(3,1,2,0,'No000002','2017-12-04 09:41:36',0,1);
+/*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
+INSERT INTO `shop_order` VALUES (1,1,2,0,'No000001','2017-12-04 09:40:59',0,1),(3,1,2,0,'No000002','2017-12-04 09:41:36',0,1),(4,12,3,0,'No000003','2017-12-04 09:41:36',0,7),(5,16,2,1,'No000004','2017-12-04 09:41:36',0,7);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +201,8 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `shop_receiving`;
-
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_receiving` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `receiver` varchar(16) NOT NULL,
@@ -194,24 +214,32 @@ CREATE TABLE `shop_receiving` (
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
   CONSTRAINT `shop_receiving_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `shop_user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `shop_receiving`
+--
 
 LOCK TABLES `shop_receiving` WRITE;
 /*!40000 ALTER TABLE `shop_receiving` DISABLE KEYS */;
-INSERT INTO `shop_receiving` VALUES (2,'jack2','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',1,1),(3,'jack1','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',0,1);
+INSERT INTO `shop_receiving` VALUES (2,'jack2','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',1,1),(3,'jack1','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',0,1),(4,'java12','12345678910','123456','广东省珠海市金湾区广东科学技术职业学院',0,7),(8,'成长三','12345464152','132456','xxxx学院 21栋',1,7);
 /*!40000 ALTER TABLE `shop_receiving` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `shop_tag`
+--
 
 DROP TABLE IF EXISTS `shop_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +248,7 @@ CREATE TABLE `shop_tag` (
 
 LOCK TABLES `shop_tag` WRITE;
 /*!40000 ALTER TABLE `shop_tag` DISABLE KEYS */;
-INSERT INTO `shop_tag` VALUES (1,'test'),(2,'test2'),(3,'书画'),(6,'国画'),(7,'山水画');
+INSERT INTO `shop_tag` VALUES (1,'test'),(3,'书画'),(6,'国画'),(7,'山水画');
 /*!40000 ALTER TABLE `shop_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,6 +257,8 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `shop_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `account` varchar(16) NOT NULL,
@@ -241,26 +271,26 @@ CREATE TABLE `shop_user` (
   `phone` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `account` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-
--- 创建订单项表。
-drop table IF EXISTS  shop_cart_items;
-create table shop_cart_items (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  cid int (11) not null COMMENT '商品表',
-  cart_id int(11) not null COMMENT '该项所属购物车的id',
-  PRIMARY KEY (id),
-  FOREIGN KEY (cid) REFERENCES shop_commodity(id) on UPDATE CASCADE ,
-  FOREIGN KEY (cart_id) REFERENCES  shop_cart(id) ON UPDATE CASCADE
-) ENGINE = innodb DEFAULT charset =  utf8;
-
--- 测试分支是否会被主分支自动分并
+--
+-- Dumping data for table `shop_user`
+--
 
 LOCK TABLES `shop_user` WRITE;
-INSERT INTO `shop_user` VALUES (1,'test0001','test0001','java','http:xxx.xxx/xxx.jpg','男','2017-11-30','test0001@qq.com','12345678910');
+/*!40000 ALTER TABLE `shop_user` DISABLE KEYS */;
+INSERT INTO `shop_user` VALUES (1,'test0001','21232f297a57a5a743894a0e4a801fc3','java','http:xxx.xxx/xxx.jpg','男','2017-11-30','test0001@qq.com','12345678910'),(7,'admin','21232f297a57a5a743894a0e4a801fc3','shier123','/upload/avatar/1514186071268.jpg','女','1995-02-20','admin@qq.com','1234567890'),(9,'admin123','21232f297a57a5a743894a0e4a801fc3',NULL,'/images/Orders/Alipay.png','\0',NULL,'admin@qq.com','1234567890');
+/*!40000 ALTER TABLE `shop_user` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-## 修改订单中的商品外键为 唯一
-alter table shop_order add UNIQUE (cid);
--- Dump completed on 2017-12-13 20:40:01
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-12-25 22:20:46
