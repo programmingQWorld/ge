@@ -115,6 +115,7 @@ $(document).ready(function() {
 
     // 请求购物车列表
     setVueData("/cart/list", vm, "cartitems");
+
     // 请求收货信息
     setVueData("/receiving/searchReceiving", vm, "receivingList");
 

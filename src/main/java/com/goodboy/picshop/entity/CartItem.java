@@ -12,13 +12,12 @@ public class CartItem {
 	 * @return  cartitem类的dto
 	 */
 	public CartItemDto toDto () {
-		CartItemDto dto = new CartItemDto();
-		dto.setCommid(this.getCommodity().getId());
-		dto.setCommName(this.getCommodity().getName());
-		dto.setPic(this.getCommodity().getPicture());
-		dto.setPrice(this.getCommodity().getPrice());
-		dto.setSallerName(this.getCommodity().getUser().getNickname());
-		return dto;
+			CartItemDto dto = new CartItemDto();
+			dto.setCommid(this.getCommodity().getId());
+			dto.setCommName(this.getCommodity().getName());
+			dto.setPrice(this.getCommodity().getPrice());
+			dto.setSallerName(this.getCommodity().getUser().getNickname());
+			return dto;
 	}
 
 	public CartItem() {

@@ -49,7 +49,6 @@ public class UserController {
     //登录验证
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> login(@Param("account") String account,@Param("password") String password,HttpSession session){
-
         String pwd= md5Password.md5Password(password);
         try{
             userDto=userService.userLogin(account,pwd);

@@ -75,12 +75,6 @@ function setVueData(url, vm, type) {
                 case "cartitems" :
                     vm.cartitems = data.data.items;
                     break;
-                case "cartitems" :
-                    vm.cartitems = data.data.items;
-                    break;
-                case "reduceitem":
-                    data.data;
-                    break;
             }
         }
     });
