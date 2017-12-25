@@ -8,12 +8,15 @@ public enum StatusEnum {
     SUCCESS(1, "成功"),
     FILE_TOO_LARGE(1020, "文件过大"),
     NOT_ALLOW_FILE_TYPE(1010, "不被允许上传的文件类型"),
+    NO_LOGIN(2000,"用户未登录"),
     REPEAT_USER(2001,"用户名已被注册"),
     USER_ERROR(2002,"用户名不存在或密码错误"),
+    NO_EMAILL(2003,"邮箱暂未被注册"),
+    LINK_EXPIRED(2004,"链接已过期"),
+    LINK_ERROR(2005,"链接错误"),
     UNKNOWN_ERROR(9999, "未知错误"),
     NO_COMMODITY_FOUND(1404, "没有找到商品"),
     NO_TAG_FOUND(5404, "没有找到标签"),
-      
     DEL_ORDER_FAILD(3000, "您没有创建这个订单"),
     NO_DEL_ORDER_PRI(3001, "删除订单失败，没有权限，请登录"),
     INS_ORDER_FAILD(3002, "生成订单订单失败，商品已被别人抢先下单了，如果那边1小时内没有完成付款，您还有机会"),
@@ -23,8 +26,8 @@ public enum StatusEnum {
     ORDER_UNKNOW(3006, "未知的订单"),
     NOT_PAY_YET(3007, "用户未付款"),
     NONE_CART_ITEMS(3008, "购物车是空的"),
-	  ORDER_NOT_EXIST(3009, "订单不存在"),
-	  ORDER_PAID(3010, "您已经付过款了");
+    ORDER_NOT_EXIST(3009, "订单不存在"),
+    ORDER_PAID(3010, "您已经付过款了");
 
 
     private int status;     //状态标识符

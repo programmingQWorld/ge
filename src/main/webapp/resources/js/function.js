@@ -30,7 +30,52 @@ function setVueData(url, vm, type) {
                 case "commodity" :
                     vm.commodity = data.data.commodity;
                     break;
+                case "user" :
+                    vm.user = data.data.user;
+                    break;
+                case "cartitems" :
+                    vm.cartitems = data.data.items;
+                    break;
+                case "reduceitem":
+                    data.data;
+                    break;
             }
         }
     });
+}
+
+/**
+ * 设置cookie
+ * @param key
+ * @param value
+ * @param expiredays
+ */
+function setCookie(key, value, expiredays) {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = key + "=" + encodeURI(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+}
+
+/**
+ * 根据key获取cookie的value
+ * @param key
+ * @return string
+ */
+function getCookie(key) {
+    if(document.cookie.length > 0){
+        // key正则
+        var reg =key + "=([^;]+)";
+        var patt = new RegExp(reg);
+        return encodeURI(patt.exec(document.cookie)[1]);
+    }
+    return "";
+}
+
+/**
+ * time毫秒后跳转url
+ * @param url
+ * @param time
+ */
+function jumpAfterTime(url, time) {
+    setTimeout("window.location.assign('" + url + "');", time);
 }
