@@ -10,6 +10,7 @@ $(document).ready(function () {
         methods: {
             // 根据下标获取数组值
             indexOfTagCommodities: function (index) {
+                console.log(this);
                 return this.tagCommodities[index];
             },
             // 根据下标获取数组值
