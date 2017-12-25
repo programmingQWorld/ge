@@ -3,6 +3,7 @@ $(document).ready(function () {
     var vm = new Vue({
         el: ".content",
         data: {
+            levelCommodities: [],                 // 轮播图商品
             tagCommodities: ['1','2','3','4','5'],     // 根据标签展示商品
             commodities: []     // 新上架商品
         },
@@ -23,10 +24,13 @@ $(document).ready(function () {
         }
     });
 
+    // 设置轮播商品
+    setVueData("/commodity/5/level", vm, "levelCommodities");
+
     // 设置标签商品
-    setVueData("http://10.10.112.170:8080/tag/1/commodity", vm, "tagCommodities");
+    setVueData("/tag/1/commodity", vm, "tagCommodities");
 
     // 设置新上架商品
-    setVueData("http://10.10.112.170:8080/commodity/list", vm, "commodityList");
+    setVueData("/commodity/list", vm, "commodityList");
 
 });

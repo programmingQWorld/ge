@@ -83,7 +83,7 @@
             o.id, o.create_time, o.status,
             comm.id commid, comm.name, comm.picture, comm.price,
             seller.id sellerid, seller.nickname sellername,
-            buyer.id buyerid, buyer.nickname,
+            buyer.id buyerid, buyer.nickname buyername,
             r.id recid, r.receiver, r.address, r.phone
         from ((((shop_order o
             left JOIN shop_commodity comm on o.cid = comm.id)

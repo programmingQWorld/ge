@@ -2,7 +2,8 @@ $(document).ready(function() {
     var vm = new Vue({
         el : '#app',
         data : {
-           cartitems : [],  // 购物车中的商品集合对象
+            receivings: [],     // 收货信息
+            cartitems : [],  // 购物车中的商品集合对象
             list:[
                 {
                     id:1,
@@ -94,9 +95,39 @@ $(document).ready(function() {
                         this.checked = true;
                     }
                 }
+            },
+            // 默认地址
+            getDefaultReceiving: function (p) {
+                for(var i = 0; i < this.receivings.length; i++){
+                    if(this.receivings[i].isDefault == 1){
+                        switch (p){
+                            case "receiver" :
+                                return this.receivings[i].receiver;
+                            case "address" :
+                                return this.receivings[i].address;
+                            case "phone" :
+                                return this.receivings[i].phone;
+                        }
+                    }
+                }
             }
         }});
 
     // 请求购物车列表
     setVueData("/cart/list", vm, "cartitems");
+    // 请求收货信息
+    setVueData("/receiving/searchReceiving", vm, "receivingList");
+
+    /*显示更多地址*/
+    $('#MoreAddress').click(function () {
+        if ($(".showAddress").css("display") == "none") {
+            $(".showAddress").show();
+            /*   $("#MoreAddress").html("收起");*/
+            $("#MoreAddress").html("");
+        } else {
+            $(".showAddress").hide();
+            /*     $("#MoreAddress").html("更多收货地址");*/
+
+        }
+    });
 });

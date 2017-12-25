@@ -241,12 +241,12 @@ body{
 }
 .opusImg img{
 }
-input[name="opusName"]{
+input[name="cname"]{
 	width:200px;
 	height:30px;
 
 }
-input[name="opusUrl"]{
+input#commodityPicture, input[name="opusUrl"]{
 	position:absolute;
 	top:0;
 	right:0;
@@ -273,7 +273,7 @@ input[name="opusUrl"]{
 	margin-left:19px;
 	font-weight:normal;
 }
-input[name="lb"]{
+input[name="tagId"]{
 	margin-left:28px;
 	margin-right:9px;
 }
@@ -288,12 +288,12 @@ input[name="opusOther"]{
 	margin-left:8px;
 	margin-right:8px;
 }
-input[name="money"]{
+input[name="cprice"]{
 	width:250px;
 	height:30px;
 	margin-left:27px;
 }
-input[name="sub"]{
+input.sub{
 	margin-left:67px;
 	line-height:28px;
 	border-radius:6px;
@@ -719,17 +719,17 @@ ul.pagination li a.active {
 ul.pagination li a:hover:not(.active,) {color: red;border: red solid 1px;}
 /*翻頁樣式結束*/
 /*彈出框樣式開始*/
-.Info h5 input[id='name']{
+.Info h5 input[name='name']{
 	width: 150px;
 	border:0px;
 }
-.Info h5 input[id='author']{
+.Info h5 input[name='author']{
 	width: 100px;
 }
-.Info h5 input[id='size']{
+.Info h5 input[name='sizeW'], .Info h5 input[name='sizeH']{
 	width: 70px;
 }
-.Info h5 input[id='price']{
+.Info h5 input[name='price']{
 	width: 70px;
 }
 .form-control{
@@ -743,7 +743,7 @@ ul.pagination li a:hover:not(.active,) {color: red;border: red solid 1px;}
 	color: red;
 	font-weight: 500;
 }
-.EditButtom{
+.EditButton{
 	margin:15px;
 	background-color: black;
 	color: white;

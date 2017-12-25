@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 
 @RestController
+// 跨域请求
+@CrossOrigin
 @RequestMapping("cart")
 public class CartController {
 
@@ -37,54 +39,54 @@ public class CartController {
 	 * @param uid  用户id
 	 * @return
 	 */
-	@RequestMapping(value = "login/{uid}", method = RequestMethod.GET)
-	public JSONResult<Object> login (@PathVariable("uid")int uid, HttpSession session) {
+//	@RequestMapping(value = "login/{uid}", method = RequestMethod.GET)
+//	public JSONResult<Object> login (@PathVariable("uid")int uid, HttpSession session) {
+//
+//	    // 登录前
+//        User olduser = (User)session.getAttribute("user");  // 判断用户是否重新登录时用到
+//		/*  模拟在线用户 - 晓琳*/
+//		User userOnline = new User();
+//		userOnline.setId(uid);
+//		userOnline.setNickname("晓琳");
+//		session.setAttribute("user", userOnline );
+//		/* */
+//		// 登录后
+//		// 设置用户的购物车
+//		if ( olduser != null && olduser.getId()==userOnline.getId() ) { // 用户已经登陆，则不能再从数据库中查找用户的购物车信息
+//			return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
+//		}
+//		CartDto dbCartDto =  cartService.getCartInfoByUserId(userOnline.getId());
+//		CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
+//
+//		if (sessionCartDto != null && dbCartDto != null ) {
+//			if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
+//				// 合并
+//				for ( CartItemDto dto : sessionCartDto.getItems() ) {
+//					if ( !dbCartDto.getItems().contains(dto)  ) {
+//						dbCartDto.getItems().add(dto);
+//					}
+//				}
+//			}
+//		}
+//		CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
+//		session.setAttribute("usercart", dto);
+//		return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
+//	}
 
-	    // 登录前
-        User olduser = (User)session.getAttribute("user");  // 判断用户是否重新登录时用到
-		/*  模拟在线用户 - 晓琳*/
-		User userOnline = new User();
-		userOnline.setId(uid);
-		userOnline.setNickname("晓琳");
-		session.setAttribute("user", userOnline );
-		/* */
-		// 登录后
-		// 设置用户的购物车
-		if ( olduser != null && olduser.getId()==userOnline.getId() ) { // 用户已经登陆，则不能再从数据库中查找用户的购物车信息
-			return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
-		}
-		CartDto dbCartDto =  cartService.getCartInfoByUserId(userOnline.getId());
-		CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
-
-		if (sessionCartDto != null && dbCartDto != null ) {
-			if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
-				// 合并
-				for ( CartItemDto dto : sessionCartDto.getItems() ) {
-					if ( !dbCartDto.getItems().contains(dto)  ) {
-						dbCartDto.getItems().add(dto);
-					}
-				}
-			}
-		}
-		CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
-		session.setAttribute("usercart", dto);
-		return new JSONResult<>(true, "登录成功,用户id:" + userOnline.getId());
-	}
-
-	@RequestMapping( value  = "logout", method = RequestMethod.GET)
-	public JSONResult<Object> logout (HttpSession session) {
-
-		// 保存信息回到数据库
-		CartDto cartDto = (CartDto) session.getAttribute("usercart");
-
-		User userOnline = (User)session.getAttribute("user");
-		cartService.saveUserCartInfo( userOnline.getId(), cartDto  );
-		// 在数据导入到数据库之后，才可以将购物车对象以及用户对象删除
-		session.setAttribute("usercart", null);
-		session.setAttribute("user", null);
-		session.setAttribute("islogin", null);
-		return null;
-	}
+//	@RequestMapping( value  = "logout", method = RequestMethod.GET)
+//	public JSONResult<Object> logout (HttpSession session) {
+//
+//		// 保存信息回到数据库
+//		CartDto cartDto = (CartDto) session.getAttribute("usercart");
+//
+//		User userOnline = (User)session.getAttribute("user");
+//		cartService.saveUserCartInfo( userOnline.getId(), cartDto  );
+//		// 在数据导入到数据库之后，才可以将购物车对象以及用户对象删除
+//		session.setAttribute("usercart", null);
+//		session.setAttribute("user", null);
+//		session.setAttribute("islogin", null);
+//		return null;
+//	}
 
 
 	/**

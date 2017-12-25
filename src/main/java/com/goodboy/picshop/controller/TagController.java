@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
  * 注解为REST控制器，所有方法返回json数据
  */
 @RestController
+// 跨域请求
+@CrossOrigin
 @RequestMapping("/tag")
 public class TagController {
     // 注入依赖
