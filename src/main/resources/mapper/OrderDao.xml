@@ -46,7 +46,7 @@
             <result property="phone" column="buyerphone" />
         </association>
         <association property="commodity" javaType="Commodity">
-            <id column="buyerid" property="id" />
+            <id column="commid" property="id" />
             <result column="name" property="name" />
             <result column="price" property="price" />
             <result column="picture" property="picture" />
