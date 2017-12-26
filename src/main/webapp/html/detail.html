@@ -57,7 +57,7 @@
                     <div id="MoreAddress" style="display:none;margin-top: 2%;">
                         <table style="width: 97.5%;">
                             <form name="SelectMsg">
-                                <span v-for="receiving in receivings"><input type="radio" name="address" v-bind:value = "receiving.id">{{ receiving.receiver }} {{ receiving.phone }} {{ receiving.address }}<br/></span>
+                                <span v-for="receiving in receivings"><input type="radio" name="address" v-bind:value="receiving.id">{{ receiving.receiver }} {{ receiving.phone }} {{ receiving.address }}<br/></span>
                             </form>
                         </table>
                     </div>
@@ -74,7 +74,7 @@
                         <p style="color: red">&yen;{{ commodity.price }}</p>
                     </div>
                 </div>
-            <div class="buttonBox"><button type="button"  class="BuyNowButtom " @click = "createOrderButton">確認支付</button></div>
+            <div class="buttonBox"><button type="button" class="BuyNowButtom ">確認支付</button></div>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
                         <div class="MsgBox_DetailMsg"><span>價格：<p id="price">￥{{ commodity.price }}</p></span></div>
                         <div class="buttomBox">
                             <div class="buttonBox"><button type="button" class="Detail-buttom btn-buy-now">立即購買</button></div>
-                            <div class="buttonBox"><a href="shopping.html"><button type="button" class="Detail-buttom ">加入購物車</button></a></div>
+                            <div class="buttonBox"><button type="button" class="Detail-buttom btn-add-cart">加入購物車</button></div>
                             <br>
                         </div>
                     </div>

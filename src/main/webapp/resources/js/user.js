@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    var loginUser = getCookie("loginUser");
+    var page = 1;       // 目前页数
+    var limit = 8;      // 每页多少
+    var offset = 0;     // 从哪条开始查询
+    var loginUser = getCookie("loginUser");     // 登录用户
     // 判断是否登录
     if(!loginUser){
         window.location.assign("index.html");
@@ -13,6 +16,7 @@ $(document).ready(function () {
             orders: [],         // 订单数据
             receivings: [],     // 收货信息
             commodities: [],    // 商品信息
+            count: 0,           // 商品数量
             tags:[],            // 标签
             sellerOrders: []    // 卖家订单
         },
@@ -24,6 +28,10 @@ $(document).ready(function () {
             // 用户头像
             userAvatar: function () {
                 return (this.user.avatar == null) ? "/images/Orders/avatar.png" : this.user.avatar;
+            },
+            // 计算分页
+            pageCount: function () {
+                return Math.ceil(this.count/limit);
             }
         },
         methods: {
@@ -58,7 +66,58 @@ $(document).ready(function () {
                         }
                     }
                 });
+            },
+            // 设默认地址
+            setDefaultReceiving: function (e) {
+                $.ajax({
+                    url: "/receiving/setIsDefault/" + $(e.currentTarget).attr('data-id'),
+                    success: function (data, status) {
+                        if(data.data.status == 1){
+                            alert(data.data.info);
+                        }else {
+                            alert(data.data.info);
+                        }
+                    }
+                });
+            },
+            // 发货
+            send: function (e) {
+                $.ajax({
+                    url: "/order/seller/handlerorder/" + $(e.currentTarget).attr('data-id'),
+                    success: function (data, status) {
+                        if(data.data.status){
+                            alert(data.data.info);
+                        }else{
+                            alert(data.data.info);
+                        }
+                    }
+                });
+            },
+            // 付款
+            pay: function (e) {
+                $.ajax({
+                    url: "/order/pay/" + $(e.currentTarget).attr('data-id'),
+                    success: function (data, status) {
+                        if(data.data.status){
+                            alert(data.data.info);
+                        }else{
+                            alert(data.data.info);
+                        }
+                    }
+                });
+            },
+            // 点击分页按钮
+            jumpPageNum: function (n) {
+                page = n;
+                offset = (page-1) * limit;
+                setVueData("/user/" + loginUser + "/commodity?offset=" + offset + "&limit=" + limit, vm, "commodityList");
             }
+        },
+        updated: function () {
+            // 为分页上样式
+            var pageNum = $('.works-page.fy ul li');
+            $(pageNum).find('a').removeClass('active');
+            $(pageNum[page]).find('a').addClass('active');
         }
     });
 
@@ -72,13 +131,16 @@ $(document).ready(function () {
     setVueData("/receiving/searchReceiving", vm, "receivingList");
 
     // 请求卖家商品信息
-    setVueData("/user/" + loginUser + "/commodity", vm, "commodityList");
+    setVueData("/user/" + loginUser + "/commodity?offset=" + offset + "&limit=" + limit, vm, "commodityList");
 
     // 请求标签数据
     setVueData("/tag/list", vm, "tagList");
 
     // 请求卖家订单
     setVueData("/order/seller/list", vm, "sellerOrderList");
+
+    // 请求商品数量
+    setVueData("/user/" + loginUser + "/commodity/count", vm, "count");
 
     // 上传头像
     $('#avatar').change(function () {
@@ -221,5 +283,21 @@ $(document).ready(function () {
             });
 
         }
+    });
+
+    // 商品分页，上一页
+    $('.works-page.fy .prev').click(function (e) {
+        if(page == vm.pageCount) page--;
+        page--;
+        offset = page * limit;
+        if(page == 0) page = 1, offset = 0;
+        setVueData("/user/" + loginUser + "/commodity?offset=" + offset + "&limit=" + limit, vm, "commodityList");
+    });
+    // 商品分页，下一页
+    $('.works-page.fy .next').click(function (e) {
+        offset = page * limit;
+        var commodity = vm.commodities[0];
+        setVueData("/user/" + loginUser + "/commodity?offset=" + offset + "&limit=" + limit, vm, "commodityList");
+        if(page != vm.pageCount) page++;
     });
 });

@@ -79,4 +79,10 @@ public class CommodityDaoTest extends BaseTest{
         int update = commodityDao.updateCommodity(commodity);
         System.out.println("update = " + update);
     }
+
+    @Test
+    public void testCountCommodityByUserId() throws Exception{
+        int count = commodityDao.countCommodityByUserId(7);
+        System.out.println(count);
+    }
 }

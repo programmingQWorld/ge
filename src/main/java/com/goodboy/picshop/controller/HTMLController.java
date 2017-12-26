@@ -20,4 +20,9 @@ public class HTMLController {
     public String author(){
         return "author";
     }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(){
+        return "index";
+    }
 }

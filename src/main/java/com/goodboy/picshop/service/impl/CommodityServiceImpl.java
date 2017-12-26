@@ -144,4 +144,9 @@ public class CommodityServiceImpl implements CommodityService {
         commodityDao.updateCommodity(commodity);
         return new CommodityDto(StatusEnum.SUCCESS);
     }
+
+    public CommodityDto countByUserId(int userId) {
+        int count = commodityDao.countCommodityByUserId(userId);
+        return new CommodityDto(StatusEnum.SUCCESS, count);
+    }
 }

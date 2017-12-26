@@ -26,7 +26,10 @@ function setVueData(url, vm, type) {
             // 根据type判断，给Vue对象数据赋值
             switch (type){
                 case "commodityList" :
-                    vm.commodities = data.data.commodityList;
+                    // 判断是否还有数据
+                    if(data.data.commodityList != null) {
+                        vm.commodities = data.data.commodityList;
+                    }
                     break;
                 case "tagList" :
                     vm.tags = data.data.tagList;
@@ -75,11 +78,8 @@ function setVueData(url, vm, type) {
                 case "cartitems" :
                     vm.cartitems = data.data.items;
                     break;
-                case "cartitems" :
-                    vm.cartitems = data.data.items;
-                    break;
-                case "reduceitem":
-                    data.data;
+                case "count" :
+                    vm.count = data.data.count;
                     break;
             }
         }

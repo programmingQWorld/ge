@@ -80,4 +80,19 @@ $(document).ready(function () {
             $("#BuyNow").modal('show');
         }
     });
+
+    // 加入购物车
+    $('.btn-add-cart').click(function () {
+        $.ajax({
+            url: "/cart/additem/" + commodityId,
+            success: function (data, status) {
+                if(data.success){
+                    alert(data.errorMsg);
+                    window.location.href = "/shopping.html";
+                }else{
+                    alert(data.errorMsg);
+                }
+            }
+        });
+    });
 });

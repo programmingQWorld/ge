@@ -143,37 +143,37 @@
 								</div>
 							</div>
 							<!-- 詳情彈出框結束-->
-						</div>
-					</div>
-				</div>
-				<!--付款頁面開始-->
-				<div class="modal fade" id="Paypage" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document" style="height: 5%;width: 30%">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<h4 class="modal-title" id="myModalLabel3">確認付款</h4>
-							</div>
-							<div class="modal-body">
-								<h5>恭喜您已成功提交訂單</h5>
-								<p>訂單號：<span class="orderNumber">No554981662</span></p>
-								<p>總金額：<span class="Amt">￥200.00</span></p>
-							</div>
-							<div class="modal-body">
-								<h5>支付平台</h5>
-								<div class="payImg">
-									<p><img src="images/Orders/WeChat.png"><img src="images/Orders/Alipay.png"></p>
+							<!--付款頁面開始-->
+							<div class="modal fade" id="Paypage" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document" style="height: 5%;width: 30%">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">×</span>
+											</button>
+											<h4 class="modal-title" id="myModalLabel3">確認付款</h4>
+										</div>
+										<div class="modal-body">
+											<h5>恭喜您已成功提交訂單</h5>
+											<p>訂單號：<span class="orderNumber">{{ order.orderNo }}</span></p>
+											<p>總金額：<span class="Amt">￥{{ getTotalCost(index) }}</span></p>
+										</div>
+										<div class="modal-body">
+											<h5>支付平台</h5>
+											<div class="payImg">
+												<p><img src="images/Orders/WeChat.png"><img src="images/Orders/Alipay.png"></p>
+											</div>
+										</div>
+										<div>
+											<button class="PaidButtom" v-bind:data-id="order.commodity.id" v-on:click="pay($event)">支付</button>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div>
-								<button class="PaidButtom">支付</button>
-							</div>
+							<!--付款頁面結束-->
 						</div>
 					</div>
 				</div>
-				<!--付款頁面結束-->
 
 				<!-- **************2 -->
 				<div class="person_information hide">
@@ -249,11 +249,12 @@
 								<!--<label style=" margin-top:10px;width: 20px;height: 45px">
 									<input type="checkbox"><span></span>
 								</label>-->
-								<img src="images/Orders/shape-1.png">
+								<img v-if="receiving.isDefault" src="images/Orders/shape-1.png">
 							</div>
 							<span class="content_name">{{ receiving.receiver }}</span>
 							<span class="content_address">{{ receiving.address }}</span>
 							<span class="content_phone">{{ receiving.phone }}</span>
+							<span class="content_del content_default" v-bind:data-id="receiving.id" v-on:click="setDefaultReceiving($event)">设为默认</span>
 							<span class="content_del" v-bind:data-id="receiving.id" v-on:click="delReceiving($event)">删除</span>
 						</div>
 					</div>
@@ -312,12 +313,9 @@
 					<!--翻页开始-->
 					<div class="works-page fy">
 						<ul class="pagination">
-							<li><a href="#">---</a></li>
-							<li><a href="#">1</a></li>
-							<li><a class="active" href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">></a></li>
+							<li><a class="prev" href="#"><</a></li>
+							<li v-for="n in pageCount" v-on:click="jumpPageNum(n)"><a href="#">{{ n }}</a></li>
+							<li><a class="next" href="#">></a></li>
 						</ul>
 					</div>
 					<!--翻页结束-->
@@ -355,7 +353,7 @@
 							<!-- <img src="img/作者介绍-作品1.png"> -->
 							<div class="row topInfo">
 								<div class="col-md-3 orderImg">
-									<img src="images/Orders/AuthorIntro_works1.png">
+									<img v-bind:src="sellerOrder.commodity.picture" width="100" height="75" />
 								</div>
 								<div class="col-md-4 orderPro">
 									<span class="orderpro">{{ sellerOrder.user.nickname }}《{{ sellerOrder.commodity.name }}》</span><p><span class="orderpro">￥{{ sellerOrder.commodity.price }}</span>
@@ -369,7 +367,8 @@
 								<div class="col-md-2 bottomText" id="1">{{ sellerOrder.receiving.receiver }}</div>
 								<div class="col-md-5 bottomText" id="2">{{ sellerOrder.receiving.address }}</div>
 								<div class="col-md-2 bottomText" id="3">{{ sellerOrder.receiving.phone }}</div>
-								<div class="col-md-3 bottomText" id="4"><button v-if="sellerOrder.status" class="send sendok">已发货</button><button v-else class="send">发货</button>
+								<div class="col-md-3 bottomText" id="4"><button v-if="sellerOrder.status" class="send sendok">已发货</button>
+									<button v-else v-bind:data-id="sellerOrder.id" v-on:click="send($event)" class="send">发货</button>
 								</div>
 							</div>
 

@@ -52,4 +52,10 @@ public class CommodityServiceImplTest extends BaseTest {
         CommodityDto commodityDto = commodityService.update(19, "爱上当", 456, 25, 25);
         System.out.println(commodityDto);
     }
+
+    @Test
+    public void testCountByUserId() throws Exception{
+        CommodityDto commodityDto = commodityService.countByUserId(7);
+        System.out.println(commodityDto);
+    }
 }
