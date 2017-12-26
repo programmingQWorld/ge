@@ -197,6 +197,13 @@ public class UserController {
         return new JSONResult<CommodityDto>(true, commodityDto);
     }
 
+    // 查询用户上架的商品
+    @RequestMapping(value = "{userId}/commodity/count", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<CommodityDto> countCommodity(@PathVariable("userId") int userId){
+        CommodityDto commodityDto = commodityService.countByUserId(userId);
+        return new JSONResult<CommodityDto>(true, commodityDto);
+    }
+
     // 新增商品
     @RequestMapping(value = "/commodity/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<CommodityDto> addCommodity(@RequestParam("cname") String name,

@@ -69,4 +69,11 @@ public interface CommodityService {
      * @return
      */
     CommodityDto update(int id, String name, float price, float sizeWidth, float sizeHeight);
+
+    /**
+     * 获取用户的商品数量
+     * @param userId 用户id
+     * @return 商品数量
+     */
+    CommodityDto countByUserId(int userId);
 }
