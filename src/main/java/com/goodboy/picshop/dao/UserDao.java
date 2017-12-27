@@ -49,5 +49,26 @@ public interface UserDao {
      */
     int updatePwd(@Param("password")String password,@Param("email")String email);
 
+    /**
+     * 根据邮箱激活用户
+     * @param email
+     * @return 影响行数
+     */
+    int emailActive(@Param("email")String email);
+
+    /**
+     * 查找邮箱是否被注册
+     * @param email
+     * @return 影响行数
+     */
+    int searchEmail(@Param("email")String email);
+
+    /**
+     * 查找账号是否被注册
+     * @param account
+     * @return 影响行数
+     */
+    int searchAccount(@Param("account")String account);
+
 
 }
