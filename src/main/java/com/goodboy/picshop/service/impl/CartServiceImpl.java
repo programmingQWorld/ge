@@ -44,7 +44,7 @@ public class CartServiceImpl implements CartService {
 	 * @param userid
 	 * @return
 	 */
-	@Override
+
 	public CartDto getCartInfoByUserId(int userid) {
 		Cart cart = cartDao.queryCartByUserId(userid);
 		if (cart == null) {
@@ -60,7 +60,7 @@ public class CartServiceImpl implements CartService {
 	 * @param userid  购物车车主id
 	 * @param cartDto  购物车dto 会用到里面的cartid, itemlist
 	 */
-	@Override
+
 	public void saveUserCartInfo(int userid, CartDto cartDto) {
 		try {
 			int result = 0;
