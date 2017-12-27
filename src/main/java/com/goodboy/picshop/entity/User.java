@@ -17,11 +17,12 @@ public class User {
     private Date birthday;      //用户生日
     private String email;       //用户邮箱
     private String phone;       //用户手机
+    private int active;      //用户是否激活
 
     public User() {
     }
 
-    public User(int id, String account, String password, String nickname, String avatar, char sex, Date birthday, String email, String phone) {
+    public User(int id, String account, String password, String nickname, String avatar, char sex, Date birthday, String email, String phone,int active) {
         this.id = id;
         this.account = account;
         this.password = password;
@@ -31,6 +32,7 @@ public class User {
         this.birthday = birthday;
         this.email = email;
         this.phone = phone;
+        this.active=active;
     }
 
     //注册业务的构造器
@@ -122,6 +124,14 @@ public class User {
         this.phone = phone;
     }
 
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
     @Override
     public String toString() {
         return "User{ id = " + this.id
@@ -134,4 +144,6 @@ public class User {
                 + ", email = " + this.email
                 + ", phone = " + this.phone + " }";
     }
+
+
 }

@@ -12,9 +12,7 @@ import com.goodboy.picshop.service.UploaderService;
 import com.goodboy.picshop.service.UserService;
 import com.goodboy.picshop.util.GenerateLinkUtils;
 import com.goodboy.picshop.util.md5Password;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.mail.SimpleMailMessage;
@@ -46,17 +44,31 @@ public class UserController {
 
     UserDto userDto=null;
     //登录验证
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JSONResult<UserDto> login(@Param("account") String account,@Param("password") String password,HttpSession session){
+    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<UserDto> login(@RequestParam("account")String account,@RequestParam("password")String password,@RequestParam("checkCode")String checkCode,HttpSession session){
         String pwd= md5Password.md5Password(password);
+        String code=(String)session.getAttribute("checkCode");
         try{
-            userDto=userService.userLogin(account,pwd);
+            userDto=userService.userLogin(account,pwd,checkCode,code);
         }catch (UserErrorException uie){
             userDto=new UserDto(StatusEnum.USER_ERROR);
+        }catch(CheckCodeErrorException ccee){
+            userDto=new UserDto(StatusEnum.CODE_ERROR);
+        }catch(UserNoActiveException unae){
+            userDto=new UserDto(StatusEnum.NO_ACTIVE);
         }
+
         session.setAttribute("user",userDto.getUser());
         return  new JSONResult<UserDto>(true,userDto);
     }
+    //生成验证码
+    @RequestMapping(value = "/getCheckCode", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<UserDto> getCheckCode(HttpSession session){
+        userDto=userService.getCheckCode();
+        session.setAttribute("checkCode",userDto.getCode());
+        return  new JSONResult<UserDto>(true,userDto);
+    }
+
     //用户注销
     @RequestMapping("/logout")
     public JSONResult<UserDto> logout(HttpServletRequest request){
@@ -72,19 +84,47 @@ public class UserController {
     }
 
     //注册用户
-    @RequestMapping(value = "/insertUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/insertUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> insert(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("email") String email,@RequestParam("phone") String phone){
 
         try {
             String pwd= md5Password.md5Password(password);
-            userDto = userService.insert(account, pwd, email, phone);
+            userDto = userService.insert(account,pwd,email,phone);
+            SimpleMailMessage mail=new SimpleMailMessage();
+            mail.setTo(email);//收件人邮箱地址
+            mail.setFrom("774659399@qq.com");//发件人
+            mail.setSubject("邮箱激活");//主题
+            mail.setText("请点击以下链接完成邮箱激活，链接于24小时过期:" + GenerateLinkUtils.generateEmailLink(email));//正文
+            mailSender.send(mail);
         }
-        catch (DuplicateKeyException e){
-            userDto=new UserDto(StatusEnum.REPEAT_USER);
+        catch (AccountRegisterException e){
+            userDto=new UserDto(StatusEnum.REPEAT_ACCOUNT);
+        }
+        catch (EmailRegisterException e){
+            userDto=new UserDto(StatusEnum.REPEAT_EMAIL);
+        }
+        catch (Exception e){
+            userDto=new UserDto(StatusEnum.UNKNOWN_ERROR);
         }
         return new JSONResult<UserDto>(true, userDto);
     }
-
+    //用户点击邮箱激活链接，解析链接并判断身份
+    //判断链接是否失效
+    //根据邮箱激活用户
+    @RequestMapping(value = "/emailActive", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<UserDto> emailActive(String checkCode){
+        try {
+            List list = resetPwdService.parseEmailLink(checkCode).getList();
+            userDto=userService.emailActive((String)list.get(0));
+        }catch (LinkErrorException lee){
+            userDto=new UserDto(StatusEnum.LINK_ERROR);
+        }catch (LinkExpiredException le){
+            userDto=new UserDto(StatusEnum.LINK_EXPIRED);
+        }catch (Exception e){
+            userDto=new UserDto(StatusEnum.LINK_ERROR);
+        }
+        return new JSONResult<UserDto>(true, userDto);
+    }
     //更新信息
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> update(@RequestParam("nickname")String nickname, @RequestParam("file") MultipartFile file, @RequestParam("sex")String sex, @DateTimeFormat(pattern = "yyyy-MM-dd")Date birthday, @RequestParam("email") String email, HttpSession session){
@@ -128,13 +168,13 @@ public class UserController {
             userDto=userService.findUserByEmail(email);
             SimpleMailMessage mail=new SimpleMailMessage();
             mail.setTo(userDto.getUser().getEmail());//收件人邮箱地址
-            mail.setFrom("xxx@qq.com");//发件人
+            mail.setFrom("774659399@qq.com");//发件人
             mail.setSubject("密码重置");//主题
             mail.setText("要使用新的密码, 请使用以下链接启用密码,链接24小时后过期:" + GenerateLinkUtils.generateResetPwdLink(userDto.getUser()) );//正文
             mailSender.send(mail);
 
         }catch (NoEmailException uee){
-            userDto=new UserDto(StatusEnum.NO_EMAILL);
+            userDto=new UserDto(StatusEnum.NO_EMAIL);
         }
 
         return new JSONResult<UserDto>(true, userDto);
@@ -143,9 +183,9 @@ public class UserController {
     //判断链接是否失效
     //根据邮箱和昵称查找用户
     @RequestMapping(value = "/resetPwd", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JSONResult<UserDto> showForgetPwdUser(String checkCode) throws Exception{
+    public JSONResult<UserDto> showForgetPwdUser(String checkCode){
         try {
-            List list = resetPwdService.parseLink(checkCode).getList();
+            List list = resetPwdService.parsePwdLink(checkCode).getList();
             userDto=userService.findUserByEmail((String)list.get(1));
         }catch (LinkErrorException lee){
             userDto=new UserDto(StatusEnum.LINK_ERROR);

@@ -72,8 +72,12 @@ public class ReceivingController {
         if(user==null){
             return new JSONResult<ReceivingDto>(false,"用户未登录");
         }
-        int defaultReceiving=receivingService.queryDefaultReceiving(user.getId()).getReceiving().getId();//获取用户当前默认地址
-        receivingService.setIsDefault(defaultReceiving,0);//将原先默认地址设为非默认
+
+        Receiving defaultReceiving =receivingService.queryDefaultReceiving(user.getId()).getReceiving();//获取用户当前默认地址
+        if(defaultReceiving!=null){
+            receivingService.setIsDefault(defaultReceiving.getId(),0);//将原先默认地址设为非默认
+        }
+
         ReceivingDto receivingDto =receivingService.setIsDefault(receivingId,1);//将地址设为默认地址
         return new JSONResult<ReceivingDto>(true,receivingDto);
     }
