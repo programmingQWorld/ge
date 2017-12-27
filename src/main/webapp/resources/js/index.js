@@ -5,7 +5,8 @@ $(document).ready(function () {
         data: {
             levelCommodities: [],                 // 轮播图商品
             tagCommodities: [],     // 根据标签展示商品
-            commodities: []     // 新上架商品
+            commodities: [],     // 新上架商品
+            checkCode: ""       // 验证码
         },
         methods: {
             // 根据下标获取数组值
@@ -47,5 +48,8 @@ $(document).ready(function () {
 
     // 设置新上架商品
     setVueData("/commodity/list", vm, "commodityList");
+
+    // 设置验证码
+    setVueData("/user/getCheckCode", vm, "checkCode");
 
 });

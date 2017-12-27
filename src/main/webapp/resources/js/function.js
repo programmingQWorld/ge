@@ -90,6 +90,9 @@ function setVueData(url, vm, type) {
                 case "count" :
                     vm.count = data.data.count;
                     break;
+                case "checkCode" :
+                    vm.checkCode = data.data.code;
+                    break;
             }
         }
     });

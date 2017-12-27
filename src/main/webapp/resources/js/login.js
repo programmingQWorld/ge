@@ -1,17 +1,18 @@
 $(document).ready(function(){
 	/*登录注册切换*/
-	$(".btnReg").click(function(){
-		$(".btnReg").addClass("onBtn");
-		$(".btnLog").removeClass("onBtn");
-		$(".register").show();
-		$(".login").hide();
-	});
-	$(".btnLog").click(function(){
-		$(".btnLog").addClass("onBtn");
-		$(".btnReg").removeClass("onBtn");
-		$(".register").hide();
-		$(".login").show();
-	});
+	$(document).on('click', '.btnReg', function (e) {
+        $(".btnReg").addClass("onBtn");
+        $(".btnLog").removeClass("onBtn");
+        $(".register").show();
+        $(".login").hide();
+    });
+
+	$(document).on('click', '.btnLog', function (e) {
+        $(".btnLog").addClass("onBtn");
+        $(".btnReg").removeClass("onBtn");
+        $(".register").hide();
+        $(".login").show();
+    });
 	/*验证*/
 	// layui.use("layer",function(){
 	// 	$(".btnLog").click(function(){
@@ -62,7 +63,7 @@ function login_submit_sure(){
 		$.ajax({
 			url: "/user/login",
 			type: "POST",
-			data: {"account":name, "password":pwd},
+			data: {"account": name, "password": pwd, "checkCode": yzm},
 			success: function (data, status) {
 				// 登录成功
 				if(data.data.status == 1){
