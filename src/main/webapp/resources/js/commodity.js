@@ -4,7 +4,7 @@ $(document).ready(function () {
     var page = 1;                     // 页数
     var masonryActive = false;      // 瀑布流插件初始化标志
     var tagId = 0;                  // 标签Id，0为全部标签
-    var commodityUrl = "http://10.10.112.170:8080/commodity/list?limit=" + limit;     // 请求商品数据url,默认请求全部
+    var commodityUrl = "/commodity/list?limit=" + limit;     // 请求商品数据url,默认请求全部
     // 绑定数据的Vue对象
     var vm = new Vue({
         el: '.content',
@@ -44,10 +44,10 @@ $(document).ready(function () {
                 // 判断是否点击了全部按钮
                 if(tagId != 0) {
                     // 请求tagId标签下的商品数据
-                    commodityUrl = "http://10.10.112.170:8080/tag/" + tagId + "/commodity?limit=" + limit;
+                    commodityUrl = "/tag/" + tagId + "/commodity?limit=" + limit;
                 }else{
                     // 请求全部商品数据
-                    commodityUrl = "http://10.10.112.170:8080/commodity/list?limit=" + limit;
+                    commodityUrl = "/commodity/list?limit=" + limit;
                 }
                 // 设置该标签下的第一页
                 page = 1;
@@ -61,7 +61,7 @@ $(document).ready(function () {
     });
 
     // 请求标签数据
-    setVueData("http://10.10.112.170:8080/tag/list", vm, "tagList");
+    setVueData("/tag/list", vm, "tagList");
 
     // 请求商品数据
     setVueData(commodityUrl, vm, "commodityList");

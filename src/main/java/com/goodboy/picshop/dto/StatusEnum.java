@@ -8,6 +8,8 @@ public enum StatusEnum {
     SUCCESS(1, "成功"),
     FILE_TOO_LARGE(1020, "文件过大"),
     NOT_ALLOW_FILE_TYPE(1010, "不被允许上传的文件类型"),
+    NO_USER(1030, "用户不存在"),
+    COMMODITY_REPEAT(1040, "商品重复"),
     NO_LOGIN(2000,"用户未登录"),
     USER_ERROR(2002,"用户名不存在或密码错误"),
     NO_EMAIL(2003,"邮箱暂未被注册"),

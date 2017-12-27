@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>購物車</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/shopping.css">
+    <script src="js/jquery/jquery-3.2.1.min.js"></script>
+    <script src="js/vue/vue.js"></script>
+    <script type="text/javascript" src="js/layui/layui.js"></script>
+    <script src="js/function.js"></script>
+    <script src="js/shopping.js"></script>
+    <style type="text/css">
+
+        /*复选框样式开始*/
+        input[type="checkbox"]{appearance: none; -webkit-appearance: none;outline: none;display:none}
+        label{width:100px;height:100px;display:inline-block;cursor:pointer;}
+        label input[type="checkbox"] + span{width:20px;height:20px;display:inline-block;background:url(images/checkbox_01.gif)  no-repeat;background-position:0 0;}
+        label input[type="checkbox"]:checked + span{background-position:0 -21px;}
+        /*复选框样式结束*/
+
+    </style>
+</head>
+<body >
+<!-- 导航开始 -->
+<div class="nav_person container navbar-default pageheader" role="navigation">
+    <div class="container">
+        <div class="nav-logo">
+            <a class="navbar-brand" href="javaScript:;"><img src="images/logo.png"></a>
+        </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="navbar">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html"><p>yè</p><span>主頁</span></a></li>
+                <li><a href="commodity.html"><p>zuò</p><span>作品</span></a></li>
+                <li><a href="index.html#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
+                <li v-if="user.id" class="logn_up"><a href="user.html">{{ username }}</a></li>
+                <li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 导航结束 -->
+<div id="app" class="container">
+    <div  class="ShoppingBox">
+            <div>
+                <h1>Shopping</h1>
+                <h5 style="font-weight: 600;font-size: 15px">購物車</h5>
+                    <div style="display: inline-block;width: 100px;height: 50px;text-align: left">
+                        <td>
+                            <label style=" margin-top:20px;width: 20px;height: 45px"><input type="checkbox" v-on:click="swapCheck" v-model="checked"><span></span></label>
+                        </td>
+                        <span style="font-size:14px;font-weight:600;margin-left: 1%;">全选</span>
+                    </div>
+            </div>
+            <div class="Shopping-Mid">
+                <form role="form">
+                    <template v-if="cartitems.length">
+                    <table style="width: 80%; height: 95px;" frame="hsides" cellpadding="4">
+                                <tr v-for="(item,index) in cartitems">
+                                    <div style="display: inline-block;"><td style="padding-top: 20px;">
+                                            <label style="width: 20px;height: 40px;">
+                                                <input type="checkbox"  @click="checkSingle(index)" v-model="selectList" :id="item.id" :value="index" name="selectList" ><span></span>
+                                            </label>
+                                        </td>
+                                    </div>
+                                    <td><img class="img-rounded" v-bind:src="item.pic" width="100" height="95" /></td>
+                                    <td>{{ item.sallerName }}</td>
+                                    <td>{{ item.commName }}</td>
+                                    <td>&yen;{{ item.price }}</td>
+                                    <td>{{ item.count==undefined ? 1 : item.count }}件</td>
+                                    <td align="right"><button @click="handleRemove(index, item.commid)" type="button" class="Shopping-buttom">刪除</button></td>
+                                </tr>
+                    </table>
+                    </template>
+                    <div v-else>sorry~购物车为空！</div>
+                </form>
+            </div>
+        <div class="SureAddress">
+            <p style="margin: 10px;margin-left: 10px">確認收貨地址</p>
+            <span style="float: left;margin-left: 20px;">收貨人信息</span>
+            <span style="float: right;margin-right: 20px;"><a href="user.html#EditAddress">新增地址</a></span>
+            <div class="Consigneeinfo">
+                <div class="checkBoxType" style="display: inline-block;">
+                    <label style=" margin-top:10px;width: 20px;height: 45px">
+                        <input type="checkbox"><span></span>
+                    </label>
+                </div>
+                <div class="infoName">{{ getDefaultReceiving('receiver') }}</div>
+                <div class="infoAddress">{{ getDefaultReceiving('address') }}</div>
+                <div class="infoNumber">{{ getDefaultReceiving('phone') }}</div>
+                <div class="Shopping-default">默認</div>
+            </div>
+            <!--显示更多地址开始-->
+            <div class="showAddress">
+                <div v-for="receiving in receivings" class="Consigneeinfo">
+                    <div class="checkBoxType" style="display: inline-block;">
+                        <label style=" margin-top:10px;width: 20px;height: 45px">
+                            <input type="checkbox"><span></span>
+                        </label>
+                    </div>
+                    <div class="infoName">{{ receiving.receiver }}</div>
+                    <div class="infoAddress">{{ receiving.address }}</div>
+                    <div class="infoNumber">{{ receiving.phone }}</div>
+                    <div class=""></div>
+                </div>
+            </div>
+            <!--显示更多地址结束-->
+            <span id="MoreAddress" style="font-size: 14px;color: black;margin-left: 9px;">更多收货地址 <span class="glyphicon glyphicon-chevron-down"></span></span>
+        </div>
+        <div class="Shopping-col">
+            <p style="margin:0 6px 7px;">總金額：<span id=Col-money>&yen;{{ totalPrice }}</span><button type="button" class="Shopping-buttom checkout">結算</button></p>
+        </div>
+    </div>
+</div>
+    <footer>
+        <h5>&copy;haoren</h5>
+    </footer>
+</div>
+
+</body>
+
+</html>

@@ -10,14 +10,13 @@ import com.goodboy.picshop.exception.UserNoLoginException;
 import com.goodboy.picshop.service.ReceivingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @RestController
+// 跨域请求
+@CrossOrigin
 @RequestMapping("/receiving")
 public class ReceivingController {
 

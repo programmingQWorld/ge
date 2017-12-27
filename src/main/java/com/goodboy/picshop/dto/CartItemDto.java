@@ -1,11 +1,11 @@
 package com.goodboy.picshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class CartItemDto {
 	private int commid;   // 商品id
-	private  String commName;  // 商品名
+	private String commName;  // 商品名
+	private String pic;  // 商品图片
 	private float price;
 	private String sallerName;   // 老板姓名
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -75,6 +75,14 @@ public class CartItemDto {
 
 	public void setSallerName(String sallerName) {
 		this.sallerName = sallerName;
+	}
+
+	public String getPic() {
+		return pic;
+	}
+
+	public void setPic(String pic) {
+		this.pic = pic;
 	}
 
 	@Override

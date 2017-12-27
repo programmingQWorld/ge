@@ -1,0 +1,210 @@
+/*導航條開始*/
+*{
+    margin:0;
+    padding:0;
+}
+/*a{
+
+}*/
+a:link{
+    color:red;
+}
+a:hover{
+    /*color: red;*/
+    text-decoration: none;
+}
+body{
+    font-family:Microsoft YaHei;
+}
+.nav_person{
+    margin-top:52px;
+    height:88px;
+    background-color:white;
+    box-shadow:-2px 2px 8px #ccc;
+    border-radius:20px;
+    position:relative;
+    z-index:3;
+}
+.nav_person ul li{
+    line-height:88px;
+    margin-left:55px;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    font-family:Microsoft YaHei;
+    color:black;
+}
+.nav_person ul li a{
+    padding:0;
+    color:black;
+}
+.nav_person ul li a:hover{
+    /*background-color:white;*/
+
+}
+.nav_person .collapse ul li p{
+    margin-bottom:5px;
+    font-size:12px;
+    color:rgb(152,150,150);
+    font-weight:normal;
+}
+.nav_person .collapse ul li.logn_up a{
+    color:white;
+    text-align:center;
+    line-height:60px;
+}
+.nav_person .collapse ul li.logn_up{
+    width:120px;
+    height:60px;
+    display:block;
+    color:white;
+    background-color:black;
+    border-radius:10px;
+    margin-top:16px;
+}
+.nav_person button{
+    margin:22px 17px 16px 0;
+}
+/*导航结束*/
+.ShoppingBox{
+    width: 80%;
+    margin:  0 auto;
+}
+.ShoppingBox h1{
+    font-size: 60px;
+    color: rgb(255,0,0);
+    font-family: "Microsoft YaHei UI";
+    font-weight: bold;
+}
+.ShoppingBox h4{
+    font-size: 16px;
+    color: rgb(3,3,3);
+}
+.footer h5{
+    text-align:center;
+    font-weight: bold;
+}
+.Shopping-Mid form img{
+    padding-top: 5%;
+    padding-bottom: 5%;
+/*    border-radius: 10px;*/
+}
+.Shopping-buttom{
+    font-size: 14px;
+    height: 40px;
+    width: 80px;
+    /*border-left-color: red;*/
+    border-left:3px solid red;
+    /* padding-left:10px;*/
+    margin:15px;
+    background-color: black;
+    color: rgb(255,255,255);
+    border: none;
+    border-radius: 7px;
+    text-align: center;
+    /*     margin-right: -50%;*/
+}
+.SureAddress span{
+    font-size: 14px;
+    color: rgb(152,150,150);
+}
+.SureAddress {
+    width: 80%;
+   /* height: 190px;*/
+    border: 1px solid #b4b4b4;
+    margin-top: 17px;
+}
+/*table{
+    font-size: 14px;
+    color: rgb(3,3,3);
+    text-align: center;
+    font-family: "Microsoft YaHei UI";
+}
+table tr td:nth-child(5){
+    color: red;
+
+}*/
+/*确认收货地址开始*/
+.Consigneeinfo{
+/*    background-color: #1b6d85;*/
+    width: 100%;
+    height: 50px;
+    clear: both;
+    text-align: center;
+    margin: 0 auto;
+}
+.Consigneeinfo .checkBoxType{
+/*    background-color: palevioletred;*/
+    width: 5%;
+    height: 50px;
+    float: left;
+    margin: 0 auto;
+}
+.Consigneeinfo .infoName{
+ /*   background-color: #00bcd4;*/
+    width: 15%;
+    height: 50px;
+    float: left;
+    line-height: 3;
+}
+.Consigneeinfo .infoAddress{
+ /*   background-color: #00d449;*/
+    width: 40%;
+    height: 50px;
+    float: left;
+    line-height: 3;
+}
+.Consigneeinfo .infoNumber{
+/*    background-color: #2b542c;*/
+    width: 20%;
+    height: 50px;
+    float: left;
+    line-height: 3;
+}
+.Consigneeinfo .infoTF{
+/*    background-color: grey;*/
+    width: 15%;
+    height: 50px;
+    float: left;
+    line-height: 3;
+}
+/*确认收货地址结束*/
+.Shopping-default{
+    display: inline-block;
+    font-size: 12px;
+    height: 20px;
+    width: 50px;
+    line-height: 20px;
+    margin:15px;
+    background-color: rgb(212,212,212);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+}
+.Shopping-col{
+    float:right;
+    margin-right: 17.5%;
+}
+.Shopping-col span{
+    color: red;
+}
+/*     .SureAddress span{
+         float: right;
+         color: green;
+     }
+     .SureAddress span:nth-child(2){
+         margin-left: 2%;
+         color: red;
+     }*/
+footer h5{
+    text-align: center;
+    font-weight: bold;
+    /* margin: 0 auto;*/
+}
+/*显示地址开始*/
+.showAddress{
+    display: none;
+  /*  visibility: hidden;*/
+}
+/*显示地址结束*/

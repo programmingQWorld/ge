@@ -3,17 +3,34 @@ $(document).ready(function () {
     var vm = new Vue({
         el: ".content",
         data: {
-            tagCommodities: ['1','2','3','4','5'],     // 根据标签展示商品
+            levelCommodities: [],                 // 轮播图商品
+            tagCommodities: [],     // 根据标签展示商品
             commodities: []     // 新上架商品
         },
         methods: {
             // 根据下标获取数组值
-            indexOfTagCommodities: function (index) {
-                return this.tagCommodities[index];
+            indexOfTagCommodities: function (index, p) {
+                if(this.tagCommodities[index] == null) return;
+                switch (p){
+                    case "id" :
+                        return this.tagCommodities[index].id;
+                    case "name" :
+                        return this.tagCommodities[index].name;
+                    case "picture" :
+                        return this.tagCommodities[index].picture;
+                }
             },
             // 根据下标获取数组值
-            indexOfCommodities: function (index) {
-                return this.tagCommodities[index];
+            indexOfCommodities: function (index, p) {
+                if(this.commodities[index] == null) return;
+                switch (p){
+                    case "id" :
+                        return this.commodities[index].id;
+                    case "name" :
+                        return this.commodities[index].name;
+                    case "picture" :
+                        return this.commodities[index].picture;
+                }
             },
             // 生成商品详情页链接
             makeDetailUrl: function (id) {
@@ -22,10 +39,13 @@ $(document).ready(function () {
         }
     });
 
+    // 设置轮播商品
+    setVueData("/commodity/5/level", vm, "levelCommodities");
+
     // 设置标签商品
-    setVueData("http://10.10.112.170:8080/tag/1/commodity", vm, "tagCommodities");
+    setVueData("/tag/3/commodity", vm, "tagCommodities");
 
     // 设置新上架商品
-    setVueData("http://10.10.112.170:8080/commodity/list", vm, "commodityList");
+    setVueData("/commodity/list", vm, "commodityList");
 
 });

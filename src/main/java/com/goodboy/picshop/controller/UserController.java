@@ -1,15 +1,10 @@
 package com.goodboy.picshop.controller;
 
 
-import com.goodboy.picshop.dto.JSONResult;
-import com.goodboy.picshop.dto.StatusEnum;
-import com.goodboy.picshop.dto.UploaderDto;
-import com.goodboy.picshop.dto.UserDto;
+import com.goodboy.picshop.dto.*;
 import com.goodboy.picshop.entity.User;
 import com.goodboy.picshop.exception.*;
-import com.goodboy.picshop.service.ResetPwdService;
-import com.goodboy.picshop.service.UploaderService;
-import com.goodboy.picshop.service.UserService;
+import com.goodboy.picshop.service.*;
 import com.goodboy.picshop.util.GenerateLinkUtils;
 import com.goodboy.picshop.util.md5Password;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +25,8 @@ import java.util.List;
  * 注解为REST控制器，所有方法返回json数据
  */
 @RestController
+// 跨域请求
+@CrossOrigin
 @RequestMapping("/user")
 public class UserController {
     //注入依赖
@@ -41,15 +38,37 @@ public class UserController {
     private JavaMailSender mailSender;
     @Autowired
     private ResetPwdService resetPwdService;
+    @Autowired
+    private CommodityService commodityService;
+    @Autowired
+    private CartService cartService;
 
     UserDto userDto=null;
     //登录验证
-    @RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> login(@RequestParam("account")String account,@RequestParam("password")String password,@RequestParam("checkCode")String checkCode,HttpSession session){
         String pwd= md5Password.md5Password(password);
         String code=(String)session.getAttribute("checkCode");
         try{
             userDto=userService.userLogin(account,pwd,checkCode,code);
+            session.setAttribute("user",userDto.getUser());
+
+            CartDto dbCartDto =  cartService.getCartInfoByUserId(userDto.getUser().getId());
+            CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
+
+            if (sessionCartDto != null && dbCartDto != null ) {
+                if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
+                    // 合并
+                    for ( CartItemDto dto : sessionCartDto.getItems() ) {
+                        if ( !dbCartDto.getItems().contains(dto)  ) {
+                            dbCartDto.getItems().add(dto);
+                        }
+                    }
+                }
+            }
+            CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
+            session.setAttribute("usercart", dto);
+
         }catch (UserErrorException uie){
             userDto=new UserDto(StatusEnum.USER_ERROR);
         }catch(CheckCodeErrorException ccee){
@@ -72,6 +91,10 @@ public class UserController {
     //用户注销
     @RequestMapping("/logout")
     public JSONResult<UserDto> logout(HttpServletRequest request){
+        // 保存信息回到数据库
+        CartDto cartDto = (CartDto) request.getSession().getAttribute("usercart");
+        User userOnline = (User) request.getSession().getAttribute("user");
+        cartService.saveUserCartInfo( userOnline.getId(), cartDto  );
         request.getSession().invalidate();
         return  new JSONResult<UserDto>(true,new UserDto(StatusEnum.SUCCESS));
     }
@@ -84,7 +107,7 @@ public class UserController {
     }
 
     //注册用户
-    @RequestMapping(value = "/insertUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/insertUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> insert(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("email") String email,@RequestParam("phone") String phone){
 
         try {
@@ -108,6 +131,23 @@ public class UserController {
         }
         return new JSONResult<UserDto>(true, userDto);
     }
+
+    // 上传头像
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<UploaderDto> upload(@RequestParam("file") MultipartFile file){
+        UploaderDto uploaderDto = null;
+        try {
+            uploaderDto = uploaderService.upload(file, "/upload/avatar/");
+        }catch (NotAllowFileTypeException nafte){   // 不允许上传的文件类型
+            uploaderDto = new UploaderDto(StatusEnum.NOT_ALLOW_FILE_TYPE);
+        }catch (FileTooLargeException ftle){        // 文件过大
+            uploaderDto = new UploaderDto(StatusEnum.FILE_TOO_LARGE);
+        }catch (UnknownException ue){               // 未知错误
+            uploaderDto = new UploaderDto(StatusEnum.UNKNOWN_ERROR);
+        }
+        return new JSONResult<UploaderDto>(true, uploaderDto);
+    }
+
     //用户点击邮箱激活链接，解析链接并判断身份
     //判断链接是否失效
     //根据邮箱激活用户
@@ -127,35 +167,14 @@ public class UserController {
     }
     //更新信息
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JSONResult<UserDto> update(@RequestParam("nickname")String nickname, @RequestParam("file") MultipartFile file, @RequestParam("sex")String sex, @DateTimeFormat(pattern = "yyyy-MM-dd")Date birthday, @RequestParam("email") String email, HttpSession session){
-        UploaderDto uploaderDto=null;
+    public JSONResult<UserDto> update(@RequestParam("nickname")String nickname, @RequestParam("filePath") String filePath, @RequestParam("sex")String sex, @RequestParam("birthday") @DateTimeFormat(pattern = "yyyy-MM-dd")Date birthday, @RequestParam("email") String email, HttpSession session){
         User user=(User)session.getAttribute("user");
         if(user==null){
             return new JSONResult<UserDto>(false,"用户未登录");
         }
-        try {
-            uploaderDto=uploaderService.upload(file,"/resources/upload/avatar/");
-        }catch (UserNoLoginException unle){// 用户未登录
-            userDto = new UserDto(StatusEnum.NO_LOGIN);
-        }
-        catch (NotAllowFileTypeException nafte){   // 不允许上传的文件类型
-            userDto = new UserDto(StatusEnum.NOT_ALLOW_FILE_TYPE);
-        }catch (FileTooLargeException ftle){        // 文件过大
-            userDto = new UserDto(StatusEnum.FILE_TOO_LARGE);
-        }catch (UnknownException ue){               // 未知错误
-            userDto = new UserDto(StatusEnum.UNKNOWN_ERROR);
-        }
-        String avatar=uploaderDto.getFileName();
-//        try {
-//            byte[] bytes = sex.getBytes("ISO-8859-1");
-//            String s=new String(bytes,"utf-8");
-//
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
         user.setNickname(nickname);
         user.setSex(sex.charAt(0));
-        user.setAvatar(avatar);
+        user.setAvatar(filePath);
         user.setBirthday(birthday);
         user.setEmail(email);
         userDto = userService.update(user);
@@ -203,5 +222,60 @@ public class UserController {
         String pwd=md5Password.md5Password(password);
         userDto=userService.updatePwd(pwd,email);
         return new JSONResult<UserDto>(true, userDto);
+    }
+
+    // 根据用户id查询用户上架的商品
+    @RequestMapping(value = "/{userId}/commodity", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<CommodityDto> getCommodity(@PathVariable("userId") int userId,
+                                                 @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                                 @RequestParam(value = "limit", defaultValue = "8") int limit){
+        CommodityDto commodityDto = null;
+        try{
+            commodityDto = commodityService.getByUser(userId, offset, limit);
+        }catch (NoCommodityFoundException ncfe){
+            commodityDto = new CommodityDto(StatusEnum.NO_COMMODITY_FOUND);
+        }
+        return new JSONResult<CommodityDto>(true, commodityDto);
+    }
+
+    // 查询用户上架的商品
+    @RequestMapping(value = "{userId}/commodity/count", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<CommodityDto> countCommodity(@PathVariable("userId") int userId){
+        CommodityDto commodityDto = commodityService.countByUserId(userId);
+        return new JSONResult<CommodityDto>(true, commodityDto);
+    }
+
+    // 新增商品
+    @RequestMapping(value = "/commodity/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<CommodityDto> addCommodity(@RequestParam("cname") String name,
+                                                 @RequestParam("cpic") String picture,
+                                                 @RequestParam("tagId") int tagId,
+                                                 @RequestParam("csizeWidth") float sizeWidth,
+                                                 @RequestParam("csizeHeight") float sizeHeight,
+                                                 @RequestParam("cprice") float price,
+                                                 HttpSession session){
+        User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<CommodityDto>(false,"用户未登录");
+        }
+        CommodityDto commodityDto = null;
+        try {
+            commodityDto = commodityService.add(name, picture, tagId, sizeWidth, sizeHeight, price, user.getId());
+        }catch (NoUserException nue){       // 用户不存在
+            commodityDto = new CommodityDto(StatusEnum.NO_USER);
+        }catch (CommodityRepeatException cre){      // 商品重复
+            commodityDto = new CommodityDto(StatusEnum.COMMODITY_REPEAT);
+        }
+        return new JSONResult<CommodityDto>(true, commodityDto);
+    }
+
+    // 是否登录
+    @RequestMapping(value = "/islogin", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JSONResult<UserDto> isLogin(HttpSession session){
+        User user=(User)session.getAttribute("user");
+        if(user==null){
+            return new JSONResult<UserDto>(false,"用户未登录");
+        }
+        return new JSONResult<UserDto>(true, new UserDto(StatusEnum.SUCCESS, user));
     }
 }

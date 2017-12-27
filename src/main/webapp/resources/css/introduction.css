@@ -1,0 +1,88 @@
+/*導航條開始*/
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    font-family:Microsoft YaHei;
+}
+.nav_person{
+    margin-top:52px;
+    height:88px;
+    background-color:white;
+    box-shadow:-2px 2px 8px #ccc;
+    border-radius:20px;
+    position:relative;
+    z-index:3;
+}
+.nav_person ul li{
+    line-height:88px;
+    margin-left:55px;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    font-family:Microsoft YaHei;
+    color:black;
+}
+.nav_person ul li a{
+    padding:0;
+    color:black;
+}
+.nav_person ul li a:hover{
+    /*background-color:white;*/
+
+}
+.nav_person .collapse ul li p{
+    margin-bottom:5px;
+    font-size:12px;
+    color:rgb(152,150,150);
+    font-weight:normal;
+}
+.nav_person .collapse ul li.logn_up a{
+    color:white;
+    text-align:center;
+    line-height:60px;
+}
+.nav_person .collapse ul li.logn_up{
+    width:120px;
+    height:60px;
+    display:block;
+    color:white;
+    background-color:black;
+    border-radius:10px;
+    margin-top:16px;
+}
+.nav_person button{
+    margin:22px 17px 16px 0;
+}
+/*导航结束*/
+/*局部开始*/
+
+.box  h1{
+    font-size: 60px;
+    font-family: "Microsoft YaHei UI";
+    font-weight: bold;
+    color: rgb(255,0,0);
+}
+.box div p {
+    font-family: "Microsoft YaHei UI";
+    font-size: 14px;
+    margin-bottom: 50px;
+    color: rgb(152,150,150);
+    text-indent: 2em;
+}
+.box div h4{
+    font-family: "Microsoft YaHei UI";
+    font-size: 16px;
+    color: rgb(0,0,0);
+}
+.box div h4 span{
+    font-size: 16px;
+    font-family: "Cooper Std Black";
+    color:rgb(255,0,0);
+}
+footer h5{
+    text-align: center;
+    font-weight: bold;
+}
+/*局部结束*/

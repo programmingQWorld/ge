@@ -73,27 +73,23 @@ body{
 	display:inline-block;
 
 }
-.user_header span{
+.user_header .username{
 	font-size:18px;
 	color:black;
-	display:inline-block;
-	position:relative;
-	top:-6px;
-	left:20px;
+	padding: 4px 0px;
+	position: relative;
+	top: 32px;
 }
 .user_header .user_heart {
-	display:inline-block;
-	font-size:0;
-	position:relative;
-	top:36px;
-	left:-40px;
+	position: relative;
+	top: 36px;
 }
 .user_header .user_heart div{
 	width:80px;
 	height:30px;
 	background-color:rgb(211,211,211);
 	display:inline-block;
-	margin-left:20px;
+	margin-right:20px;
 	line-height:30px;
 	text-align:center;
 	font-size:14px;
@@ -241,12 +237,12 @@ body{
 }
 .opusImg img{
 }
-input[name="opusName"]{
+input[name="cname"]{
 	width:200px;
 	height:30px;
 
 }
-input[name="opusUrl"]{
+input#commodityPicture, input[name="opusUrl"]{
 	position:absolute;
 	top:0;
 	right:0;
@@ -273,7 +269,7 @@ input[name="opusUrl"]{
 	margin-left:19px;
 	font-weight:normal;
 }
-input[name="lb"]{
+input[name="tagId"]{
 	margin-left:28px;
 	margin-right:9px;
 }
@@ -288,12 +284,12 @@ input[name="opusOther"]{
 	margin-left:8px;
 	margin-right:8px;
 }
-input[name="money"]{
+input[name="cprice"]{
 	width:250px;
 	height:30px;
 	margin-left:27px;
 }
-input[name="sub"]{
+input.sub{
 	margin-left:67px;
 	line-height:28px;
 	border-radius:6px;
@@ -646,7 +642,6 @@ input[type="text"]{
 	margin-left:50px;
 }
 .address_manage .content_del{
-	margin-left:41px;
 	color:rgb(152,150,150);
 	cursor:pointer;
 }
@@ -719,17 +714,17 @@ ul.pagination li a.active {
 ul.pagination li a:hover:not(.active,) {color: red;border: red solid 1px;}
 /*翻頁樣式結束*/
 /*彈出框樣式開始*/
-.Info h5 input[id='name']{
+.Info h5 input[name='name']{
 	width: 150px;
 	border:0px;
 }
-.Info h5 input[id='author']{
+.Info h5 input[name='author']{
 	width: 100px;
 }
-.Info h5 input[id='size']{
+.Info h5 input[name='sizeW'], .Info h5 input[name='sizeH']{
 	width: 70px;
 }
-.Info h5 input[id='price']{
+.Info h5 input[name='price']{
 	width: 70px;
 }
 .form-control{
@@ -743,7 +738,7 @@ ul.pagination li a:hover:not(.active,) {color: red;border: red solid 1px;}
 	color: red;
 	font-weight: 500;
 }
-.EditButtom{
+.EditButton{
 	margin:15px;
 	background-color: black;
 	color: white;

@@ -60,17 +60,17 @@ function login_submit_sure(){
 	 	}
 	 	// 用户登录请求
 		$.ajax({
-			url: "http://10.10.112.170:8080/user/login",
-			method: "POST",
+			url: "/user/login",
+			type: "POST",
 			data: {"account":name, "password":pwd},
 			success: function (data, status) {
 				// 登录成功
 				if(data.data.status == 1){
 					successAlert("Welcome Back!");
 					// 设置cookie
-					setCookie("isLogin", 1, null);
+					setCookie("loginUser", data.data.userId, null);
 					// 跳转用户个人中心
-					jumpAfterTime("http://10.10.112.170:8080/user.html", 2000);
+					jumpAfterTime("/user.html", 2000);
 				}else{
 					ErrorAlert(data.data.info);
 				}
@@ -114,8 +114,8 @@ function register_submit_sure(){
 	 	}
 		// 用户注册请求
 		$.ajax({
-			url: "http://10.10.112.170:8080/user/insertUser",
-			method: "post",
+			url: "/user/insertUser",
+			type: "post",
 			data: {"account":name, "email":email, "password":pwd, "phone":iphone},
 			success: function (data, status) {
 				// 注册成功

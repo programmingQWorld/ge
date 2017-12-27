@@ -2,6 +2,8 @@ package com.goodboy.picshop.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -100,6 +102,7 @@ public class User {
         this.sex = sex;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     public Date getBirthday() {
         return birthday;
     }

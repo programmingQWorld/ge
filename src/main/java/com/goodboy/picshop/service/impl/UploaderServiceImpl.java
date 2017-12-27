@@ -29,7 +29,7 @@ public class UploaderServiceImpl implements UploaderService {
                         // 文件名按时间戳规则重命名
                         filename = new Date().getTime() + fileType;
                         // 文件保存路径
-                        String filePath = System.getProperty("evan.webapp") + savePath + filename;
+                        String filePath = System.getProperty("evan.webapp") + "/resources" + savePath + filename;
                         // 转存文件
                         file.transferTo(new File(filePath));
                         return new UploaderDto(StatusEnum.SUCCESS, savePath + filename);

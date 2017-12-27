@@ -47,4 +47,17 @@
         INSERT INTO shop_commodity_rel_tag (cid, tid) VALUES (#{commodityId}, #{tagId})
     </insert>
 
+    <select id="queryCommodityByLevel" resultType="Commodity">
+        SELECT id, picture FROM shop_commodity WHERE level = #{level}
+    </select>
+
+    <update id="updateCommodity" parameterType="Commodity">
+        UPDATE shop_commodity SET name = #{name}, size_width = #{sizeWidth}, size_height = #{sizeHeight}, price = #{price}
+        WHERE id = #{id}
+    </update>
+
+    <select id="countCommodityByUserId" resultType="int" >
+        SELECT COUNT(*) FROM shop_commodity WHERE uid = #{userId}
+    </select>
+
 </mapper>
