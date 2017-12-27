@@ -73,27 +73,23 @@ body{
 	display:inline-block;
 
 }
-.user_header span{
+.user_header .username{
 	font-size:18px;
 	color:black;
-	display:inline-block;
-	position:relative;
-	top:-6px;
-	left:20px;
+	padding: 4px 0px;
+	position: relative;
+	top: 32px;
 }
 .user_header .user_heart {
-	display:inline-block;
-	font-size:0;
-	position:relative;
-	top:36px;
-	left:-40px;
+	position: relative;
+	top: 36px;
 }
 .user_header .user_heart div{
 	width:80px;
 	height:30px;
 	background-color:rgb(211,211,211);
 	display:inline-block;
-	margin-left:20px;
+	margin-right:20px;
 	line-height:30px;
 	text-align:center;
 	font-size:14px;
@@ -646,7 +642,6 @@ input[type="text"]{
 	margin-left:50px;
 }
 .address_manage .content_del{
-	margin-left:41px;
 	color:rgb(152,150,150);
 	cursor:pointer;
 }

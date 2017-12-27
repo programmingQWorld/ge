@@ -48,32 +48,33 @@ public class UserController {
     UserDto userDto=null;
     //登录验证
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JSONResult<UserDto> login(@Param("account") String account,@Param("password") String password,HttpSession session){
+    public JSONResult<UserDto> login(@RequestParam("account") String account,@RequestParam("password") String password,HttpSession session){
 
         String pwd= md5Password.md5Password(password);
         try{
             userDto=userService.userLogin(account,pwd);
-        }catch (UserErrorException uie){
-            userDto=new UserDto(StatusEnum.USER_ERROR);
-        }
-        session.setAttribute("user",userDto.getUser());
 
-        CartDto dbCartDto =  cartService.getCartInfoByUserId(userDto.getUser().getId());
-        CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
+            session.setAttribute("user",userDto.getUser());
 
-        if (sessionCartDto != null && dbCartDto != null ) {
-            if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
-                // 合并
-                for ( CartItemDto dto : sessionCartDto.getItems() ) {
-                    if ( !dbCartDto.getItems().contains(dto)  ) {
-                        dbCartDto.getItems().add(dto);
+            CartDto dbCartDto =  cartService.getCartInfoByUserId(userDto.getUser().getId());
+            CartDto sessionCartDto = (CartDto) session.getAttribute("usercart");
+
+            if (sessionCartDto != null && dbCartDto != null ) {
+                if (sessionCartDto.getItems() != null && sessionCartDto.getItems().size() > 0) {
+                    // 合并
+                    for ( CartItemDto dto : sessionCartDto.getItems() ) {
+                        if ( !dbCartDto.getItems().contains(dto)  ) {
+                            dbCartDto.getItems().add(dto);
+                        }
                     }
                 }
             }
-        }
-        CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
-        session.setAttribute("usercart", dto);
+            CartDto dto = (dbCartDto == null) ? sessionCartDto : dbCartDto ;
+            session.setAttribute("usercart", dto);
 
+        }catch (UserErrorException uie){
+            userDto=new UserDto(StatusEnum.USER_ERROR);
+        }
         return  new JSONResult<UserDto>(true,userDto);
     }
     //用户注销

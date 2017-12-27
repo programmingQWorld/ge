@@ -6,6 +6,15 @@ $(document).ready(function () {
         el: '.pageheader',
         data: {
             user:{}     // 登录用户
+        },
+        computed: {
+            // 用户名
+            username: function () {
+                return (this.user.nickname == null) ? this.user.account : this.user.nickname;
+            }
+        },
+        updated: function () {
+            $('#navbar .logn_up').css('background-color','white').css('border','1px solid red').find('a').css('color', 'red');
         }
     });
     // 请求是否已登录

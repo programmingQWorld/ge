@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-   <link rel="stylesheet" href="css/shopping.css">
+    <link rel="stylesheet" href="css/shopping.css">
     <script src="js/jquery/jquery-3.2.1.min.js"></script>
     <script src="js/vue/vue.js"></script>
     <script type="text/javascript" src="js/layui/layui.js"></script>
@@ -42,7 +42,7 @@
                 <li><a href="index.html"><p>yè</p><span>主頁</span></a></li>
                 <li><a href="commodity.html"><p>zuò</p><span>作品</span></a></li>
                 <li><a href="index.html#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
-                <li v-if="user.id" class="logn_up"><a href="user.html">{{ user.nickname }}</a></li>
+                <li v-if="user.id" class="logn_up"><a href="user.html">{{ username }}</a></li>
                 <li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
             </ul>
         </div>
