@@ -68,7 +68,7 @@
                                 <tr v-for="(item,index) in cartitems">
                                     <div style="display: inline-block;"><td style="padding-top: 20px;">
                                             <label style="width: 20px;height: 40px;">
-                                                <input type="checkbox"  @click="checkSingle(index)" v-model="selectList" :id="item.id" :value="index" name="selectList" ><span></span>
+                                                <input type="checkbox"  @click="checkSingle(index)" v-model="selectList" :id="item.id" :value="item.commid" name="selectList" ><span></span>
                                             </label>
                                         </td>
                                     </div>
@@ -104,7 +104,8 @@
                 <div v-for="receiving in receivings" class="Consigneeinfo">
                     <div class="checkBoxType" style="display: inline-block;">
                         <label style=" margin-top:10px;width: 20px;height: 45px">
-                            <input type="checkbox"><span></span>
+                            <span  v-if="receiving.isDefault == 1"><input checked type="checkbox" name = "useraddress" v-bind:value = "receiving.id" /><span ></span></span>
+                            <span  v-else><input type="checkbox" name = "useraddress" v-bind:value = "receiving.id" /><span ></span></span>
                         </label>
                     </div>
                     <div class="infoName">{{ receiving.receiver }}</div>

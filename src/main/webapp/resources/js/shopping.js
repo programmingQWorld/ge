@@ -136,21 +136,6 @@ $(document).ready(function() {
         }
     });
 
-    // /*判断是否选择商品*/
-    // $('.Shopping-buttom.checkout').click(function () {
-    //     var i = 0;
-    //     ($('.Shopping-Mid').find(':checkbox').each(function () {
-    //         if ($(this).is(":checked")){
-    //             i = 1;
-    //         }
-    //     }))
-    //     if(i){
-    //         alert("谢谢回顾");
-    //         window.location.href="user.html";
-    //     }
-    //     else
-    //         alert("请选择商品");
-    // });
     /*判断是否选择商品*/
     $('.Shopping-buttom.checkout').click(function () {
         var a = 0;
@@ -168,8 +153,31 @@ $(document).ready(function() {
             }
         ));
         if(i&a){
-            alert("谢谢回顾");
-            window.location.href="user.html";
+            var selectedItems = $("input[name=selectList]:checked");
+            var ids = [];  // 商品id集合
+            for (var i = 0; i < selectedItems.length; i++) {
+                ids.push(selectedItems.get(i).value);
+            }
+            var recid = $("input[name=useraddress]:checked").val();
+            debugger
+            $.ajax({
+                url: "order/addOrder",
+                type: 'POST',
+                // dataType:"json",
+                traditional:true,
+                data : {
+                    commids :ids ,
+                    recid : recid
+                },
+                success : function (xhr) {
+                    if ( !(xhr.data.status === 3002)) {
+                        alert("订单创建成功");
+                        window.location = "/user.html";
+                    } else {
+                        alert (xhr.data.info);
+                    }
+                }
+            });
         }
         else if( i == 0)
             alert("请选择商品");
