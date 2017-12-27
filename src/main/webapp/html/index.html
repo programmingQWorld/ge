@@ -58,75 +58,77 @@
 	</div>
 </div>
 <!-- 导航结束 -->
-<!--登录注册弹出框开始-->
-<div class="modal fade comwidth" id="Show_LoginResgister" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="com login">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">×</span>
-			</button>
-			<div class="Button">
-				<button class="Btn btnLog onBtn">登录</button>
-				<button class="Btn btnReg">注册</button>
-			</div>
-			<form class="logForm" onsubmit="return login_submit_sure();">
-				<div class="formgroup">
-					<span class="bt">用户名</span>
-					<input type="text" name="name1" placeholder="请输入用户名" class="input">
-				</div>
-				<div class="formgroup">
-					<span class="bt">密码</span>
-					<input type="password" name="pwd1" class="input">
-				</div>
-				<div class="">
-					<span class="bt">验证码</span>
-					<input type="text" name="yzm" class="input yzm">
-					<span class="YZM text-center">asdf</span>
-					<a href="Forget.html"><span class="ForgetPas">忘记密码</span></a>
-				</div>
-				<div class="btnSubmit1">
-					<input type="submit" value="登录" class="btnSub btnSub1">
-				</div>
 
-			</form>
-		</div>
-		<div class="com register">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">×</span>
-			</button>
-			<div class="Button">
-				<button class="Btn btnLog onBtn">登录</button>
-				<button class="Btn btnReg">注册</button>
-			</div>
-			<form method="post" name="regForm" class="regForm" onsubmit="return register_submit_sure()">
-				<div class="">
-					<span class="bt">账号</span>
-					<input type="text" name="name2" placeholder="请输入账号" class="input">
-				</div>
-				<div class="">
-					<span class="bt">密码</span>
-					<input type="password" name="pwd2" class="input">
-				</div>
-				<div class="">
-					<span class="bt">邮箱</span>
-					<input type="text" name="email" class="input">
-				</div>
-				<div class="">
-					<span class="bt">电话</span>
-					<input type="text" name="iphone" class="input">
-				</div>
-				<div class="btnSubmit2">
-					<input type="submit" value="注册" class="btnSub btnSub2">
-				</div>
+</div>
 
-			</form>
+
+<div class="content">
+	<!--登录注册弹出框开始-->
+	<div class="modal fade comwidth" id="Show_LoginResgister" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="com login">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<div class="Button">
+					<button class="Btn btnLog onBtn">登录</button>
+					<button class="Btn btnReg">注册</button>
+				</div>
+				<form class="logForm" onsubmit="return login_submit_sure();">
+					<div class="formgroup">
+						<span class="bt">用户名</span>
+						<input type="text" name="name1" placeholder="请输入用户名" class="input">
+					</div>
+					<div class="formgroup">
+						<span class="bt">密码</span>
+						<input type="password" name="pwd1" class="input">
+					</div>
+					<div class="">
+						<span class="bt">验证码</span>
+						<input type="text" name="yzm" class="input yzm">
+						<span class="YZM text-center">{{ checkCode }}</span>
+						<a href="Forget.html"><span class="ForgetPas">忘记密码</span></a>
+					</div>
+					<div class="btnSubmit1">
+						<input type="submit" value="登录" class="btnSub btnSub1">
+					</div>
+
+				</form>
+			</div>
+			<div class="com register">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<div class="Button">
+					<button class="Btn btnLog onBtn">登录</button>
+					<button class="Btn btnReg">注册</button>
+				</div>
+				<form method="post" name="regForm" class="regForm" onsubmit="return register_submit_sure()">
+					<div class="">
+						<span class="bt">账号</span>
+						<input type="text" name="name2" placeholder="请输入账号" class="input">
+					</div>
+					<div class="">
+						<span class="bt">密码</span>
+						<input type="password" name="pwd2" class="input">
+					</div>
+					<div class="">
+						<span class="bt">邮箱</span>
+						<input type="text" name="email" class="input">
+					</div>
+					<div class="">
+						<span class="bt">电话</span>
+						<input type="text" name="iphone" class="input">
+					</div>
+					<div class="btnSubmit2">
+						<input type="submit" value="注册" class="btnSub btnSub2">
+					</div>
+
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
-</div>
-
-<!--登录注册弹出框结束-->
-<div class="content">
+	<!--登录注册弹出框结束-->
 <!-- 轮播图开始 -->
 <div class="slide_img">
 	<!--data-ride="carousel" 自动轮播-->
@@ -285,13 +287,13 @@
 		<div class="new_works_box">
 			<div class="new_works_top">
 				<div class="new_works_one tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0, 'id'))"><img v-bind:src="indexOfCommodities(0, 'picture')"  width="300" height="225" alt="新品1"></a>
+					<a v-bind:href="makeDetailUrl(indexOfCommodities(0, 'id'))"><img v-bind:src="indexOfCommodities(0, 'picture')"  width="300" height="225" alt="新品1"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(0, 'name') }}</span>
 					</div>
 				</div>
 				<div class="new_works_tow tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1, 'id'))"><img v-bind:src="indexOfCommodities(1, 'picture')" width="225" height="300" alt="新品2"></a>
+					<a v-bind:href="makeDetailUrl(indexOfCommodities(1, 'id'))"><img v-bind:src="indexOfCommodities(1, 'picture')" width="225" height="300" alt="新品2"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(1, 'name') }}</span>
 					</div>
@@ -299,13 +301,13 @@
 			</div>
 			<div class="new_works_bottom">
 				<div class="new_works_three tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2, 'id'))"><img v-bind:src="indexOfCommodities(2, 'picture')" width="225" height="300" alt="新品3"></a>
+					<a v-bind:href="makeDetailUrl(indexOfCommodities(2, 'id'))"><img v-bind:src="indexOfCommodities(2, 'picture')" width="225" height="300" alt="新品3"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(2, 'name') }}</span>
 					</div>
 				</div>
 				<div class="new_works_four tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3, 'id'))"><img v-bind:src="indexOfCommodities(3, 'picture')" width="300" height="225" alt="新品3"></a>
+					<a v-bind:href="makeDetailUrl(indexOfCommodities(3, 'id'))"><img v-bind:src="indexOfCommodities(3, 'picture')" width="300" height="225" alt="新品3"></a>
 					<div class="tanchuname">
 						<span class="drow_name">{{ indexOfCommodities(3, 'name') }}</span>
 					</div>

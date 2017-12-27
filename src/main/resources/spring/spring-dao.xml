@@ -49,12 +49,12 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.qq.com"/>
         <property name="port" value="25"/>
-        <property name="username" value="xx@qq.com"/>
-        <property name="password" value="xxx"/>
+        <property name="username" value="774659399@qq.com"/>
+        <property name="password" value="nmrpjlvmzooubbhj"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.smtp.auth">true</prop>
-                <prop key="mail.smtp.from">xxx</prop>
+                <prop key="mail.smtp.from">774659399@qq.com</prop>
                 <prop key="mail.smtp.socketFactory.fallback">false</prop>
                 <prop key="mail.smtp.starttls.enable">true</prop>
                 <!-- <prop key="mail.debug">true</prop> -->

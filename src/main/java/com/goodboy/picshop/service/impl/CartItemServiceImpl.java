@@ -54,7 +54,6 @@ public class CartItemServiceImpl implements CartItemService {
 	 * @param cartid  购物车id
 	 * @param items 购物中的商品集合
 	 */
-	@Override
 	public void saveCartItemList(int cartid, List<CartItemDto> items) {
 		Map<String, Object> map = new HashMap();
 		map.put("cartid", cartid);
@@ -66,7 +65,6 @@ public class CartItemServiceImpl implements CartItemService {
 	 * 清空数据库中的购物车
 	 * @param cartid
 	 */
-	@Override
 	public void clearCart(int cartid) {
 		cartItemDao.clearCartItemsByCartid(cartid);
 	}

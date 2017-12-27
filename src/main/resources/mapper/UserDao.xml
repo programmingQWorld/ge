@@ -6,7 +6,7 @@
 <mapper namespace="com.goodboy.picshop.dao.UserDao">
 
     <select id="queryUserIdByAccountAndPassword" resultType="User" >
-        SELECT id,account,avatar,nickname,birthday,email,phone
+        SELECT id,account,avatar,nickname,birthday,email,phone,active
         FROM shop_user
         WHERE account = #{account} AND password = #{password}
     </select>
@@ -35,6 +35,21 @@
         SET password = #{password}
         WHERE email = #{email}
     </update>
+
+    <!--激活邮箱-->
+    <update id="emailActive" parameterType="User">
+        UPDATE shop_user
+        SET active = 1
+        WHERE email = #{email}
+    </update>
+    <!--用于判断邮箱是否被注册-->
+    <select id="searchEmail" resultType="int">
+        select count(email) from shop_user WHERE email = #{email}
+    </select>
+    <!--用于判断账号是否被注册-->
+    <select id="searchAccount" resultType="int">
+        select count(account) from shop_user WHERE account = #{account}
+    </select>
 
 
 

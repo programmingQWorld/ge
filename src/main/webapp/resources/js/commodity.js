@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var offset = 0;                   // 从哪条数据开始查询
-    var limit = 6;                    // 每页数据条数
+    var limit = 12;                    // 每页数据条数
     var page = 1;                     // 页数
     var masonryActive = false;      // 瀑布流插件初始化标志
     var tagId = 0;                  // 标签Id，0为全部标签

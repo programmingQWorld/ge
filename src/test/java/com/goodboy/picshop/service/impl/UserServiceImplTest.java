@@ -18,7 +18,7 @@ public class UserServiceImplTest extends BaseTest {
 
     @Test
     public void testLoginUser()throws Exception{
-        UserDto userDto=userService.userLogin("test0003","test0001");
+        UserDto userDto=userService.userLogin("test0003","test0001","qwe","qwe");
         System.out.println(userDto);
     }
     @Test
@@ -42,16 +42,16 @@ public class UserServiceImplTest extends BaseTest {
         System.out.println(userService.update(user));
     }
 
-    @Test
-    public void testSendEmail() throws Exception{
-        SimpleMailMessage mail=new SimpleMailMessage();
-        mail.setTo("814334428@qq.com");//收件人邮箱地址
-        mail.setFrom("774659399@qq.com");//收件人
-        mail.setSubject("spring自带javamail发送的邮件");//主题
-        mail.setText("hello this mail is from spring javaMail ");//正文
-        userService.sendEmail(mail);
-        System.out.print("成功发送");
-    }
+//    @Test
+//    public void testSendEmail() throws Exception{
+//        SimpleMailMessage mail=new SimpleMailMessage();
+//        mail.setTo("@qq.com");//收件人邮箱地址
+//        mail.setFrom("@qq.com");//
+//        mail.setSubject("spring自带javamail发送的邮件");//主题
+//        mail.setText("hello this mail is from spring javaMail ");//正文
+//        userService.sendEmail(mail);
+//        System.out.print("成功发送");
+//    }
     @Test
     public void testLinkUtils() throws Exception{
         User user=userService.findUserByEmail("12@qq.com").getUser();

@@ -13,7 +13,8 @@ public class UserDto {
     private int status;     // 标识
     private String info;    // 标识信息
     private User user;      // 返回用户信息
-    private int userId;         //返回用户id
+    private String code;    //用户登陆的验证码
+    private int userId;     //返回用户id
     private List list;      //返回一个集合
 
     public UserDto(){
@@ -21,6 +22,11 @@ public class UserDto {
     public UserDto(StatusEnum statusEnum) {
         this.status = statusEnum.getStatus();
         this.info = statusEnum.getInfo();
+    }
+    public UserDto(StatusEnum statusEnum,String code) {
+        this.status = statusEnum.getStatus();
+        this.info = statusEnum.getInfo();
+        this.code=code;
     }
 
     public UserDto(StatusEnum statusEnum,User user) {
@@ -71,6 +77,14 @@ public class UserDto {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
     public List getList() {
         return list;

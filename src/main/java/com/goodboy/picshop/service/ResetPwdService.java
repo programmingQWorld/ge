@@ -6,10 +6,16 @@ import java.util.List;
 
 public interface ResetPwdService {
     /**
-     * 通过传入加密链接将其解密
+     * 解密邮箱激活链接
+     * @param checkCode
+     * @return 获取一个几个对象：邮箱+链接失效时间
+     */
+    UserDto parseEmailLink(String checkCode);
+    /**
+     * 解密密码重置链接
      * @param checkCode
      * @return 获取一个几个对象：昵称+邮箱+链接失效时间
      */
-    UserDto parseLink(String checkCode);
+    UserDto parsePwdLink(String checkCode);
 
 }

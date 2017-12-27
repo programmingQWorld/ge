@@ -10,12 +10,14 @@ import org.springframework.mail.SimpleMailMessage;
 public interface UserService {
 
     /**
-     * 通过账号（account）和密码查询用户id（登录）
-     * @param account 用户账号
-     * @param password 用户密码
-     * @return 用户id
+     *  通过账号（account）和密码查询用户id（登录）
+     * @param account 账号
+     * @param password 密码
+     * @param checkCode 验证码
+     * @param code session的验证码
+     * @return 返回用户
      */
-    UserDto userLogin(String account,String password);
+    UserDto userLogin(String account,String password,String checkCode,String code);
     /**
      * 通过用户id查询单个用户实体
      * @param id
@@ -60,5 +62,18 @@ public interface UserService {
      * @return 影响行数
      */
     UserDto updatePwd(String password,String email);
+    /**
+     * 根据邮箱激活用户
+     * @param email
+     * @return 影响行数
+     */
+    UserDto  emailActive(String email);
+
+    /**
+     * 生成验证码
+     * @return
+     */
+    UserDto getCheckCode();
+
 
 }
