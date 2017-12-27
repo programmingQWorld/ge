@@ -65,7 +65,7 @@ public class OrderController {
 	 * @return
 	 */
 	@RequestMapping(value = "addOrder", method = RequestMethod.POST)
-public JSONResult<OrderDto> addOrder (@RequestParam("commids[]") Integer[]  commids, int recid,  HttpServletRequest request ) {
+public JSONResult<OrderDto> addOrder ( Integer[]  commids, int recid,  HttpServletRequest request ) {
 		User userOnline = (User)request.getSession().getAttribute(	"user");
 		//ReceivingDto receivingDto =  receivingService.queryDefaultReceiving(userOnline.getId());
 		OrderDto orderDto = orderService.insertOrders(commids, recid, userOnline.getId());

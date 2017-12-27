@@ -104,7 +104,7 @@
 										<span v-else class="n_judge_pay">未付款<br><span class="red_font">请在一小时内完成付款</span></span>
 									</td>
 									<td class="dothing">
-										<div v-if="order.isPay == 0" class="pay" data-toggle="modal" data-target="#Paypage">付款</div>
+										<div v-if="order.isPay == 0" class="pay" data-toggle="modal" v-bind:data-target="makeModalId('Paypage' + order.id, true)">付款</div>
 										<div class="xq" data-toggle="modal" v-bind:data-target="makeModalId('Oreder_Detail_' +order.id, true)">详情</div>
 									</td>
 								</tr>
@@ -144,7 +144,7 @@
 							</div>
 							<!-- 詳情彈出框結束-->
 							<!--付款頁面開始-->
-							<div class="modal fade" id="Paypage" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal fade" v-bind:id="makeModalId('Paypage' + order.id, false)" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 								<div class="modal-dialog" role="document" style="height: 5%;width: 30%">
 									<div class="modal-content">
 										<div class="modal-header">

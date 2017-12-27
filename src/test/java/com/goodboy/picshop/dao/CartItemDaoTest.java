@@ -54,4 +54,28 @@ public class CartItemDaoTest extends BaseTest {
         }
 	    System.out.println( 5 / 2);
     }
+
+    @Test
+	public void testPower() {
+	    double base = 13;
+	    int exponent = 12;
+	    double res = 1;
+	    boolean flag = false;
+	    if (exponent < 0) {
+	    	exponent = 0 - exponent;
+	    	flag = true;
+	    }
+	    while (exponent != 0) {
+	    	if ((exponent & 1) == 1) {
+	    		res = res * base;
+		    }
+		    base = base * base;
+	    	exponent = exponent >>> 1;
+	    }
+	    if ( flag ) {
+		    System.out.println(1 / res);
+	    } else {
+		    System.out.println( res );
+	    }
+    }
 }
