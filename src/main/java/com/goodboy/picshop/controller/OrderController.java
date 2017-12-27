@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -60,17 +61,23 @@ public class OrderController {
 	/**
 	 * 创建订单接口 （只有在线用户可以创建订单）
 	 * @param commids  订单关联的商品id集合
-	 * @param session
+	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "addOrder", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public JSONResult<OrderDto> addOrder (Integer[] commids, HttpSession session ) {
-		User userOnline = (User)session.getAttribute(	"user");
-		ReceivingDto receivingDto =  receivingService.queryDefaultReceiving(userOnline.getId());
-		OrderDto orderDto = orderService.insertOrders(commids, receivingDto.getReceiving().getId(), userOnline.getId());
+	@RequestMapping(value = "addOrder", method = RequestMethod.POST)
+public JSONResult<OrderDto> addOrder ( Integer[]  commids, int recid,  HttpServletRequest request ) {
+		User userOnline = (User)request.getSession().getAttribute(	"user");
+		//ReceivingDto receivingDto =  receivingService.queryDefaultReceiving(userOnline.getId());
+		OrderDto orderDto = orderService.insertOrders(commids, recid, userOnline.getId());
 		return new JSONResult<OrderDto>(true, orderDto);
 	}
 
+	/**
+	 * 支付（模拟）
+	 * @param commid
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "pay/{cno}", method = RequestMethod.GET)
 	public JSONResult<PayDto> pay (@PathVariable("cno") int commid, HttpSession session) {
 		User userOnline = (User)session.getAttribute(	"user");

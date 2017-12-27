@@ -7,7 +7,7 @@ $(document).ready(function () {
         data: {
             commodity: {user:{}},
             tags: [],
-            receivings: []
+            receivings: [],
         },
         methods: {
             // 生成作者链接
@@ -28,6 +28,34 @@ $(document).ready(function () {
                         }
                     }
                 }
+            },
+            // 生成订单,并跳转到订单页面
+            createOrderButton : function () {
+                // 生成订单需要用到的参数
+                // 发送请求到后台请求生成订单
+                var rec_id = $("input[name=address]:checked").val();  // 收货id
+                var commids = [];
+                commids.push(this.commodity.id);                                      // 商品id
+                var ids = [this.commodity.id];
+                $.ajax({
+                    url: "order/addOrder",
+                    type: 'POST',
+                    // dataType:"json",
+                    traditional:true,
+                    data : {
+                        commids :ids ,
+                        recid : rec_id
+                    },
+                    success : function (xhr) {
+                            if ( !(xhr.data.status === 3002)) {
+                                alert("订单创建成功");
+                                window.location = "/user.html";
+                            } else {
+                                alert (xhr.data.info);
+                            }
+                        }
+                });
+
             }
         }
     });

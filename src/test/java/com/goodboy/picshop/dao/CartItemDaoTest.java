@@ -33,5 +33,49 @@ public class CartItemDaoTest extends BaseTest {
     public void testDelCartItems () {
         cartItemDao.clearCartItemsByCartid(2);
     }
+    @Test
+    public void  testTrailingZeros () {
+        long sum = 0;
+        long n = 666;
+        long tmp = n / 5;
+        while (tmp != 0) {
+            sum += tmp;
+            tmp = tmp / 5;
+            System.out.println( "loop : " + tmp);
+        }
+        System.out.println(sum);
+    }
 
+    @Test
+    public void testByteMax () {
+        byte bv = 0;
+        for (int i = 0; i < 200; i++) {
+            System.out.println(bv ++);
+        }
+	    System.out.println( 5 / 2);
+    }
+
+    @Test
+	public void testPower() {
+	    double base = 13;
+	    int exponent = 12;
+	    double res = 1;
+	    boolean flag = false;
+	    if (exponent < 0) {
+	    	exponent = 0 - exponent;
+	    	flag = true;
+	    }
+	    while (exponent != 0) {
+	    	if ((exponent & 1) == 1) {
+	    		res = res * base;
+		    }
+		    base = base * base;
+	    	exponent = exponent >>> 1;
+	    }
+	    if ( flag ) {
+		    System.out.println(1 / res);
+	    } else {
+		    System.out.println( res );
+	    }
+    }
 }

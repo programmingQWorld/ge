@@ -57,7 +57,10 @@
                     <div id="MoreAddress" style="display:none;margin-top: 2%;">
                         <table style="width: 97.5%;">
                             <form name="SelectMsg">
-                                <span v-for="receiving in receivings"><input type="radio" name="address" v-bind:value="receiving.id">{{ receiving.receiver }} {{ receiving.phone }} {{ receiving.address }}<br/></span>
+                                <span v-for="receiving in receivings">
+                                    <span v-if="receiving.isDefault == 1"><input  type="radio" checked  name="address" v-bind:value="receiving.id">{{ receiving.receiver }} {{ receiving.phone }} {{ receiving.address }}<br/></span>
+                                    <span v-else><input  type="radio" checked  name="address" v-bind:value="receiving.id">{{ receiving.receiver }} {{ receiving.phone }} {{ receiving.address }}<br/></span>
+                                </span>
                             </form>
                         </table>
                     </div>
@@ -74,7 +77,7 @@
                         <p style="color: red">&yen;{{ commodity.price }}</p>
                     </div>
                 </div>
-            <div class="buttonBox"><button type="button" class="BuyNowButtom ">確認支付</button></div>
+            <div class="buttonBox"><button type="button" class="BuyNowButtom " v-on:click="createOrderButton">確認支付</button></div>
             </div>
         </div>
     </div>
