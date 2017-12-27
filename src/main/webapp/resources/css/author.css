@@ -89,7 +89,6 @@ body{
     font-size: 16px;
     font-weight: bold;
     color: black;
-    margin-top: -2%;
     padding-bottom: 20px;
     margin-left: 5%;
     text-align: left;
@@ -138,6 +137,9 @@ footer h5{
 }
 .Author_intro_Msg div div{
     padding-bottom: 10px;
+}
+.changePic img{
+    width: 100%;
 }
 /*效果代码开始*/
 .tanchuname{

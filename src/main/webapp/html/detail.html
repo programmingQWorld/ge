@@ -32,7 +32,7 @@
                 <li><a href="index.html"><p>yè</p><span>主頁</span></a></li>
                 <li><a href="commodity.html"><p>zuò</p><span>作品</span></a></li>
                 <li><a href="index.html#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
-                <li v-if="user.id" class="logn_up"><a href="user.html">{{ user.nickname }}</a></li>
+                <li v-if="user.id" class="logn_up"><a href="user.html">{{ username }}</a></li>
                 <li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
             </ul>
         </div>

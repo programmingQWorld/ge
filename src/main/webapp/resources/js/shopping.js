@@ -136,19 +136,44 @@ $(document).ready(function() {
         }
     });
 
+    // /*判断是否选择商品*/
+    // $('.Shopping-buttom.checkout').click(function () {
+    //     var i = 0;
+    //     ($('.Shopping-Mid').find(':checkbox').each(function () {
+    //         if ($(this).is(":checked")){
+    //             i = 1;
+    //         }
+    //     }))
+    //     if(i){
+    //         alert("谢谢回顾");
+    //         window.location.href="user.html";
+    //     }
+    //     else
+    //         alert("请选择商品");
+    // });
     /*判断是否选择商品*/
     $('.Shopping-buttom.checkout').click(function () {
+        var a = 0;
         var i = 0;
         ($('.Shopping-Mid').find(':checkbox').each(function () {
-            if ($(this).is(":checked")){
-                i = 1;
+                if ($(this).is(":checked")){
+                    i = 1;
+                }
             }
-        }))
-        if(i){
+        ));
+        ($('.SureAddress').find(':checkbox').each(function () {
+                if ($(this).is(":checked")){
+                    a = 1;
+                }
+            }
+        ));
+        if(i&a){
             alert("谢谢回顾");
             window.location.href="user.html";
         }
-        else
+        else if( i == 0)
             alert("请选择商品");
-    });
+        else if (a == 0)
+            alert("请选择地址");
+    })
 });

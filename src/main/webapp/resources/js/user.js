@@ -56,11 +56,16 @@ $(document).ready(function () {
             },
             // 删除收货信息
             delReceiving: function (e) {
+                if($(e.currentTarget).attr('data-default') == 1){
+                    alert("不能删除默认地址");
+                    return;
+                }
                 $.ajax({
                     url: "/receiving/delete/" + $(e.currentTarget).attr('data-id'),
                     success: function (data, status) {
                         if(data.data.status == 1){
                             alert(data.data.info);
+                            window.location.reload();
                         }else{
                             alert(data.data.info);
                         }
@@ -74,6 +79,7 @@ $(document).ready(function () {
                     success: function (data, status) {
                         if(data.data.status == 1){
                             alert(data.data.info);
+                            window.location.reload();
                         }else {
                             alert(data.data.info);
                         }
@@ -87,6 +93,7 @@ $(document).ready(function () {
                     success: function (data, status) {
                         if(data.data.status){
                             alert(data.data.info);
+                            window.location.reload();
                         }else{
                             alert(data.data.info);
                         }
@@ -100,6 +107,7 @@ $(document).ready(function () {
                     success: function (data, status) {
                         if(data.data.status){
                             alert(data.data.info);
+                            window.location.reload();
                         }else{
                             alert(data.data.info);
                         }
@@ -178,6 +186,7 @@ $(document).ready(function () {
             success: function (data, status) {
                 if(data.data.status == 1){
                     alert(data.data.info);
+                    window.location.reload();
                 }else{
                     alert(data.data.info);
                 }
@@ -203,6 +212,7 @@ $(document).ready(function () {
             success: function (data, status) {
                 if(data.data.status == 1){
                     alert(data.data.info);
+                    window.location.reload();
                 }else {
                     alert(data.data.info);
                 }
@@ -244,6 +254,7 @@ $(document).ready(function () {
             success: function (data, status) {
                 if(data.data.status == 1){
                     alert(data.data.info);
+                    window.location.reload();
                 }else{
                     alert(data.data.info);
                 }

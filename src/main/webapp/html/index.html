@@ -50,7 +50,7 @@
 					<li id="workspage"><a href="#workPage"><p>zuò</p><span>作品</span></a></li>
 					<div class="move_line2"></div>
 					<li id="AboutUspage"><a href="#AboutUs"><p>guān yú</p><span>關於我們</span></a></li>
-					<li v-if="user.id" class="logn_up"><a href="user.html">{{ user.nickname }}</a></li>
+					<li v-if="user.id" class="logn_up"><a href="user.html">{{ username }}</a></li>
 					<li v-else class="logn_up" data-toggle="modal" data-target="#Show_LoginResgister"><a href="#">登录</a></li>
 				</ul>
 			</div>
@@ -71,8 +71,8 @@
 			</div>
 			<form class="logForm" onsubmit="return login_submit_sure();">
 				<div class="formgroup">
-					<span class="bt">邮箱</span>
-					<input type="text" name="name1" placeholder="请输入邮箱" class="input">
+					<span class="bt">用户名</span>
+					<input type="text" name="name1" placeholder="请输入用户名" class="input">
 				</div>
 				<div class="formgroup">
 					<span class="bt">密码</span>
@@ -197,8 +197,8 @@
 		<div class="box_works">
 			<div class="box_top ">
 				<div class="box_one hkzh">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0).id)">
-						<img v-bind:src="indexOfTagCommodities(0).picture" width="500" height="281" alt="作品1">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0, 'id'))">
+						<img v-bind:src="indexOfTagCommodities(0, 'picture')" width="500" height="281" alt="作品1">
 						<div class="mengban" style="height:281px;top:-140px;"></div>
 						<div class="move_border_line">
 							<div class="top_b_line" style="top:-120px"></div>
@@ -206,12 +206,12 @@
 							<div class="bottom_b_line" style="top:120px"></div>
 							<div class="left_b_line" style="top:-134px"></div>
 						</div>
-						<div class="drow_n"><span class="span0">{{ indexOfTagCommodities(0).name }}</span></div>
+						<div class="drow_n"><span class="span0">{{ indexOfTagCommodities(0, 'name') }}</span></div>
 					</a>
 				</div>
 				<div class="box_tow hkzh">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1).id)">
-						<img v-bind:src="indexOfTagCommodities(1).picture" width="216" height="281" style="padding-top: 22%" alt="作品2">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1, 'id'))">
+						<img v-bind:src="indexOfTagCommodities(1, 'picture')" width="216" height="281" style="padding-top: 22%" alt="作品2">
 						<div class="mengban" style="top:47.516px"></div>
 						<div class="move_border_line" style="top:72px">
 							<div class="top_b_line1"></div>
@@ -219,14 +219,14 @@
 							<div class="bottom_b_line1"></div>
 							<div class="left_b_line1"></div>
 						</div>
-						<div class="drow_n" style="top:47.516px"><span class="span1" style="top:47.516px">{{ indexOfTagCommodities(1).name }}</span></div>
+						<div class="drow_n" style="top:47.516px"><span class="span1" style="top:47.516px">{{ indexOfTagCommodities(1, 'name') }}</span></div>
 					</a>
 				</div>
 			</div>
 			<div class="box_bottom">
 				<div class="box_three hkzh">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2).id)">
-						<img v-bind:src="indexOfTagCommodities(2).picture" width="216" height="234" style="margin-bottom: 45%;" alt="作品3">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2, 'id'))">
+						<img v-bind:src="indexOfTagCommodities(2, 'picture')" width="216" height="234" style="margin-bottom: 45%;" alt="作品3">
 						<div class="mengban" style="left:-20px"></div>
 						<div class="move_border_line" style="left:-20px">
 							<div class="top_b_line2"></div>
@@ -234,12 +234,12 @@
 							<div class="bottom_b_line2"></div>
 							<div class="left_b_line2"></div>
 						</div>
-						<div class="drow_n"><span class="span2">{{ indexOfTagCommodities(2).name }}</span></div>
+						<div class="drow_n"><span class="span2">{{ indexOfTagCommodities(2, 'name') }}</span></div>
 					</a>
 				</div>
 				<div class="box_four hkzh">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3).id)">
-						<img v-bind:src="indexOfTagCommodities(3).picture" width="250" height="333" alt="作品4">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3, 'id'))">
+						<img v-bind:src="indexOfTagCommodities(3, 'picture')" width="250" height="333" alt="作品4">
 						<div class="mengban" style="left:-20px"></div>
 						<div class="move_border_line" style="left:-20px">
 							<div class="top_b_line3"></div>
@@ -247,12 +247,12 @@
 							<div class="bottom_b_line3"></div>
 							<div class="left_b_line3"></div>
 						</div>
-						<div class="drow_n"><span class="span3">{{ indexOfTagCommodities(3).name }}</span></div>
+						<div class="drow_n"><span class="span3">{{ indexOfTagCommodities(3, 'name') }}</span></div>
 					</a>
 				</div>
 				<div class="box_five hkzh">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(4).id)">
-						<img v-bind:src="indexOfTagCommodities(4).picture" width="250" height="333" alt="作品5">
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(4, 'id'))">
+						<img v-bind:src="indexOfTagCommodities(4, 'picture')" width="250" height="333" alt="作品5">
 						<div class="mengban" style="left:-20px"></div>
 						<div class="move_border_line" style="left:-20px">
 							<div class="top_b_line4"></div>
@@ -260,7 +260,7 @@
 							<div class="bottom_b_line4"></div>
 							<div class="left_b_line4"></div>
 						</div>
-						<div class="drow_n"><span class="span4">{{ indexOfTagCommodities(4).name }}</span></div>
+						<div class="drow_n"><span class="span4">{{ indexOfTagCommodities(4, 'name') }}</span></div>
 					</a>
 				</div>
 			</div>
@@ -285,29 +285,29 @@
 		<div class="new_works_box">
 			<div class="new_works_top">
 				<div class="new_works_one tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0).id)"><img v-bind:src="indexOfCommodities(0).picture"  width="300" height="225" alt="新品1"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(0, 'id'))"><img v-bind:src="indexOfCommodities(0, 'picture')"  width="300" height="225" alt="新品1"></a>
 					<div class="tanchuname">
-						<span class="drow_name">{{ indexOfCommodities(0).name }}</span>
+						<span class="drow_name">{{ indexOfCommodities(0, 'name') }}</span>
 					</div>
 				</div>
 				<div class="new_works_tow tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1).id)"><img v-bind:src="indexOfCommodities(1).picture" width="225" height="300" alt="新品2"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(1, 'id'))"><img v-bind:src="indexOfCommodities(1, 'picture')" width="225" height="300" alt="新品2"></a>
 					<div class="tanchuname">
-						<span class="drow_name">{{ indexOfCommodities(1).name }}</span>
+						<span class="drow_name">{{ indexOfCommodities(1, 'name') }}</span>
 					</div>
 				</div>
 			</div>
 			<div class="new_works_bottom">
 				<div class="new_works_three tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2).id)"><img v-bind:src="indexOfCommodities(2).picture" width="225" height="300" alt="新品3"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(2, 'id'))"><img v-bind:src="indexOfCommodities(2, 'picture')" width="225" height="300" alt="新品3"></a>
 					<div class="tanchuname">
-						<span class="drow_name">{{ indexOfCommodities(2).name }}</span>
+						<span class="drow_name">{{ indexOfCommodities(2, 'name') }}</span>
 					</div>
 				</div>
 				<div class="new_works_four tanchuname_baba">
-					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3).id)"><img v-bind:src="indexOfCommodities(3).picture" width="300" height="225" alt="新品3"></a>
+					<a v-bind:href="makeDetailUrl(indexOfTagCommodities(3, 'id'))"><img v-bind:src="indexOfCommodities(3, 'picture')" width="300" height="225" alt="新品3"></a>
 					<div class="tanchuname">
-						<span class="drow_name">{{ indexOfCommodities(3).name }}</span>
+						<span class="drow_name">{{ indexOfCommodities(3, 'name') }}</span>
 					</div>
 				</div>
 			</div>
@@ -329,6 +329,7 @@
 			<span id="AboutUs" class="contact">Contact</span><br/>
 			<span class="query">關於產品的疑問等從这里開始</span>
 		</div>
+		<div class="box_right"><img src="images/logo.png" alt="logo" class="footerLogo"></div>
 		<div class="contact_way">
 			<span>聯繋電话:0755-32864957</span><br>
 			<span>電子郵件:haoren@163.com</span><br>
