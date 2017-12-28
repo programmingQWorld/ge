@@ -64,14 +64,14 @@ public class CartServiceImpl implements CartService {
 	public void saveUserCartInfo(int userid, CartDto cartDto) {
 		try {
 			int result = 0;
-			// 如果cart.id = 0, 数据库中插入购物车
+			// 如果cart.id = 0, 数据库中插入购物车记录
 			if ( cartDto.getCartid() == 0) {
 				Cart cart = new Cart();
 				User user = new User();
-				user.setId(1);
+				user.setId(userid);
 				cart.setUser( user );
-				cartDao.saveUserCartInfo(cart);  // 购物车对应的那条记录
-				cartDto.setCartid(cart.getId());
+				cartDao.saveUserCartInfo(cart);  // 新增记录
+				cartDto.setCartid(cart.getId());  // 得到自增主键
 			}
 			if ( result == 0) {  // 说明这个购物车里面存在商品
 				cartItemService.clearCart(cartDto.getCartid());

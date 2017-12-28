@@ -10,7 +10,7 @@
     </insert>
 
     <!-- commodity.id, commodity.name, commodity.price, commodity.picture, user.nickname, cart.uid, user.id -->
-    <!--commodity.id, commodity.name, commodity.price, commodity.picture, , items.id-->
+    <!--commo dity.id, commodity.name, commodity.price, commodity.picture, , items.id-->
 
     <!--
     left join shop_cart_items items on cart.id = items.cart_id

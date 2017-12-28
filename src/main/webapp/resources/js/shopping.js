@@ -159,7 +159,6 @@ $(document).ready(function() {
                 ids.push(selectedItems.get(i).value);
             }
             var recid = $("input[name=useraddress]:checked").val();
-            debugger
             $.ajax({
                 url: "order/addOrder",
                 type: 'POST',
