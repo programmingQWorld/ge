@@ -5,6 +5,10 @@
 body{
 	font-family:Microsoft YaHei;
 }
+.borderImg{
+	border:12px solid transparent;
+	border-image: url("/images/border.jpg") 12 12 12 12;
+}
 .nav_person{
 	margin-top:52px;
 	height:88px;
@@ -152,7 +156,7 @@ body{
 }
 .bo{
 	/*border:1px solid red;*/
-	/*width:220px;*/
+	width:257px;
 	height:160px;
 	margin-top:10px;
 	margin-right:-18px;
@@ -170,16 +174,17 @@ body{
 }
 .imgmsg{
 	position:absolute;
-	width:100%;
+	width:97%;
+	height: 86%;
 	color:#fff;
 	font-size:12px;
 	display:inline-block;
 	/*border:1px solid red;*/
 	z-index:1;
 	left:37px;
-	border-radius:8px;
+	border-radius:0px;
 	top:0;
-	left:0;
+	left:12px;
 	right:0;
 	bottom:0;
 	margin:auto;
@@ -199,7 +204,7 @@ body{
 }
 .imgmsg:hover{
 	background:black;
-	opacity:0.8;
+	opacity:0.6;
 
 }
 /*添加商品*/

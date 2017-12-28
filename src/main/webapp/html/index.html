@@ -86,8 +86,8 @@
 					<div class="">
 						<span class="bt">验证码</span>
 						<input type="text" name="yzm" class="input yzm">
-						<span class="YZM text-center">{{ checkCode }}</span>
-						<a href="Forget.html"><span class="ForgetPas">忘记密码</span></a>
+						<span class="YZM text-center" v-on:click="changeCode">{{ checkCode }}</span>
+						<a href="forget.html"><span class="ForgetPas">忘记密码</span></a>
 					</div>
 					<div class="btnSubmit1">
 						<input type="submit" value="登录" class="btnSub btnSub1">

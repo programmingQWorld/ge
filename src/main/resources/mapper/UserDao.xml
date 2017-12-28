@@ -27,7 +27,7 @@
     </select>
 
     <select id="findUserByEmail" resultType="User">
-        SELECT id,nickname,email FROM shop_user WHERE email = #{email}
+        SELECT id,account,email FROM shop_user WHERE email = #{email}
     </select>
     <!--修改密码-->
     <update id="updatePwd" parameterType="User">

@@ -16,10 +16,10 @@ public class GenerateLinkUtils {
     public static String generateResetPwdLink(User user) throws Exception {
         //添加 过期时间，24小时后链接失效
         long endTimes = System.currentTimeMillis()+1*24*3600*1000;
-        String para = user.getNickname()+";"+user.getEmail()+";"+endTimes;
+        String para = user.getAccount()+";"+user.getEmail()+";"+endTimes;
         //先加密，再url转码,顺序不能修改
         String encode = UrlUtil.getURLEncoderString(DesUtil.encrypt(para));
-        String str="http://localhost:8080/user/resetPwd?checkCode="+encode;
+        String str="http://10.10.112.170:8080/user/resetPwd?checkCode="+encode;
         return  str;
     }
 
@@ -32,7 +32,7 @@ public class GenerateLinkUtils {
         String para = email+";"+endTimes;
         //先加密，再url转码,顺序不能修改
         String encode = UrlUtil.getURLEncoderString(DesUtil.encrypt(para));
-        String str="http://localhost:8080/user/emailActive?checkCode="+encode;
+        String str="http://10.10.112.170:8080/user/emailActive?checkCode="+encode;
         return  str;
     }
 
