@@ -25,7 +25,7 @@ public class UploaderServiceImpl implements UploaderService {
                 String fileType = filename.substring(filename.lastIndexOf('.'));
                 if((fileContentType.equals("image/jpeg") || fileContentType.equals("image/png")) && (fileType.equals(".jpg") || fileType.equals(".jpeg") || fileType.equals(".png"))) {
                     // 判断文件大小
-                    if(file.getSize() <= 128000) {
+                    if(file.getSize() <= 3072000) {
                         // 文件名按时间戳规则重命名
                         filename = new Date().getTime() + fileType;
                         // 文件保存路径

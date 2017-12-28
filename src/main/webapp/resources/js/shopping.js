@@ -42,9 +42,10 @@ $(document).ready(function() {
                 var total = 0;
                 for(var i = 0,len = this.selectList.length;i < len;i++){
                     var index = this.selectList[i];
-                    var item = this.list[index];
+                    var item = null;
+                    for(var j=0; j < this.cartitems.length; j++) if(this.cartitems[j].commid == index) item = this.cartitems[j];
                     if(item){
-                        total += item.price * item.count;
+                        total += item.price;
                     }
                     else{
                         continue;
@@ -159,7 +160,6 @@ $(document).ready(function() {
                 ids.push(selectedItems.get(i).value);
             }
             var recid = $("input[name=useraddress]:checked").val();
-            debugger
             $.ajax({
                 url: "order/addOrder",
                 type: 'POST',

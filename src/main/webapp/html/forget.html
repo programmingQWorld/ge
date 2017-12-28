@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>忘记密码</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <style>
+        .Sure_Send{
+            margin:15px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 80px;
+            height: 40px;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- <div class="btn btn-success" type="button" data-toggle="modal" data-target="#FogetPassword">1010</div>-->
+<div class="modal fade" id="FogetPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><!--data-backdrop="static"-->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="index.html">
+                    <button type="button" class="close"  aria-hidden="true">
+                        &times;
+                    </button>
+                </a>
+            </div>
+            <div class="modal-body">
+                <label for="basic-url">请输入您的邮箱</label>
+                <div class="input-group ">
+                    <input type="text" id="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                    <span class="input-group-addon" id="basic-addon1">@</span>
+                    <input type="text" id="emailType" class="form-control" placeholder="EmailType" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" id="resetBtn" class="btn btn-default" data-dismiss="modal">重置
+                </button>-->
+                <button id="fat-btn" class="Sure_Send" data-loading-text="Loading..."
+                        type="button"> 确定发送
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script>
+    $(document).ready(function(){
+        $('#FogetPassword').modal({
+            show:true,
+            backdrop:true,
+            backdrop: 'static', 
+            keyboard: false
+        })
+        /* $('#Show_LoginResgister').on('shown.bs.modal', function (e) {
+             // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零  
+             $(this).css('display', 'block');
+             var modalHeight=$(window).height() / 2 - $('#youModel .modal-dialog').height() / 2;
+             $(this).find('.modal-dialog').css({
+                 'margin-top': modalHeight
+             });
+         });*/
+      /*  //重置按钮事件  
+        $("#resetBtn").off().on("click",function(){
+            $("#username").val("");
+            $("#emailType").val("");
+        });*/
+        $(".Sure_Send").click(function(){
+            if($("#username").val()==""||($("#emailType").val()==""))
+            {
+                alert(":( 请完善信息");
+                return false;
+            }
+            $(this).button('loading').delay(1000).queue(function() {
+                var email = $('#username').val() + '@' + $('#emailType').val();
+                $.ajax({
+                    url: 'user/sendEmail',
+                    type: 'POST',
+                    data: {'email': email},
+                    success: function (data, status) {
+                        if(data.data.status == 1){
+                            alert("发送成功，请留意邮箱");
+                            $(this).button('reset');
+                            $("#username").val("");
+                            $("#emailType").val("");
+                            $(this).dequeue();
+                            window.location.href="index.html"
+                        }else{
+                            alert(data.data.info)
+                        }
+                    }
+                });
+
+            });
+        });
+    })
+</script>
+ 
+</body>
+</html>

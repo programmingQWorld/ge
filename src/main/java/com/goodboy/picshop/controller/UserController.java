@@ -115,7 +115,7 @@ public class UserController {
             userDto = userService.insert(account,pwd,email,phone);
             SimpleMailMessage mail=new SimpleMailMessage();
             mail.setTo(email);//收件人邮箱地址
-            mail.setFrom("774659399@qq.com");//发件人
+            mail.setFrom("11111111qq.com");//发件人
             mail.setSubject("邮箱激活");//主题
             mail.setText("请点击以下链接完成邮箱激活，链接于24小时过期:" + GenerateLinkUtils.generateEmailLink(email));//正文
             mailSender.send(mail);
@@ -181,13 +181,13 @@ public class UserController {
         return new JSONResult<UserDto>(true, userDto);
     }
     //获取邮箱发送密码重置地址
-    @RequestMapping(value = "/sendEmail", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/sendEmail", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JSONResult<UserDto> findUser(String email) throws Exception{
         try{
             userDto=userService.findUserByEmail(email);
             SimpleMailMessage mail=new SimpleMailMessage();
             mail.setTo(userDto.getUser().getEmail());//收件人邮箱地址
-            mail.setFrom("774659399@qq.com");//发件人
+            mail.setFrom("11111111@qq.com");//发件人
             mail.setSubject("密码重置");//主题
             mail.setText("要使用新的密码, 请使用以下链接启用密码,链接24小时后过期:" + GenerateLinkUtils.generateResetPwdLink(userDto.getUser()) );//正文
             mailSender.send(mail);

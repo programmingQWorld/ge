@@ -311,4 +311,20 @@ $(document).ready(function () {
         setVueData("/user/" + loginUser + "/commodity?offset=" + offset + "&limit=" + limit, vm, "commodityList");
         if(page != vm.pageCount) page++;
     });
+
+    // 注销登录
+    $('#mjzx_sx4').click(function () {
+        $.ajax({
+            url: '/user/logout',
+            success: function (data, status) {
+                if(data.data.status){
+                    alert(data.data.info);
+                    delCookie("loginUser");
+                    window.location.href = "/index.html";
+                }else{
+                    alert(data.data.info);
+                }
+            }
+        });
+    });
 });

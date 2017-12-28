@@ -68,7 +68,7 @@ public class CartServiceImpl implements CartService {
 			if ( cartDto.getCartid() == 0) {
 				Cart cart = new Cart();
 				User user = new User();
-				user.setId(1);
+				user.setId(userid);
 				cart.setUser( user );
 				cartDao.saveUserCartInfo(cart);  // 购物车对应的那条记录
 				cartDto.setCartid(cart.getId());

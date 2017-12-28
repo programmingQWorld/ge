@@ -36,6 +36,10 @@ $(document).ready(function () {
             // 生成商品详情页链接
             makeDetailUrl: function (id) {
                 return "detail-" + id + ".html";
+            },
+            // 更换验证码
+            changeCode: function () {
+                setVueData("/user/getCheckCode", vm, "checkCode");
             }
         }
     });
